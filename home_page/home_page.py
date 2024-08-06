@@ -15,4 +15,4 @@ cbsa_selection = st.selectbox(
  'Select a Metro/Micropolitan Area (Type a city name or state abbreviation to search)',cbsa_list)
 
 
-st.write(f'Please enjoy the community report for the {cbsa_selection}. See the options on the left.')
+st.write(f'Please enjoy the community report for the {cbsa_selection}. See the views on the left.')
