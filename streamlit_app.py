@@ -1,7 +1,7 @@
 import streamlit as st
 
 home_page = st.Page(
-  'home_page/home_page.py', title = 'Home', icon=":material/home:", default=True
+  'home_page/home_page.py', icon=":material/home:", default=True
 )
 
 # demographics pages
