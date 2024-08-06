@@ -1,9 +1,6 @@
 import streamlit as st
 
-st.title('Community Analytics')
-st.subheader('An app to better understand your neighbors...')
-
-
+home_page = st.Page()
 
 # demographics pages
 population = st.Page(
@@ -30,6 +27,7 @@ poverty = st.Page(
 
 pg = st.navigation(
         {
+            "Home Page": [home_page],
             "Demographics": [population, race_ethnicity, age],
             "Socioeconomics": [income, poverty],
         }
