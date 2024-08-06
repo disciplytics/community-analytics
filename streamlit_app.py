@@ -26,3 +26,13 @@ income = st.Page(
 poverty = st.Page(
   'socioeconomics/poverty.py', title = 'Poverty Report', icon=":material/money_off:", default=True
 )
+
+
+pg = st.navigation(
+        {
+            "Demographics": [population, race_ethnicity, age],
+            "Socioeconomics": [income, poverty],
+        }
+    )
+
+pg.run()
