@@ -1,3 +1,3 @@
 import streamlit as st
 
-st.title('Race and Ethnic Trends')
+st.title('Race and Ethnicity Trends')
