@@ -6,6 +6,6 @@ st.subheader('An app to better understand your neighbors...')
 
 conn = st.connection('snowflake')
 
-cbsa_list = conn.query('SELECT DISTINCT GEO_NAME as "Metro/Micro Area" FROM CBSA_DATA')
+cbsa_list = conn.query('SELECT DISTINCT GEO_NAME FROM CBSA_DATA;', ttl=600)
 
 st.write(cbsa_list)         
