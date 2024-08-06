@@ -6,7 +6,7 @@ st.subheader('An app to better understand your neighbors...')
  
 conn = st.connection("snowflake")
 
-cbsa_list = conn.query('SELECT GEO_NAME FROM CBSA_DATA_GEO_NAMES', ttl=0)
+cbsa_list = conn.query('SELECT GEO_NAME FROM CBSA_DATA_GEO_NAMES ORDER BY GEO_NAME ASC', ttl=0)
 
 cbsa_selection = st.selectbox(
  'Select a Metro/Micropolitan Area (Type to Search)',cbsa_list)
