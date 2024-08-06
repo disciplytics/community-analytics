@@ -3,7 +3,7 @@ import streamlit as st
 st.title('Community Analytics')
 st.subheader('An app to better understand your neighbors...')
 
-SNOWFLAKE_DEFAULT_CONNECTION_NAME=<name>
+SNOWFLAKE_DEFAULT_CONNECTION_NAME='<name>'
 
 conn = st.connnection("<name>", type="snowflake")
 
