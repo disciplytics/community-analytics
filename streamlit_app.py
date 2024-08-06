@@ -29,7 +29,7 @@ poverty = st.Page(
 
 pg = st.navigation(
         {
-            "Home": [home_page],
+            " ": [home_page],
             "Demographics": [population, race_ethnicity, age],
             "Socioeconomics": [income, poverty],
         }
