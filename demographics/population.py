@@ -25,10 +25,10 @@ total_fam_sql = "SELECT GEO_NAME, VARIABLE_NAME as FAMILIES, DATE as Five_Year_E
 # get the total number of familes
 total_fam_df = conn.query(total_fam_sql, ttl=0)
 
-table_tab, trend_tab, pct_change_tab = st.tabs(['Table View', 'Trend View', 'Percent Change View'])
+overview_tab, trend_tab, pct_change_tab = st.tabs(['Overview', 'Trend View', 'Percent Change View'])
 
-with table_tab:
-  st.write('hi')
+with overview_tab:
+  st.table(total_pop_df)
 
 with trend_tab:
   st.subheader('PopulationTrends')
