@@ -125,6 +125,19 @@ with single_tab:
     x_label = '5 Year Estimate Date',
     y_label = 'Total',
     color = 'Measure')
-    
+
+  st.write('Single Female Householders')
+  st.bar_chart(
+    data = bd_fam_df[bd_fam_df['VARIABLE_NAME'].isin([
+      'Households By Type: Population | Female householder, no spouse or partner present, 5yr Estimate',
+      'Households By Type: Population | Female householder, no spouse or partner present | With relatives, no children of the householder under 18 years, 5yr Estimate',
+      'Households By Type: Population | Female householder, no spouse or partner present | With children of the householder under 18 years, 5yr Estimate',
+      'Households By Type: Population | Female householder, no spouse or partner present | With only nonrelatives present, 5yr Estimate',
+      'Households By Type: Population | Female householder, no spouse or partner present | Living alone, 5yr Estimate'])],
+    x = 'FIVE_YEAR_ESTIMATE_DATE',
+    y = 'FIVE_YEAR_ESTIMATE',
+    x_label = '5 Year Estimate Date',
+    y_label = 'Total',
+    color = 'Measure')
 
 
