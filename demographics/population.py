@@ -28,11 +28,14 @@ total_fam_df = conn.query(total_fam_sql, ttl=0)
 overview_tab, trend_tab, pct_change_tab = st.tabs(['Overview', 'Trend View', 'Percent Change View'])
 
 with overview_tab:
+
+  # calc pct change
   overview_df = total_pop_df.sort_values(by=['FIVE_YEAR_ESTIMATE_DATE'])
   overview_df['PCT_CHANGE'] = overview_df['FIVE_YEAR_ESTIMATE'].pct_change()
-
+  # format the pct change
   overview_df = overview_df.style.format({'PCT_CHANGE': "{:.2%}"})
-
+  # drop nan from pct change
+  overview_df = overview_df.dropna()
   
   st.table(overview_df)
 
