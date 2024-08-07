@@ -49,3 +49,5 @@ r = pdk.Deck(layers=[ geojson_layer ], map_style=None, initial_view_state=INITIA
 # display the pydeck
 st.pydeck_chart(r)
 
+# add CBSA filter to a session variable
+st.session_state['cbsa_selection'] = cbsa_selection
