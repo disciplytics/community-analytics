@@ -13,4 +13,4 @@ total_pop_sql = "SELECT GEO_NAME, VARIABLE_NAME as Race, DATE as Five_Year_Estim
 # get the total population
 total_pop_df = conn.query(total_pop_sql, ttl=0)
 
-st.table(total_pop_sql)
+st.table(total_pop_df)
