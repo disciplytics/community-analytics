@@ -47,8 +47,11 @@ with overview_tab:
   overview_df_hh['PCT_CHANGE'] = overview_df_hh['FIVE_YEAR_ESTIMATE'].pct_change()
   # drop nan from pct change
   overview_df_hh = overview_df_hh.dropna()
-  # format the pct change
-  #overview_df_hh = overview_df_hh.style.format({'PCT_CHANGE': "{:.2%}"})
+  # format the pct change and count
+  overview_df_hh['Percent Change'] = np.round(overview_df_hh['PCT_CHANGE']*100,2).astype(str)+"%"
+  overview_df_hh['Count'] = overview_df_hh['FIVE_YEAR_ESTIMATE'].astype(int)
+  # rename VARIABLE_NAME
+  overview_df_hh['VARIABLE_NAME'] = 'Total Households'
   
   ## FAMILIES
   # calc pct change
@@ -56,19 +59,22 @@ with overview_tab:
   overview_df_fam['PCT_CHANGE'] = overview_df_fam['FIVE_YEAR_ESTIMATE'].pct_change()
   # drop nan from pct change
   overview_df_fam = overview_df_fam.dropna()
-  # format the pct change
-  overview_df_fam = overview_df_fam.style.format({'PCT_CHANGE': "{:.2%}"})
+  # format the pct change and count
+  v['Percent Change'] = np.round(overview_df_fam['PCT_CHANGE']*100,2).astype(str)+"%"
+  overview_df_fam['Count'] = overview_df_fam['FIVE_YEAR_ESTIMATE'].astype(int)
+  # rename VARIABLE_NAME
+  overview_df_fam['VARIABLE_NAME'] = 'Total Families'
 
   ## append tables
-  #overview_df = pd.concat([overview_df_pop, overview_df_hh, overview_df_fam])
+  overview_df = pd.concat([overview_df_pop, overview_df_hh, overview_df_fam])
 
   # change calcs to rows
-  overview_df_pop = pd.melt(overview_df_pop, id_vars = ['VARIABLE_NAME', 'FIVE_YEAR_ESTIMATE_DATE'], value_vars = ['Count', 'Percent Change'])
-  overview_df_pop = overview_df_pop.pivot(
+  overview_df = pd.melt(overview_df, id_vars = ['VARIABLE_NAME', 'FIVE_YEAR_ESTIMATE_DATE'], value_vars = ['Count', 'Percent Change'])
+  overview_df = overview_df.pivot(
     values = 'value', 
     index = ['VARIABLE_NAME', 'variable'], 
     columns = 'FIVE_YEAR_ESTIMATE_DATE')
-  st.table(overview_df_pop)
+  st.table(overview_df)
 
 with trend_tab:
   st.subheader('PopulationTrends')
