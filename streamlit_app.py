@@ -1,14 +1,5 @@
 import streamlit as st
 
-# connect to snowflake
-conn = st.connection("snowflake")
-
-# get the list of CBSAs for the user
-cbsa_default = conn.query('SELECT GEO_NAME FROM CBSA_DATA_GEO_NAMES ORDER BY GEO_NAME ASC LIMIT 1', ttl=0)
-
-# add CBSA filter to a session variable
-st.session_state['cbsa_selection'] = cbsa_default
-
 home_page = st.Page(
   'home_page/home_page.py', title = 'Home', icon=":material/home:", default=True
 )
