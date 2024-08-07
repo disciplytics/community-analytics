@@ -24,7 +24,7 @@ polygon_sql = "SELECT POLYGON FROM CBSA_DATA WHERE GEO_NAME = " + f"'{cbsa_selec
 polygon = conn.query(polygon_sql, ttl=0)
 
 # find averages of polygons
-$center_point = np.average(polygon['POLYGON'][0][9:-2], axis=0)
+#center_point = np.average(polygon['POLYGON'][0][9:-2], axis=0)
 
 st.write(type(polygon['POLYGON'][0][9:-2]))
 
