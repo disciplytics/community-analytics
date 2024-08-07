@@ -31,7 +31,7 @@ with overview_tab:
   overview_df = total_pop_df.sort_values(by=['FIVE_YEAR_ESTIMATE_DATE'])
   overview_df['PCT_CHANGE'] = overview_df['FIVE_YEAR_ESTIMATE'].pct_change()
 
-  overview_df.style.format({'PCT_CHANGE': "{:.2%}"})
+  overview_df = overview_df.style.format({'PCT_CHANGE': "{:.2%}"})
 
   
   st.table(overview_df)
