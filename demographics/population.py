@@ -33,62 +33,62 @@ bd_fam_df = conn.query(bd_fam_sql, ttl=0)
 
 
 # create UI
-overview_tab, fam_tab = st.tabs(['Overview', 'Family Breakdown View'])
 
-with overview_tab:
-  ## POPULATION
-  # calc pct change
-  overview_df_pop = total_pop_df.sort_values(by=['FIVE_YEAR_ESTIMATE_DATE'])
-  overview_df_pop['PCT_CHANGE'] = overview_df_pop['FIVE_YEAR_ESTIMATE'].pct_change()
-  # drop nan from pct change
-  overview_df_pop = overview_df_pop.dropna()
-  # format the pct change and count
-  overview_df_pop['Percent Change'] = np.round(overview_df_pop['PCT_CHANGE']*100,2).astype(str)+"%"
-  overview_df_pop['Count'] = overview_df_pop['FIVE_YEAR_ESTIMATE'].astype(int)
-  # rename VARIABLE_NAME
-  overview_df_pop['Measure'] = 'Total Population'
+st.subheader('Population Trends')
 
-  ## HOUSEHOLDS
-  # calc pct change
-  overview_df_hh = total_hh_df.sort_values(by=['FIVE_YEAR_ESTIMATE_DATE'])
-  overview_df_hh['PCT_CHANGE'] = overview_df_hh['FIVE_YEAR_ESTIMATE'].pct_change()
-  # drop nan from pct change
-  overview_df_hh = overview_df_hh.dropna()
-  # format the pct change and count
-  overview_df_hh['Percent Change'] = np.round(overview_df_hh['PCT_CHANGE']*100,2).astype(str)+"%"
-  overview_df_hh['Count'] = overview_df_hh['FIVE_YEAR_ESTIMATE'].astype(int)
-  # rename VARIABLE_NAME
-  overview_df_hh['Measure'] = 'Total Households'
+## POPULATION
+# calc pct change
+overview_df_pop = total_pop_df.sort_values(by=['FIVE_YEAR_ESTIMATE_DATE'])
+overview_df_pop['PCT_CHANGE'] = overview_df_pop['FIVE_YEAR_ESTIMATE'].pct_change()
+# drop nan from pct change
+overview_df_pop = overview_df_pop.dropna()
+# format the pct change and count
+overview_df_pop['Percent Change'] = np.round(overview_df_pop['PCT_CHANGE']*100,2).astype(str)+"%"
+overview_df_pop['Count'] = overview_df_pop['FIVE_YEAR_ESTIMATE'].astype(int)
+# rename VARIABLE_NAME
+overview_df_pop['Measure'] = 'Total Population'
+
+## HOUSEHOLDS
+# calc pct change
+overview_df_hh = total_hh_df.sort_values(by=['FIVE_YEAR_ESTIMATE_DATE'])
+overview_df_hh['PCT_CHANGE'] = overview_df_hh['FIVE_YEAR_ESTIMATE'].pct_change()
+# drop nan from pct change
+overview_df_hh = overview_df_hh.dropna()
+# format the pct change and count
+overview_df_hh['Percent Change'] = np.round(overview_df_hh['PCT_CHANGE']*100,2).astype(str)+"%"
+overview_df_hh['Count'] = overview_df_hh['FIVE_YEAR_ESTIMATE'].astype(int)
+# rename VARIABLE_NAME
+overview_df_hh['Measure'] = 'Total Households'
   
-  ## FAMILIES
-  # calc pct change
-  overview_df_fam = total_fam_df.sort_values(by=['FIVE_YEAR_ESTIMATE_DATE'])
-  overview_df_fam['PCT_CHANGE'] = overview_df_fam['FIVE_YEAR_ESTIMATE'].pct_change()
-  # drop nan from pct change
-  overview_df_fam = overview_df_fam.dropna()
-  # format the pct change and count
-  overview_df_fam['Percent Change'] = np.round(overview_df_fam['PCT_CHANGE']*100,2).astype(str)+"%"
-  overview_df_fam['Count'] = overview_df_fam['FIVE_YEAR_ESTIMATE'].astype(int)
-  # rename VARIABLE_NAME
-  overview_df_fam['Measure'] = 'Total Families'
+## FAMILIES
+# calc pct change
+overview_df_fam = total_fam_df.sort_values(by=['FIVE_YEAR_ESTIMATE_DATE'])
+overview_df_fam['PCT_CHANGE'] = overview_df_fam['FIVE_YEAR_ESTIMATE'].pct_change()
+# drop nan from pct change
+overview_df_fam = overview_df_fam.dropna()
+# format the pct change and count
+overview_df_fam['Percent Change'] = np.round(overview_df_fam['PCT_CHANGE']*100,2).astype(str)+"%"
+overview_df_fam['Count'] = overview_df_fam['FIVE_YEAR_ESTIMATE'].astype(int)
+# rename VARIABLE_NAME
+overview_df_fam['Measure'] = 'Total Families'
 
-  ## append tables
-  overview_df = pd.concat([overview_df_pop, overview_df_hh, overview_df_fam])
+## append tables
+overview_df = pd.concat([overview_df_pop, overview_df_hh, overview_df_fam])
 
-  ## Get Year
-  overview_df['FIVE_YEAR_ESTIMATE_DATE'] = pd.to_datetime(overview_df['FIVE_YEAR_ESTIMATE_DATE']).dt.year.astype(int)
-  # change calcs to rows
-  overview_df_pivot = pd.melt(overview_df, id_vars = ['Measure', 'FIVE_YEAR_ESTIMATE_DATE'], value_vars = ['Count', 'Percent Change'])
-  overview_df_pivot = overview_df_pivot.pivot(
+## Get Year
+overview_df['FIVE_YEAR_ESTIMATE_DATE'] = pd.to_datetime(overview_df['FIVE_YEAR_ESTIMATE_DATE']).dt.year.astype(int)
+# change calcs to rows
+overview_df_pivot = pd.melt(overview_df, id_vars = ['Measure', 'FIVE_YEAR_ESTIMATE_DATE'], value_vars = ['Count', 'Percent Change'])
+overview_df_pivot = overview_df_pivot.pivot(
     values = 'value', 
     index = ['Measure', 'variable'], 
     columns = 'FIVE_YEAR_ESTIMATE_DATE')
 
-  # reorder df
-  overview_df_pivot = overview_df_pivot.sort_index(level = 0, ascending=False)
+# reorder df
+overview_df_pivot = overview_df_pivot.sort_index(level = 0, ascending=False)
 
-  # plot 
-  st.bar_chart(
+# plot 
+st.bar_chart(
     data = overview_df,
     x = 'FIVE_YEAR_ESTIMATE_DATE',
     y = 'Count',
@@ -96,10 +96,8 @@ with overview_tab:
     y_label = 'Total',
     color = 'Measure',
     stack = True)
-  # table
-  st.dataframe(overview_df_pivot)
+# table
+st.dataframe(overview_df_pivot)
 
-with fam_tab:
-
-  st.write(bd_fam_df['VARIABLE_NAME'].unique())
+st.write(bd_fam_df['VARIABLE_NAME'].unique())
 
