@@ -23,9 +23,10 @@ st.write(f'Please enjoy the community report for the {cbsa_selection}. See the v
 polygon_sql = "SELECT POLYGON FROM CBSA_DATA WHERE GEO_NAME = " + f"'{cbsa_selection}'" + "LIMIT 1"
 polygon = conn.query(polygon_sql, ttl=0)
 
+# find averages of polygons
+center_point = np.average(polygon['POLYGON'][0][9:-2], axis=0)
 
-st.write(polygon['POLYGON'][0][9:-2])
-center_point = np.average(polygon['POLYGON'], axis=0)
+st.write(center_point)
 
 polygon_layer_snow = pdk.Layer(
         "PolygonLayer",
