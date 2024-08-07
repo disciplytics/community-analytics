@@ -27,7 +27,7 @@ polygon = conn.query(polygon_sql, ttl=0)
 # find averages of polygons
 #center_point = np.average(polygon['POLYGON'][0][9:-2], axis=0)
 
-st.write(json.loads( "[" + polygon['POLYGON'][0][9:-2] + "]"))
+st.write(np.array(polygon['POLYGON'][0][9:-2]))
 
 polygon_layer_snow = pdk.Layer(
         "PolygonLayer",
