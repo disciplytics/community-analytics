@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import pydeck as pdk
-import ast
+import json
 
 st.title('Community Analytics')
 st.subheader('An app to better understand your neighbors...')
@@ -27,7 +27,7 @@ polygon = conn.query(polygon_sql, ttl=0)
 # find averages of polygons
 #center_point = np.average(polygon['POLYGON'][0][9:-2], axis=0)
 
-st.write(ast.literal_eval(polygon['POLYGON'][0][9:-2]))
+st.write(json.loads(polygon['POLYGON'][0][9:-2]))
 
 polygon_layer_snow = pdk.Layer(
         "PolygonLayer",
