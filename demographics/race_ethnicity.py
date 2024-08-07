@@ -46,4 +46,4 @@ st.bar_chart(
     horizontal=False,)
 
 st.write(f"Race Breakdown Table For Year {total_race_df['FIVE_YEAR_ESTIMATE_DATE'].max()}")
-st.table(total_race_df[(total_race_df['Measure'].isin(race_filter)) & (total_race_df['FIVE_YEAR_ESTIMATE_DATE'] == total_race_df['FIVE_YEAR_ESTIMATE_DATE'].max())][['Measure', 'Counts']].sort_values(by=['Counts'], ascending = False).reset_index(drop=True))
+st.dataframe(total_race_df[(total_race_df['Measure'].isin(race_filter)) & (total_race_df['FIVE_YEAR_ESTIMATE_DATE'] == total_race_df['FIVE_YEAR_ESTIMATE_DATE'].max())][['Measure', 'Counts']].sort_values(by=['Counts'], ascending = False).reset_index(drop=True))
