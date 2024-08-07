@@ -18,6 +18,6 @@ st.write(f'Please enjoy the community report for the {cbsa_selection}. See the v
 
 # get geojson for selected area
 geojson_sql = f"SELECT GEO_JSON FROM CBSA_DATA WHERE GEO_NAME = {cbsa_selection} LIMIT 1"
-geojson = conn.query(geojson_sql, ttl=0)
+geojson = conn.query(geojson_sql)
 
 st.write(geojson)
