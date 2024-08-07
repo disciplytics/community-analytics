@@ -20,4 +20,21 @@ st.write(f'Please enjoy the community report for the {cbsa_selection}. See the v
 geojson_sql = "SELECT GEO_JSON FROM CBSA_DATA WHERE GEO_NAME = " + f"'{cbsa_selection}'" + "LIMIT 1"
 geojson = conn.query(geojson_sql, ttl=0)
 
-st.write(geojson)
+
+geojsondata = json.load(geojson)
+
+st.write(geojsondata)
+
+# create the GeoJson layer
+#geojson = pdk.Layer(
+#    "GeoJsonLayer",
+#    geojsondata,
+#    opacity=0.8,
+#    stroked=False,
+#   filled=True,
+#    extruded=True,
+#    wireframe=True,
+#    get_elevation="properties.valuePerSqm / 20",
+#    get_fill_color="[255, 255, properties.growth * 255]",
+#    get_line_color=[255, 255, 255],
+#)
