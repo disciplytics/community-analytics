@@ -22,4 +22,4 @@ st.line_chart(
   y = 'FIVE_YEAR_ESTIMATE',
   x_label = '5 Year Estimate Date',
   y_label = 'Population Count',
-  color = 'Legend')
+  color = 'LEGEND')
