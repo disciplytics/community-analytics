@@ -10,7 +10,7 @@ population = st.Page(
 )
 
 race_ethnicity = st.Page(
-  'demographics/race_ethnicity.py', title = 'Race and Ethnicity Report', icon=":material/diversity_1:"
+  'demographics/race_ethnicity.py', title = 'Race Report', icon=":material/diversity_1:"
 )
 
 age = st.Page(
