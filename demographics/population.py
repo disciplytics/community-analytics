@@ -28,7 +28,7 @@ total_fam_df = conn.query(total_fam_sql, ttl=0)
 overview_tab, trend_tab, pct_change_tab = st.tabs(['Overview', 'Trend View', 'Percent Change View'])
 
 with overview_tab:
-  st.table(total_pop_df)
+  st.table(total_pop_df.sort_values(by=['FIVE_YEAR_ESTIMATE_DATE']))
 
 with trend_tab:
   st.subheader('PopulationTrends')
