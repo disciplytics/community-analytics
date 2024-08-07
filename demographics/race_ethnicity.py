@@ -17,7 +17,7 @@ total_race_df = conn.query(total_race_sql, ttl=0)
 # prep data
 total_race_df['Measure'] = total_race_df['VARIABLE_NAME'].str.lstrip('Race: Population | ')
 total_race_df['FIVE_YEAR_ESTIMATE_DATE'] = pd.to_datetime(total_race_df['FIVE_YEAR_ESTIMATE_DATE']).dt.year.astype(int)
-total_race_df['Counts'] = total_race_df['FIVE_YEAR_ESTIMATE'].astpye(int)
+total_race_df['Counts'] = total_race_df['FIVE_YEAR_ESTIMATE'].astype(int)
 
 st.write('Race Trends')
 st.bar_chart(
