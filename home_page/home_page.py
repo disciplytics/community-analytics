@@ -21,7 +21,7 @@ geojson_sql = "SELECT GEO_JSON FROM CBSA_DATA WHERE GEO_NAME = " + f"'{cbsa_sele
 geojson = conn.query(geojson_sql, ttl=0)
 
 
-st.write(geojson)
+st.write(geojson['GEO_JSON'])
 
 # create the GeoJson layer
 #geojson = pdk.Layer(
