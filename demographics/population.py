@@ -4,6 +4,7 @@ import numpy as np
 
 st.title("Population Report:")
 st.subheader(f"{st.session_state['cbsa_selection']}")
+st.write('Population, households, and families')
 
 
 # connect to snowflake
