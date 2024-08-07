@@ -22,7 +22,6 @@ st.write(f'Please enjoy the community report for the {cbsa_selection}. See the v
 # get polygon for selected area
 polygon_sql = "SELECT POLYGON FROM CBSA_DATA WHERE GEO_NAME = " + f"'{cbsa_selection}'" + "LIMIT 1"
 polygon = conn.query(polygon_sql, ttl=0)
-st.write(polygon.POLYGON[0])
 
 polygon_layer_snow = pdk.Layer(
         "PolygonLayer",
