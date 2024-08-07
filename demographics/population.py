@@ -36,7 +36,7 @@ with overview_tab:
   # drop nan from pct change
   overview_df_pop = overview_df_pop.dropna()
   # format the pct change and count
-  overview_df_pop['Percent Change'] = np.round(overview_df_pop['PCT_CHANGE']/100,2).astype(str)+"%"
+  overview_df_pop['Percent Change'] = np.round(overview_df_pop['PCT_CHANGE']*100,2).astype(str)+"%"
   overview_df_pop['Count'] = overview_df_pop['FIVE_YEAR_ESTIMATE'].astype(int)
 
   ## HOUSEHOLDS
