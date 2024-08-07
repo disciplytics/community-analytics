@@ -23,6 +23,8 @@ st.write(f'Please enjoy the community report for the {cbsa_selection}. See the v
 polygon_sql = "SELECT POLYGON FROM CBSA_DATA WHERE GEO_NAME = " + f"'{cbsa_selection}'" + "LIMIT 1"
 polygon = conn.query(polygon_sql, ttl=0)
 
+center_point = np.average(polygon['POLYGON'], axis=0)
+
 polygon_layer_snow = pdk.Layer(
         "PolygonLayer",
         polygon,
@@ -39,12 +41,12 @@ polygon_layer_snow = pdk.Layer(
 
 r = pdk.Deck(
         map_style=None,
-        #initial_view_state=pdk.ViewState(
-        #latitude=center_point[1],
-        #longitude=center_point[0],
-        #zoom=3,
-        #pitch=50,
-    #),
+        initial_view_state=pdk.ViewState(
+        latitude=center_point[1],
+        longitude=center_point[0],
+        zoom=3,
+        pitch=50,
+    ),
     layers=[polygon_layer_snow]    
 )
 
