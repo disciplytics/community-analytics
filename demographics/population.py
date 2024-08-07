@@ -101,5 +101,5 @@ with overview_tab:
 
 with fam_tab:
 
-  st.write(bd_fam_df['VARIABLE_NAME']unique())
+  st.write(bd_fam_df['VARIABLE_NAME'].unique())
 
