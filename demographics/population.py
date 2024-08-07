@@ -59,10 +59,12 @@ with overview_tab:
   ## append tables
   #overview_df = pd.concat([overview_df_pop, overview_df_hh, overview_df_fam])
 
-  overview_df_pop = overview_df_pop.pivot(
-    values = ['FIVE_YEAR_ESTIMATE', 'PCT_CHANGE'], 
-    index = 'VARIABLE_NAME', 
-    columns = 'FIVE_YEAR_ESTIMATE_DATE')
+  # change calcs to rows
+  overview_df_pop = pd.melt(overview_df_pop, id_vars = ['VARIABLE_NAME', 'FIVE_YEAR_ESTIMATE_DATE'], value_vars = ['FIVE_YEAR_ESTIMATE', 'PCT_CHANGE'])
+  #overview_df_pop = overview_df_pop.pivot(
+  #  values = ['FIVE_YEAR_ESTIMATE', 'PCT_CHANGE'], 
+  #  index = 'VARIABLE_NAME', 
+  #  columns = 'FIVE_YEAR_ESTIMATE_DATE')
   st.table(overview_df_pop)
 
 with trend_tab:
