@@ -39,7 +39,7 @@ with overview_tab:
   overview_df_pop['Percent Change'] = np.round(overview_df_pop['PCT_CHANGE']*100,2).astype(str)+"%"
   overview_df_pop['Count'] = overview_df_pop['FIVE_YEAR_ESTIMATE'].astype(int)
   # rename VARIABLE_NAME
-  overview_df_pop['VARIABLE_NAME'] = 'Total Population'
+  overview_df_pop['Measure'] = 'Total Population'
 
   ## HOUSEHOLDS
   # calc pct change
@@ -51,7 +51,7 @@ with overview_tab:
   overview_df_hh['Percent Change'] = np.round(overview_df_hh['PCT_CHANGE']*100,2).astype(str)+"%"
   overview_df_hh['Count'] = overview_df_hh['FIVE_YEAR_ESTIMATE'].astype(int)
   # rename VARIABLE_NAME
-  overview_df_hh['VARIABLE_NAME'] = 'Total Households'
+  overview_df_hh['Measure'] = 'Total Households'
   
   ## FAMILIES
   # calc pct change
@@ -63,7 +63,7 @@ with overview_tab:
   overview_df_fam['Percent Change'] = np.round(overview_df_fam['PCT_CHANGE']*100,2).astype(str)+"%"
   overview_df_fam['Count'] = overview_df_fam['FIVE_YEAR_ESTIMATE'].astype(int)
   # rename VARIABLE_NAME
-  overview_df_fam['VARIABLE_NAME'] = 'Total Families'
+  overview_df_fam['Measure'] = 'Total Families'
 
   ## append tables
   overview_df = pd.concat([overview_df_pop, overview_df_hh, overview_df_fam])
@@ -71,16 +71,26 @@ with overview_tab:
   ## Get Year
   overview_df['FIVE_YEAR_ESTIMATE_DATE'] = pd.to_datetime(overview_df['FIVE_YEAR_ESTIMATE_DATE']).dt.year.astype(int)
   # change calcs to rows
-  overview_df = pd.melt(overview_df, id_vars = ['VARIABLE_NAME', 'FIVE_YEAR_ESTIMATE_DATE'], value_vars = ['Count', 'Percent Change'])
-  overview_df = overview_df.pivot(
+  overview_df_pivot = pd.melt(overview_df, id_vars = ['Measure', 'FIVE_YEAR_ESTIMATE_DATE'], value_vars = ['Count', 'Percent Change'])
+  overview_df_pivot = overview_df_pivot.pivot(
     values = 'value', 
-    index = ['VARIABLE_NAME', 'variable'], 
+    index = ['Measure', 'variable'], 
     columns = 'FIVE_YEAR_ESTIMATE_DATE')
 
   # reorder df
-  overview_df = overview_df.sort_index(level = 0, ascending=False)
-  
-  st.table(overview_df)
+  overview_df_pivot = overview_df_pivot.sort_index(level = 0, ascending=False)
+
+  # plot 
+  st.bar_chart(
+    data = overview_df,
+    x = 'FIVE_YEAR_ESTIMATE_DATE',
+    y = 'Count',
+    x_label = '5 Year Estimate Date',
+    y_label = 'Total',
+    color = 'Measure',
+    stack = True)
+  # table
+  st.dataframe(overview_df_pivot)
 
 with trend_tab:
   st.subheader('PopulationTrends')
