@@ -26,7 +26,7 @@ total_fam_sql = "SELECT GEO_NAME, VARIABLE_NAME, DATE as Five_Year_Estimate_Date
 total_fam_df = conn.query(total_fam_sql, ttl=0)
 
 # family breakdown etl
-bd_fam_sql = "SELECT  GEO_NAME, VARIABLE_NAME, DATE as Five_Year_Estimate_Date, VALUE as Five_Year_Estimate FROM CBSA_HHFAM_DATA WHERE VARIABLE_NAME IN ('Households By Type: Population | Married-couple household, 5yr Estimate', 'Households By Type: Population | Married-couple household | With no children of the householder under 18 years, 5yr Estimate', 'Households By Type: Population | Married-couple household | With children of the householder under 18 years, 5yr Estimate', 'Households By Type: Population | Cohabiting couple household, 5yr Estimate', 'Households By Type: Population | Cohabiting couple household | With no children of the householder under 18 years, 5yr Estimate', 'Households By Type: Population | Cohabiting couple household | With children of the householder under 18 years, 5yr Estimate', 'Households By Type: Population | Male householder, no spouse or partner present, 5yr Estimate', 'Households By Type: Population | Female householder, no spouse or partner present, 5yr Estimate') AND GEO_NAME = " + f"'{st.session_state['cbsa_selection']}'";
+bd_fam_sql = "SELECT  GEO_NAME, VARIABLE_NAME, DATE as Five_Year_Estimate_Date, VALUE as Five_Year_Estimate FROM CBSA_HHFAM_DATA WHERE VARIABLE_NAME IN ('Households By Type: Population | Married-couple household, 5yr Estimate', 'Households By Type: Population | Married-couple household | With no children of the householder under 18 years, 5yr Estimate', 'Households By Type: Population | Married-couple household | With children of the householder under 18 years, 5yr Estimate', 'Households By Type: Population | Cohabiting couple household, 5yr Estimate', 'Households By Type: Population | Cohabiting couple household | With no children of the householder under 18 years, 5yr Estimate', 'Households By Type: Population | Cohabiting couple household | With children of the householder under 18 years, 5yr Estimate', 'Households By Type: Population | Male householder, no spouse or partner present, 5yr Estimate', 'Households By Type: Population | Male householder, no spouse or partner present | With relatives, no children of the householder under 18 years, 5yr Estimate', 'Households By Type: Population | Male householder, no spouse or partner present | With children of the householder under 18 years, 5yr Estimate', 'Households By Type: Population | Male householder, no spouse or partner present | With only nonrelatives present, 5yr Estimate', 'Households By Type: Population | Male householder, no spouse or partner present | Living alone, 5yr Estimate', 'Households By Type: Population | Female householder, no spouse or partner present, 5yr Estimate', 'Households By Type: Population | Female householder, no spouse or partner present | With relatives, no children of the householder under 18 years, 5yr Estimate', 'Households By Type: Population | Female householder, no spouse or partner present | With children of the householder under 18 years, 5yr Estimate', 'Households By Type: Population | Female householder, no spouse or partner present | With only nonrelatives present, 5yr Estimate', 'Households By Type: Population | Female householder, no spouse or partner present | Living alone, 5yr Estimate') AND GEO_NAME = " + f"'{st.session_state['cbsa_selection']}'";
 # get the breakdown family
 bd_fam_df = conn.query(bd_fam_sql, ttl=0)
 
@@ -99,5 +99,32 @@ st.bar_chart(
 # table
 st.dataframe(overview_df_pivot)
 
-st.write(bd_fam_df['VARIABLE_NAME'].unique())
+st.subheader('Household Type Trends: Single, Married, Cohabitating')
+
+single_tab, married_tab, cohab_tab = st.tabs(['Single Householder', 'Married Householder', 'Cohabitating Householder'])
+
+##PREP Household Breakdowm
+## Get Year
+bd_fam_df['FIVE_YEAR_ESTIMATE_DATE'] = pd.to_datetime(bd_fam_df['FIVE_YEAR_ESTIMATE_DATE']).dt.year.astype(int)
+# rename VARIABLE_NAME
+bd_fam_df['Measure'] = bd_fam_df['VARIABLE_NAME'].str.lstrip('Households By Type: Population | ')
+bd_fam_df['Measure'] = bd_fam_df['Measure'].str.rstrip(', 5yr Estimate')
+
+st.dataframe(bd_fam_df)
+with single_tab:
+  st.write('Single Male Householders')
+  st.bar_chart(
+    data = bd_fam_df[bd_fam_df['VARIABLE_NAME'].isin([
+      'Households By Type: Population | Male householder, no spouse or partner present, 5yr Estimate',
+      'Households By Type: Population | Male householder, no spouse or partner present | With relatives, no children of the householder under 18 years, 5yr Estimate',
+      'Households By Type: Population | Male householder, no spouse or partner present | With children of the householder under 18 years, 5yr Estimate',
+      'Households By Type: Population | Male householder, no spouse or partner present | With only nonrelatives present, 5yr Estimate',
+      'Households By Type: Population | Male householder, no spouse or partner present | Living alone, 5yr Estimate'])],
+    x = 'FIVE_YEAR_ESTIMATE_DATE',
+    y = 'FIVE_YEAR_ESTIMATE',
+    x_label = '5 Year Estimate Date',
+    y_label = 'Total',
+    color = 'Measure'
+    
+
 
