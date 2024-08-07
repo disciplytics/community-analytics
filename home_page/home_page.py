@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import pydeck as pdk
-import json
+from geojson import Polygon
 
 st.title('Community Analytics')
 st.subheader('An app to better understand your neighbors...')
@@ -24,37 +24,30 @@ st.write(f'Please enjoy the community report for the {cbsa_selection}. See the v
 polygon_sql = "SELECT POLYGON FROM CBSA_DATA WHERE GEO_NAME = " + f"'{cbsa_selection}'" + "LIMIT 1"
 polygon = conn.query(polygon_sql, ttl=0)
 
-# find averages of polygons
-#center_point = np.average(polygon['POLYGON'][0][9:-2], axis=0)
+#st.write(np.array(polygon['POLYGON'][0][9:-2]))
 
-st.write(np.array(polygon['POLYGON'][0][9:-2]))
+# This array will contain your polygons for each district
+polygons = []
 
-polygon_layer_snow = pdk.Layer(
-        "PolygonLayer",
-        polygon,
-        #id="geojson",
-        opacity=0.05,
-        stroked=True,
-        get_polygon="POLYGON",
-        filled=True,
-        get_line_color=[200, 200, 200],
-        auto_highlight=True,
-        pickable=True,
-    )
+# Iterate through the response records
+for record in polygon["POLYGON"]:
+    # This array will contain coordinates to draw a polygon
+    coordinates = []
+    
+    # Iterate through the coordinates of the record
+    for coord in record["fields"]["geo_shape"]["coordinates"][0]:
+        lon = coord[0] # Longitude
+        lat = coord[1] # Latitude
+        
+        # /!\ Order of lon & lat might be wrong here
+        coordinates.append((lon, lat))
 
+    # Append a new Polygon object to the polygons array
+    # (Note that there are outer brackets, I'm not sure if you can
+    # store all polygons in a single Polygon object)
+    polygons.append(Polygon([coordinates]))
 
-r = pdk.Deck(
-        map_style=None,
-        initial_view_state=pdk.ViewState(
-        latitude=center_point[1],
-        longitude=center_point[0],
-        zoom=3,
-        pitch=50,
-    ),
-    layers=[polygon_layer_snow]    
-)
-
-st.pydeck_chart(r)
+st.write(polygons)
 
 
 
