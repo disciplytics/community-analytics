@@ -16,20 +16,7 @@ cbsa_selection = st.selectbox(
 
 st.write(f'Please enjoy the community report for the {cbsa_selection}. See the views on the left.')
 
-# get geojson for selected area
-geojson_sql = "SELECT GEO_JSON FROM CBSA_DATA WHERE GEO_NAME = " + f"'{cbsa_selection}'" + "LIMIT 1"
-geojson = conn.query(geojson_sql, ttl=0)
-
-# create the GeoJson layer
-geojson = pdk.Layer(
-    "GeoJsonLayer",
-    geojson['GEO_JSON'].values,
-    opacity=0.8,
-    stroked=False,
-    filled=True,
-    extruded=True,
-    wireframe=True,
-    get_elevation="20",
-    get_fill_color="[255, 255, 255]",
-    get_line_color=[255, 255, 255],
-)
+# get polygon for selected area
+polygon_sql = "SELECT POLYGON FROM CBSA_DATA WHERE GEO_NAME = " + f"'{cbsa_selection}'" + "LIMIT 1"
+polygon = conn.query(polygon_sql, ttl=0)
+st.write(polygon)
