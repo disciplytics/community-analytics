@@ -14,4 +14,16 @@ total_race_sql = "SELECT GEO_NAME, VARIABLE_NAME, DATE as Five_Year_Estimate_Dat
 # get the total race
 total_race_df = conn.query(total_race_sql, ttl=0)
 
-st.dataframe(total_race_df)
+# prep data
+total_race_df['Measure'] = total_race_df['VARIABLE_NAME'].str.lstrip('Race: Population | ')
+total_race_df['FIVE_YEAR_ESTIMATE_DATE'] = pd.to_datetime(total_race_df['FIVE_YEAR_ESTIMATE_DATE']).dt.year.astype(int)
+total_race_df['Counts'] = total_race_df['FIVE_YEAR_ESTIMATE'].astpye(int)
+
+st.write('Race Trends')
+st.bar_chart(
+  data = total_race_df,
+  x = 'FIVE_YEAR_ESTIMATE_DATE',
+  y = 'Counts',
+  x_label = '5 Year Estimate Date',
+  y_label = 'Total',
+  color = 'Measure')
