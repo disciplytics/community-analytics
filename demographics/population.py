@@ -69,7 +69,7 @@ with overview_tab:
   overview_df = pd.concat([overview_df_pop, overview_df_hh, overview_df_fam])
 
   ## Get Year
-  overview_df['FIVE_YEAR_ESTIMATE_DATE'] = overview_df['FIVE_YEAR_ESTIMATE_DATE'].dt.year.astype(int)
+  overview_df['FIVE_YEAR_ESTIMATE_DATE'] = pd.to_datetime(overview_df['FIVE_YEAR_ESTIMATE_DATE']).dt.year.astype(int)
   # change calcs to rows
   overview_df = pd.melt(overview_df, id_vars = ['VARIABLE_NAME', 'FIVE_YEAR_ESTIMATE_DATE'], value_vars = ['Count', 'Percent Change'])
   overview_df = overview_df.pivot(
