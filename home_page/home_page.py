@@ -24,7 +24,7 @@ polygon_sql = "SELECT POLYGON FROM CBSA_DATA WHERE GEO_NAME = " + f"'{cbsa_selec
 polygon = conn.query(polygon_sql, ttl=0)
 
 
-st.write(polygon['POLYGON'][0][0])
+st.write(polygon['POLYGON'][0][7:])
 center_point = np.average(polygon['POLYGON'], axis=0)
 
 polygon_layer_snow = pdk.Layer(
