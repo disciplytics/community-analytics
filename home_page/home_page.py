@@ -1,5 +1,5 @@
 import streamlit as st
-
+import json
 st.title('Community Analytics')
 st.subheader('An app to better understand your neighbors...')
 
