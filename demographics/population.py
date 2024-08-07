@@ -28,7 +28,7 @@ total_fam_df = conn.query(total_fam_sql, ttl=0)
 table_tab, trend_tab, pct_change_tab = st.tabs(['Table View', 'Trend View', 'Percent Change View'])
 
 with table_tab:
-
+  st.write('hi')
 
 with trend_tab:
   st.subheader('PopulationTrends')
@@ -56,3 +56,4 @@ with trend_tab:
     y_label = 'Family Count')
 
 with pct_change_tab:
+  st.write('hi')
