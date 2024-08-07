@@ -76,7 +76,7 @@ with overview_tab:
     columns = 'FIVE_YEAR_ESTIMATE_DATE')
 
   # reorder df
-  overview_df = overview_df.sort_index(level = 0, ascending=False)
+  overview_df = overview_df.sort_index(level = 0, ascending=False).sort_index(level = 1, ascending=True)
   
   st.table(overview_df)
 
