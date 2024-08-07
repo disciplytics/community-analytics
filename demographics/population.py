@@ -108,9 +108,7 @@ single_tab, married_tab, cohab_tab = st.tabs(['Single Householder', 'Married Hou
 bd_fam_df['FIVE_YEAR_ESTIMATE_DATE'] = pd.to_datetime(bd_fam_df['FIVE_YEAR_ESTIMATE_DATE']).dt.year.astype(int)
 # rename VARIABLE_NAME
 bd_fam_df['Measure'] = bd_fam_df['VARIABLE_NAME'].str.lstrip('Households By Type: Population | ')
-bd_fam_df['Measure'] = bd_fam_df['Measure'].str.rstrip(', 5yr Estimate')
 
-st.dataframe(bd_fam_df)
 with single_tab:
   st.write('Single Male Householders')
   st.bar_chart(
@@ -140,4 +138,29 @@ with single_tab:
     y_label = 'Total',
     color = 'Measure')
 
+with married_tab:
+  st.write('Married Householders')
+  st.bar_chart(
+    data = bd_fam_df[bd_fam_df['VARIABLE_NAME'].isin([
+      'Households By Type: Population | Married-couple household, 5yr Estimate',
+      'Households By Type: Population | Married-couple household | With no children of the householder under 18 years, 5yr Estimate',
+      'Households By Type: Population | Married-couple household | With children of the householder under 18 years, 5yr Estimate'])],
+    x = 'FIVE_YEAR_ESTIMATE_DATE',
+    y = 'FIVE_YEAR_ESTIMATE',
+    x_label = '5 Year Estimate Date',
+    y_label = 'Total',
+    color = 'Measure')
+
+with cohab_tab:
+  st.write('Cohabitating Householders')
+  st.bar_chart(
+    data = bd_fam_df[bd_fam_df['VARIABLE_NAME'].isin([
+      'Households By Type: Population | Cohabiting couple household, 5yr Estimate',
+      'Households By Type: Population | Cohabiting couple household | With no children of the householder under 18 years, 5yr Estimate',
+      'Households By Type: Population | Cohabiting couple household | With children of the householder under 18 years, 5yr Estimate'])],
+    x = 'FIVE_YEAR_ESTIMATE_DATE',
+    y = 'FIVE_YEAR_ESTIMATE',
+    x_label = '5 Year Estimate Date',
+    y_label = 'Total',
+    color = 'Measure')
 
