@@ -124,7 +124,7 @@ with single_tab:
     y = 'FIVE_YEAR_ESTIMATE',
     x_label = '5 Year Estimate Date',
     y_label = 'Total',
-    color = 'Measure'
+    color = 'Measure')
     
 
 
