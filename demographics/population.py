@@ -68,6 +68,8 @@ with overview_tab:
   ## append tables
   overview_df = pd.concat([overview_df_pop, overview_df_hh, overview_df_fam])
 
+  ## Get Year
+  overview_df['FIVE_YEAR_ESTIMATE_DATE'] = overview_df['FIVE_YEAR_ESTIMATE_DATE'].dt.year.astype(int)
   # change calcs to rows
   overview_df = pd.melt(overview_df, id_vars = ['VARIABLE_NAME', 'FIVE_YEAR_ESTIMATE_DATE'], value_vars = ['Count', 'Percent Change'])
   overview_df = overview_df.pivot(
@@ -76,7 +78,7 @@ with overview_tab:
     columns = 'FIVE_YEAR_ESTIMATE_DATE')
 
   # reorder df
-  overview_df = overview_df.sort_index(level = 0, ascending=False).sort_index(level = 1, ascending=True)
+  overview_df = overview_df.sort_index(level = 0, ascending=False)
   
   st.table(overview_df)
 
