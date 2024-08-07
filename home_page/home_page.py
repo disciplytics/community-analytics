@@ -31,7 +31,7 @@ geojson_dict = ast.literal_eval(geojson['COORDS'][0])
 geojson_layer = pdk.Layer(
     "GeoJsonLayer",
     geojson_dict,
-    opacity=0.8,
+    opacity=0.3,
     stroked=False,
     filled=True,
     extruded=True,
@@ -41,7 +41,7 @@ geojson_layer = pdk.Layer(
     get_line_color=[255, 255, 255],
 )
 
-INITIAL_VIEW_STATE = pdk.ViewState(latitude=geojson_dict['coordinates'][0][0][1], longitude=geojson_dict['coordinates'][0][0][0], zoom=10.5, max_zoom=16, pitch=45, bearing=0)
+INITIAL_VIEW_STATE = pdk.ViewState(latitude=geojson_dict['coordinates'][0][0][1], longitude=geojson_dict['coordinates'][0][0][0], zoom=1, max_zoom=16, pitch=45, bearing=0)
 
 # create the pydeck using the geojson layer
 r = pdk.Deck(layers=[ geojson_layer ], map_style=None, initial_view_state=INITIAL_VIEW_STATE)
