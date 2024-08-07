@@ -11,17 +11,17 @@ st.write('Population, households, and families')
 conn = st.connection("snowflake")
 
 # total pop etl
-total_pop_sql = "SELECT GEO_NAME, VARIABLE_NAME as Race, DATE as Five_Year_Estimate_Date, VALUE as Five_Year_Estimate FROM CBSA_RACE_DATA WHERE VARIABLE_NAME = 'Race: Population | Total, 5yr Estimate' AND GEO_NAME = " + f"'{st.session_state['cbsa_selection']}'"
+total_pop_sql = "SELECT GEO_NAME, VARIABLE_NAME, DATE as Five_Year_Estimate_Date, VALUE as Five_Year_Estimate FROM CBSA_RACE_DATA WHERE VARIABLE_NAME = 'Race: Population | Total, 5yr Estimate' AND GEO_NAME = " + f"'{st.session_state['cbsa_selection']}'"
 # get the total population
 total_pop_df = conn.query(total_pop_sql, ttl=0)
 
 # total HH etl
-total_hh_sql = "SELECT  GEO_NAME, VARIABLE_NAME as HOUSEHOLDS, DATE as Five_Year_Estimate_Date, VALUE as Five_Year_Estimate FROM CBSA_HHFAM_DATA WHERE VARIABLE_NAME = 'Household Type By Household Size: Population | Total, 5yr Estimate' AND GEO_NAME = " + f"'{st.session_state['cbsa_selection']}'"
+total_hh_sql = "SELECT  GEO_NAME, VARIABLE_NAME, DATE as Five_Year_Estimate_Date, VALUE as Five_Year_Estimate FROM CBSA_HHFAM_DATA WHERE VARIABLE_NAME = 'Household Type By Household Size: Population | Total, 5yr Estimate' AND GEO_NAME = " + f"'{st.session_state['cbsa_selection']}'"
 # get the total number of households
 total_hh_df = conn.query(total_hh_sql, ttl=0)
 
 # total familes etl
-total_fam_sql = "SELECT GEO_NAME, VARIABLE_NAME as FAMILIES, DATE as Five_Year_Estimate_Date, VALUE as Five_Year_Estimate FROM CBSA_HHFAM_DATA WHERE VARIABLE_NAME = 'Household Type By Household Size: Population | Family households, 5yr Estimate' AND GEO_NAME = " + f"'{st.session_state['cbsa_selection']}'"
+total_fam_sql = "SELECT GEO_NAME, VARIABLE_NAME, DATE as Five_Year_Estimate_Date, VALUE as Five_Year_Estimate FROM CBSA_HHFAM_DATA WHERE VARIABLE_NAME = 'Household Type By Household Size: Population | Family households, 5yr Estimate' AND GEO_NAME = " + f"'{st.session_state['cbsa_selection']}'"
 # get the total number of familes
 total_fam_df = conn.query(total_fam_sql, ttl=0)
 
@@ -60,7 +60,11 @@ with overview_tab:
   #overview_df = pd.concat([overview_df_pop, overview_df_hh, overview_df_fam])
 
   overview_df_pop = pd.pivot_table(
-    overview_df_pop, values = ['FIVE_YEAR_ESTIMATE', 'PCT_CHANGE'], index = ['RACE'], columns = ['FIVE_YEAR_ESTIMATE_DATE'])
+    overview_df_pop, 
+    values = ['FIVE_YEAR_ESTIMATE', 'PCT_CHANGE'], 
+    index = 'VARIABLE_NAME', 
+    columns = 'FIVE_YEAR_ESTIMATE_DATE', 
+    aggfunc='sum')
   st.table(overview_df_pop)
 
 with trend_tab:
