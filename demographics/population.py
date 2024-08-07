@@ -36,7 +36,7 @@ with overview_tab:
   # drop nan from pct change
   overview_df_pop = overview_df_pop.dropna()
   # format the pct change
-  #overview_df_pop = overview_df_pop.style.format({'PCT_CHANGE': "{:.2%}"})
+  overview_df_pop = overview_df_pop.style.format({'PCT_CHANGE': "{:.2%}"})
 
   ## HOUSEHOLDS
   # calc pct change
