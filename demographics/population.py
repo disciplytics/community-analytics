@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 
-st.title(f"Population Report: {st.session_state['cbsa_selection']}")
+st.title(f"Population Report: \n {st.session_state['cbsa_selection']}")
 
 
 # connect to snowflake
