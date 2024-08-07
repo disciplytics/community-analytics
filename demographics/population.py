@@ -60,7 +60,7 @@ with overview_tab:
   # drop nan from pct change
   overview_df_fam = overview_df_fam.dropna()
   # format the pct change and count
-  v['Percent Change'] = np.round(overview_df_fam['PCT_CHANGE']*100,2).astype(str)+"%"
+  overview_df_fam['Percent Change'] = np.round(overview_df_fam['PCT_CHANGE']*100,2).astype(str)+"%"
   overview_df_fam['Count'] = overview_df_fam['FIVE_YEAR_ESTIMATE'].astype(int)
   # rename VARIABLE_NAME
   overview_df_fam['VARIABLE_NAME'] = 'Total Families'
