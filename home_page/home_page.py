@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import pydeck as pdk
+import ast
 
 st.title('Community Analytics')
 st.subheader('An app to better understand your neighbors...')
