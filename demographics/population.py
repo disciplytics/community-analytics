@@ -25,26 +25,34 @@ total_fam_sql = "SELECT GEO_NAME, VARIABLE_NAME as FAMILIES, DATE as Five_Year_E
 # get the total number of familes
 total_fam_df = conn.query(total_fam_sql, ttl=0)
 
-st.subheader('Population Trends')
-st.line_chart(
-  data = total_pop_df, 
-  x = 'FIVE_YEAR_ESTIMATE_DATE', 
-  y = 'FIVE_YEAR_ESTIMATE',
-  x_label = '5 Year Estimate Date',
-  y_label = 'Population Count')
+table_tab, trend_tab, pct_change_tab = st.tabs(['Table View', 'Trend View', 'Percent Change View'])
 
-st.subheader('Household Trends')
-st.line_chart(
-  data = total_hh_df, 
-  x = 'FIVE_YEAR_ESTIMATE_DATE', 
-  y = 'FIVE_YEAR_ESTIMATE',
-  x_label = '5 Year Estimate Date',
-  y_label = 'Household Count')
+with table_tab:
 
-st.subheader('Family Trends')
-st.line_chart(
-  data = total_fam_df, 
-  x = 'FIVE_YEAR_ESTIMATE_DATE', 
-  y = 'FIVE_YEAR_ESTIMATE',
-  x_label = '5 Year Estimate Date',
-  y_label = 'Family Count')
+
+with trend_tab:
+  st.subheader('PopulationTrends')
+  st.line_chart(
+    data = total_pop_df, 
+    x = 'FIVE_YEAR_ESTIMATE_DATE', 
+    y = 'FIVE_YEAR_ESTIMATE',
+    x_label = '5 Year Estimate Date',
+    y_label = 'Population Count')
+  
+  st.subheader('Household Trends')
+  st.line_chart(
+    data = total_hh_df, 
+    x = 'FIVE_YEAR_ESTIMATE_DATE', 
+    y = 'FIVE_YEAR_ESTIMATE',
+    x_label = '5 Year Estimate Date',
+    y_label = 'Household Count')
+  
+  st.subheader('Family Trends')
+  st.line_chart(
+    data = total_fam_df, 
+    x = 'FIVE_YEAR_ESTIMATE_DATE', 
+    y = 'FIVE_YEAR_ESTIMATE',
+    x_label = '5 Year Estimate Date',
+    y_label = 'Family Count')
+
+with pct_change_tab:
