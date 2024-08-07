@@ -8,12 +8,9 @@ st.title('Population Report')
 # connect to snowflake
 conn = st.connection("snowflake")
 
-'''SELECT 
-    GEO_NAME,
-    VARIABLE_NAME as Race,
-    DATE as Five_Year_Estimate_Date,
-    VALUE as Five_Year_Estimate
-FROM COMMUNITY_ANALYTICS.PUBLIC.CBSA_RACE_DATA'''
-
+# total pop etl
+total_pop_sql = "SELECT GEO_NAME, VARIABLE_NAME as Race, DATE as Five_Year_Estimate_Date, VALUE as Five_Year_Estimate FROM CBSA_RACE_DATA WHERE GEO_NAME = " + f"'{cbsa_selection}'"
 # get the total population
-cbsa_list = conn.query('SELECT GEO_NAME FROM CBSA_RACE_DATA', ttl=0)
+total_pop_df = conn.query(total_pop_sql, ttl=0)
+
+st.table(total_pop_sql)
