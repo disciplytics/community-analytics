@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 
-st.subheader(f"Population Report: {st.session_state['cbsa_selection']}")
+st.title(f"Population Report: {st.session_state['cbsa_selection']}")
 
 
 # connect to snowflake
@@ -13,4 +13,10 @@ total_pop_sql = "SELECT GEO_NAME, VARIABLE_NAME as Race, DATE as Five_Year_Estim
 # get the total population
 total_pop_df = conn.query(total_pop_sql, ttl=0)
 
-st.table(total_pop_df)
+st.subheader('Population Trends')
+st.line_chart(
+  data = total_pop_df, 
+  x = 'FIVE_YEAR_ESTIMATE_DATE', 
+  y = 'FIVE_YEAR_ESTIMATE',
+  x_label = '5 Year Estimate Date',
+  y_label = 'Total Population Count')
