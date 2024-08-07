@@ -29,15 +29,36 @@ overview_tab, trend_tab, pct_change_tab = st.tabs(['Overview', 'Trend View', 'Pe
 
 with overview_tab:
 
+  ## POPULATION
   # calc pct change
-  overview_df = total_pop_df.sort_values(by=['FIVE_YEAR_ESTIMATE_DATE'])
-  overview_df['PCT_CHANGE'] = overview_df['FIVE_YEAR_ESTIMATE'].pct_change()
+  overview_df_pop = total_pop_df.sort_values(by=['FIVE_YEAR_ESTIMATE_DATE'])
+  overview_df_pop['PCT_CHANGE'] = overview_df_pop['FIVE_YEAR_ESTIMATE'].pct_change()
   # drop nan from pct change
-  overview_df = overview_df.dropna()
+  overview_df_pop = overview_df_pop.dropna()
   # format the pct change
-  overview_df = overview_df.style.format({'PCT_CHANGE': "{:.2%}"})
+  overview_df_pop = overview_df_pop.style.format({'PCT_CHANGE': "{:.2%}"})
+
+  ## HOUSEHOLDS
+  # calc pct change
+  overview_df_hh = total_hh_df.sort_values(by=['FIVE_YEAR_ESTIMATE_DATE'])
+  overview_df_hh['PCT_CHANGE'] = overview_df_hh['FIVE_YEAR_ESTIMATE'].pct_change()
+  # drop nan from pct change
+  overview_df_hh = overview_df_hh.dropna()
+  # format the pct change
+  overview_df_hh = overview_df_hh.style.format({'PCT_CHANGE': "{:.2%}"})
   
-  st.table(overview_df)
+  ## FAMILIES
+  # calc pct change
+  overview_df_fam = total_fam_df.sort_values(by=['FIVE_YEAR_ESTIMATE_DATE'])
+  overview_df_fam['PCT_CHANGE'] = overview_df_fam['FIVE_YEAR_ESTIMATE'].pct_change()
+  # drop nan from pct change
+  overview_df_fam = overview_df_fam.dropna()
+  # format the pct change
+  overview_df_fam = overview_df_fam.style.format({'PCT_CHANGE': "{:.2%}"})
+
+  ## append tables
+  #overview_df = pd.concat([overview_df_pop, overview_df_hh, overview_df_fam])
+  st.table(overview_df_pop)
 
 with trend_tab:
   st.subheader('PopulationTrends')
