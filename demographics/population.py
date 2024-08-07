@@ -38,6 +38,8 @@ with overview_tab:
   # format the pct change and count
   overview_df_pop['Percent Change'] = np.round(overview_df_pop['PCT_CHANGE']*100,2).astype(str)+"%"
   overview_df_pop['Count'] = overview_df_pop['FIVE_YEAR_ESTIMATE'].astype(int)
+  # rename VARIABLE_NAME
+  overview_df_pop['VARIABLE_NAME'] = 'Total Population'
 
   ## HOUSEHOLDS
   # calc pct change
