@@ -17,6 +17,7 @@ cbsa_selection = st.selectbox(
 st.write(f'Please enjoy the community report for the {cbsa_selection}. See the views on the left.')
 
 # get geojson for selected area
-geojson = conn.query(f"SELECT GEO_JSON FROM CBSA_DATA WHERE GEO_NAME = {cbsa_selection} LIMIT 1;", ttl=0)
+geojson_sql = f"SELECT GEO_JSON FROM CBSA_DATA WHERE GEO_NAME = {cbsa_selection} LIMIT 1"
+geojson = conn.query(geojson_sql, ttl=0)
 
 st.write(geojson)
