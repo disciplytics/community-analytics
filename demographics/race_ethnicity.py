@@ -28,4 +28,5 @@ st.bar_chart(
   x_label = '5 Year Estimate Date',
   y_label = 'Total',
   color = 'Measure',
-  stack = False)
+  stack = False,
+  use_container_width = True)
