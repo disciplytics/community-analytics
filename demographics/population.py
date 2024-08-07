@@ -97,7 +97,7 @@ st.bar_chart(
     color = 'Measure',
     stack = True)
 # table
-overview_df_pivot_report = overview_df_pivot.rename(columns = {'variable':' '})
+overview_df_pivot_report = overview_df_pivot.rename(columns = {'variable':'-'})
 st.dataframe(overview_df_pivot_report)
 
 st.subheader('Household Type Trends: Single, Married, Cohabitating')
