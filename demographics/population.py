@@ -45,7 +45,7 @@ with overview_tab:
   # drop nan from pct change
   overview_df_hh = overview_df_hh.dropna()
   # format the pct change
-  overview_df_hh = overview_df_hh.style.format({'PCT_CHANGE': "{:.2%}"})
+  #overview_df_hh = overview_df_hh.style.format({'PCT_CHANGE': "{:.2%}"})
   
   ## FAMILIES
   # calc pct change
