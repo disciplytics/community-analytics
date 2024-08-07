@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 
-st.subheader(f'Population Report: {st.session_state['cbsa_selection']}')
+st.subheader(f"Population Report: {st.session_state['cbsa_selection']}")
 
 
 # connect to snowflake
