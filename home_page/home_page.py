@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import pydeck as pdk
-from geojson import Polygon
+import ast
 
 st.title('Community Analytics')
 st.subheader('An app to better understand your neighbors...')
@@ -24,4 +24,4 @@ st.write(f'Please enjoy the community report for the {cbsa_selection}. See the v
 geojson_sql = "SELECT COORDS FROM CBSA_DATA WHERE GEO_NAME = " + f"'{cbsa_selection}'" + "LIMIT 1"
 geojson = conn.query(geojson_sql, ttl=0)
 
-st.write(type(geojson['COORDS'][0]))
+st.write(ast.literal_eval(geojson['COORDS'][0]))
