@@ -32,7 +32,7 @@ st.bar_chart(
   stack = False,
   use_container_width = True)
 
-st.write(f'Race Breakdown For Year {total_race_df['5 Year Estimate Date'].max()}')
+st.write(f"Race Breakdown For Year {total_race_df['5 Year Estimate Date'].max()}")
 
 st.bar_chart(
   data = total_race_df[(total_race_df['Measure'].isin(race_filter)) & (total_race_df['5 Year Estimate Date'] == total_race_df['5 Year Estimate Date'].max())],
