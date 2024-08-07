@@ -25,10 +25,17 @@ total_fam_sql = "SELECT GEO_NAME, VARIABLE_NAME, DATE as Five_Year_Estimate_Date
 # get the total number of familes
 total_fam_df = conn.query(total_fam_sql, ttl=0)
 
-overview_tab, trend_tab, pct_change_tab = st.tabs(['Overview', 'Trend View', 'Percent Change View'])
+# family breakdown etl
+bd_fam_sql = "SELECT  GEO_NAME, VARIABLE_NAME, DATE as Five_Year_Estimate_Date, VALUE as Five_Year_Estimate FROM CBSA_HHFAM_DATA WHERE VARIABLE_NAME IN ('Households By Type: Population | Married-couple household, 5yr Estimate', 'Households By Type: Population | Married-couple household | With no children of the householder under 18 years, 5yr Estimate', 'Households By Type: Population | Married-couple household | With children of the householder under 18 years, 5yr Estimate', 'Households By Type: Population | Cohabiting couple household, 5yr Estimate', 'Households By Type: Population | Cohabiting couple household | With no children of the householder under 18 years, 5yr Estimate', 'Households By Type: Population | Cohabiting couple household | With children of the householder under 18 years, 5yr Estimate', 'Households By Type: Population | Male householder, no spouse or partner present, 5yr Estimate', 'Households By Type: Population | Female householder, no spouse or partner present, 5yr Estimate') AND GEO_NAME = " + f"'{st.session_state['cbsa_selection']}'";
+# get the breakdown family
+bd_fam_df = conn.query(bd_fam_sql, ttl=0)
+
+
+
+# create UI
+overview_tab, fam_tab = st.tabs(['Overview', 'Family Breakdown View'])
 
 with overview_tab:
-
   ## POPULATION
   # calc pct change
   overview_df_pop = total_pop_df.sort_values(by=['FIVE_YEAR_ESTIMATE_DATE'])
@@ -92,30 +99,7 @@ with overview_tab:
   # table
   st.dataframe(overview_df_pivot)
 
-with trend_tab:
-  st.subheader('PopulationTrends')
-  st.line_chart(
-    data = total_pop_df, 
-    x = 'FIVE_YEAR_ESTIMATE_DATE', 
-    y = 'FIVE_YEAR_ESTIMATE',
-    x_label = '5 Year Estimate Date',
-    y_label = 'Population Count')
-  
-  st.subheader('Household Trends')
-  st.line_chart(
-    data = total_hh_df, 
-    x = 'FIVE_YEAR_ESTIMATE_DATE', 
-    y = 'FIVE_YEAR_ESTIMATE',
-    x_label = '5 Year Estimate Date',
-    y_label = 'Household Count')
-  
-  st.subheader('Family Trends')
-  st.line_chart(
-    data = total_fam_df, 
-    x = 'FIVE_YEAR_ESTIMATE_DATE', 
-    y = 'FIVE_YEAR_ESTIMATE',
-    x_label = '5 Year Estimate Date',
-    y_label = 'Family Count')
+with fam_tab:
 
-with pct_change_tab:
-  st.write('hi')
+  st.write(bd_fam_df['VARIABLE_NAME']unique())
+
