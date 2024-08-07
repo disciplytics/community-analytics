@@ -19,8 +19,9 @@ total_race_df['Measure'] = total_race_df['VARIABLE_NAME'].str.lstrip('Race: Popu
 total_race_df['FIVE_YEAR_ESTIMATE_DATE'] = pd.to_datetime(total_race_df['FIVE_YEAR_ESTIMATE_DATE']).dt.year.astype(int)
 total_race_df['Counts'] = total_race_df['FIVE_YEAR_ESTIMATE'].astype(int)
 
-st.write('Race Trends')
 race_filter = st.multiselect('Filter Races Here', total_race_df['Measure'].unique(),total_race_df['Measure'].unique())
+st.write('Race Trends')
+
 st.bar_chart(
   data = total_race_df[total_race_df['Measure'].isin(race_filter)],
   x = 'FIVE_YEAR_ESTIMATE_DATE',
