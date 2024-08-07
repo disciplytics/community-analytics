@@ -26,4 +26,5 @@ st.bar_chart(
   y = 'Counts',
   x_label = '5 Year Estimate Date',
   y_label = 'Total',
-  color = 'Measure')
+  color = 'Measure',
+  stack = False)
