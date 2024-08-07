@@ -22,7 +22,7 @@ total_race_df['Counts'] = total_race_df['FIVE_YEAR_ESTIMATE'].astype(int)
 st.write('Race Trends')
 race_filter = st.multiselect('Filter Races Here', total_race_df['Measure'].unique())
 st.bar_chart(
-  data = total_race_df.query("'Measure'==@race_filter"),
+  data = total_race_df[total_race_df['Measure'].isin(race_filter)],
   x = 'FIVE_YEAR_ESTIMATE_DATE',
   y = 'Counts',
   x_label = '5 Year Estimate Date',
