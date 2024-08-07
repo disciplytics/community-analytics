@@ -45,7 +45,7 @@ r = pdk.Deck(
         #zoom=3,
         #pitch=50,
     #),
-    layers=[my_polygons]    
+    layers=[polygon_layer_snow]    
 )
 
 st.pydeck_chart(r)
