@@ -27,4 +27,13 @@ age_sex_df['Age Range'] = age_sex_df['Age Range'].apply(sex_cleanup)
 # remove 5yr Estimate
 age_sex_df['Age Range'] = age_sex_df['Age Range'].str.rstrip(', 5yr Estimate')
 
+# get year variable
+age_sex_df['FIVE_YEAR_ESTIMATE_DATE'] = pd.to_datetime(age_sex_df['FIVE_YEAR_ESTIMATE_DATE']).year.astype(int)
+
+# make the age table
+age_sex_df_report = pd.pivot_table(
+  age_sex_df, index = 'Age Range', columns = 'FIVE_YEAR_ESTIMATE_DATE', values = 'FIVE_YEAR_ESTIMATE', aggfunc = 'sum').fillna(0)
+
+st.dataframe(age_sex_df_report, use_container_width=True)
+
 st.dataframe(age_sex_df)
