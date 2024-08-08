@@ -24,5 +24,7 @@ def sex_cleanup(x):
     return x.lstrip('Female |')
 age_sex_df['Age Range'] = age_sex_df['Age Range'].apply(sex_cleanup)
 
+# remove 5yr Estimate
+age_sex_df['Age Range'] = age_sex_df['Age Range'].str.rstrip(', 5yr Estimate')
 
 st.dataframe(age_sex_df)
