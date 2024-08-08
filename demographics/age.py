@@ -19,9 +19,9 @@ age_sex_df['Age Range'] = age_sex_df['VARIABLE_NAME'].str.lstrip('Sex By Age: Po
 # Clean up Sex
 def sex_cleanup(x):
   if x[:1] == 'M':
-    return x.str.lstrip('Male |')
+    return x.lstrip('Male |')
   elif x[:1] == 'F':
-    return x.str.lstrip('Female |')
+    return x.lstrip('Female |')
 age_sex_df['Age Range'] = age_sex_df['Age Range'].apply(sex_cleanup)
 
 
