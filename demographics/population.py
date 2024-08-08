@@ -77,6 +77,9 @@ overview_df = pd.concat([overview_df_pop, overview_df_hh, overview_df_fam])
 
 ## Get Year
 overview_df['FIVE_YEAR_ESTIMATE_DATE'] = pd.to_datetime(overview_df['FIVE_YEAR_ESTIMATE_DATE']).dt.year.astype(int)
+
+## Get Relevant Years
+overview_df = overview_df[overview_df['FIVE_YEAR_ESTIMATE_DATE'] >= overview_df['FIVE_YEAR_ESTIMATE_DATE'].max() - 5]
 # change calcs to rows
 overview_df_pivot = pd.melt(overview_df, id_vars = ['Measure', 'FIVE_YEAR_ESTIMATE_DATE'], value_vars = ['Count', 'Percent Change'])
 overview_df_pivot = overview_df_pivot.pivot(
