@@ -53,7 +53,7 @@ mapping_dict = {
   '55 to 59': '55 to 59 Yrs Old',
   '60 and 61': '60 to 61 Yrs Old',
   '62 to 64': '62 to 64 Yrs Old',
-  '65 to 66': '65 to 66 Yrs Old',
+  '65 and 66': '65 to 66 Yrs Old',
   '67 to 69': '67 to 69 Yrs Old',
   '70 to 74': '70 to 74 Yrs Old',
   '75 to 79': '75 to 79 Yrs Old',
