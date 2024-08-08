@@ -1,8 +1,8 @@
 import streamlit as st
 
 # Initialization
-if 'key' not in st.session_state:
-    st.session_state['key'] = 'value'
+if 'cbsa_selection' not in st.session_state:
+    st.session_state['cbsa_selection'] = 'Tiffin, OH'
   
 home_page = st.Page(
   'home_page/home_page.py', title = 'Home', icon=":material/home:", default=True
