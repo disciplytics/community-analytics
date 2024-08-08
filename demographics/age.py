@@ -61,7 +61,7 @@ mapping_dict = {
   '85 years and ov': '85 Yrs and Older'
 }
 
-age_sex_df_report = age_sex_df_report.rename(columns=mapping_dict)
+age_sex_df = age_sex_df.replace({'Age Range': mapping_dict})
 
 st.dataframe(age_sex_df_report, use_container_width=True)
 
