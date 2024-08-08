@@ -1,5 +1,9 @@
 import streamlit as st
 
+# Initialization
+if 'key' not in st.session_state:
+    st.session_state['key'] = 'value'
+  
 home_page = st.Page(
   'home_page/home_page.py', title = 'Home', icon=":material/home:", default=True
 )
