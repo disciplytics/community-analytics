@@ -56,8 +56,13 @@ mapping_dict = {
   '65 to 66': '65 to 66 Yrs Old',
   '67 to 69': '67 to 69 Yrs Old',
   '70 to 74': '70 to 74 Yrs Old',
-  
+  '75 to 79': '75 to 79 Yrs Old',
+  '80 to 84': '80 to 84 Yrs Old',
+  '85 years and ov': '85 Yrs and Older'
 }
+
+age_sex_df_report = age_sex_df_report.rename(columns=mapping_dict)
+
 st.dataframe(age_sex_df_report, use_container_width=True)
 
 st.write(age_sex_df['Age Range'].unique())
