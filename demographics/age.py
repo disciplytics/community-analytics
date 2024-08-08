@@ -15,4 +15,14 @@ age_sex_df = conn.query(age_sex_sql, ttl=0)
 
 # get age aggregate column
 age_sex_df['Age Range'] = age_sex_df['VARIABLE_NAME'].str.lstrip('Sex By Age: Population |')
+
+# Clean up Sex
+def sex_cleanup(x):
+  if x.str[:1] == 'M':
+    return x.str.lstrip('Male |')
+  elif x.str[:1] == 'F':
+    return x.str.lstrip('Female |')
+age_sex_df['Age Range'] = age_sex_df['Age Range'].apply(sex_cleanup)
+
+
 st.dataframe(age_sex_df)
