@@ -14,5 +14,5 @@ age_sex_sql = "SELECT GEO_NAME, VARIABLE_NAME, DATE as Five_Year_Estimate_Date, 
 age_sex_df = conn.query(age_sex_sql, ttl=0)
 
 # get age aggregate column
-age_sex_df['Age Range'] = age_sex_df['VARIABLE'].str.lstrip('Sex By Age: Population |')
+age_sex_df['Age Range'] = age_sex_df['VARIABLE_NAME'].str.lstrip('Sex By Age: Population |')
 st.dataframe(age_sex_df)
