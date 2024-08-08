@@ -99,7 +99,7 @@ st.bar_chart(
     stack = True)
 # table
 overview_df_pivot_report = overview_df_pivot.reset_index().rename(columns = {'variable':'Metric'}).set_index(['Measure', 'Metric'])
-st.dataframe(overview_df_pivot_report)
+st.dataframe(overview_df_pivot_report, use_container_width = True)
 
 st.subheader('Household Type Trends: Single, Married, Cohabitating')
 
