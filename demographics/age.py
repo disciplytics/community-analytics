@@ -36,4 +36,4 @@ age_sex_df_report = pd.pivot_table(
 
 st.dataframe(age_sex_df_report, use_container_width=True)
 
-st.dataframe(age_sex_df)
+st.write(age_sex_df['Age Range'].unique())
