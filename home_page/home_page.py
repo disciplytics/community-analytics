@@ -16,9 +16,9 @@ cbsa_list = conn.query('SELECT GEO_NAME FROM CBSA_DATA_GEO_NAMES ORDER BY GEO_NA
 
 # return list of CBSA in a select box
 cbsa_selection = st.selectbox(
- 'Select a Metro/Micropolitan Area (Type a city name or state abbreviation to search)', cbsa_list)
+ 'Select a City (Type a city name or state abbreviation to search)', cbsa_list)
 
-st.write(f'Please enjoy the community report for the {cbsa_selection}. See the views on the left.')
+st.write(f'Please enjoy the community report for {cbsa_selection}. See the views on the left.')
 
 # get geojson for selected area
 geojson_sql = "SELECT COORDS FROM CBSA_DATA WHERE GEO_NAME = " + f"'{cbsa_selection}'" + "LIMIT 1"
