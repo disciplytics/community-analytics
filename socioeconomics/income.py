@@ -38,7 +38,7 @@ income_df['Measure'] = income_df['VARIABLE_NAME'].apply(var_cleaner)
 def get_cat(x):
     if 'Family' in x:
         return 'Family'
-    elif 'Household' in x
+    elif 'Household' in x:
         return 'Household'
 
 income_df['Category'] = income_df['VARIABLE_NAME'].apply(get_cat)
