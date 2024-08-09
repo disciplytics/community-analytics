@@ -26,8 +26,8 @@ def var_cleaner(x):
         return x.lstrip(f'Family Income In The Past 12 Months (In {report_year} Inflation-Adjusted Dollars): Population |')
     elif x[:1] == 'H':
         return x.lstrip(f'Household Income In The Past 12 Months (In {report_year} Inflation-Adjusted Dollars): Population |')
-    elif x == f'Median Family Income In The Past 12 Months (In {report_year} Inflation-Adjusted Dollars): Population | Median family income in the past 12 months (in {report_year} inflation-adjusted dollars), 5yr Estimate ({report_year})':
-        return 'Median Family Income In The Past 12 Months'
+    elif x.contains('Median Household Income'):
+        return f'Median Family Income In The Past 12 Months, 5yr Estimate ({report_year})'
     elif x == f'Median Household Income In The Past 12 Months (In {report_year} Inflation-Adjusted Dollars) By Household Size: Population | Total, 5yr Estimate ({report_year})':
         return 'Median Household Income In The Past 12 Months'
         
