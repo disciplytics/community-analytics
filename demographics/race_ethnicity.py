@@ -62,9 +62,9 @@ st.bar_chart(
     #stack = False,
     horizontal=False,)
 
-total_race_df = total_race_df[(total_race_df['Race'].isin(race_filter)) & (total_race_df['FIVE_YEAR_ESTIMATE_DATE'] == total_race_df['FIVE_YEAR_ESTIMATE_DATE'].max())][['Race', 'Population', 'Percent of Population']].sort_values(by=['Population'], ascending = False).set_index(['Race'])
-total_race_df['Percent of Population'] = np.round((total_race_df['Population'] / np.sum(total_race_df['Population'])) * 100, 2).astype(str) + "%"
+total_race_dfsel = total_race_df[(total_race_df['Race'].isin(race_filter)) & (total_race_df['FIVE_YEAR_ESTIMATE_DATE'] == total_race_df['FIVE_YEAR_ESTIMATE_DATE'].max())][['Race', 'Population']].sort_values(by=['Population'], ascending = False).set_index(['Race'])
+total_race_dfsel['Percent of Population'] = np.round((total_race_dfsel['Population'] / np.sum(total_race_dfsel['Population'])) * 100, 2).astype(str) + "%"
 
-st.write(f"Race Breakdown Table For Year {total_race_df['FIVE_YEAR_ESTIMATE_DATE'].max()}")
-st.dataframe(total_race_df,
+st.write(f"Race Breakdown Table For Year {total_race_dfsel['FIVE_YEAR_ESTIMATE_DATE'].max()}")
+st.dataframe(total_race_dfsel,
             use_container_width = True)
