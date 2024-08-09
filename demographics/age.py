@@ -96,7 +96,7 @@ st.dataframe(general_age_sex_df_report, use_container_width=True)
 # percent diff plot
 general_age_sex_df_pct_diff = general_age_sex_df[general_age_sex_df['FIVE_YEAR_ESTIMATE_DATE'] >= general_age_sex_df['FIVE_YEAR_ESTIMATE_DATE'].max()-1]
 
-general_age_sex_df_pct_diff = general_age_sex_df_pct_diff.groupby(['Age Group', 'FIVE_YEAR_ESTIMATE_DATE'])['FIVE_YEAR_ESTIMATE'].sum().reset_index()
+general_age_sex_df_pct_diff = general_age_sex_df_pct_diff.groupby(['Age Range', 'FIVE_YEAR_ESTIMATE_DATE'])['FIVE_YEAR_ESTIMATE'].sum().reset_index()
 
 general_age_sex_df_pct_diff = general_age_sex_df_pct_diff.sort_values(by = ['FIVE_YEAR_ESTIMATE_DATE'], ascending = True)
 
