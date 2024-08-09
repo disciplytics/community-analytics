@@ -6,6 +6,9 @@ st.title("Population Report:")
 st.subheader(f"{st.session_state['cbsa_selection']}")
 st.write('Population, households, and families')
 
+# Initialization
+if 'cbsa_selection' not in st.session_state:
+    st.session_state['cbsa_selection'] = 'Abbeville, Alabama'
 
 # connect to snowflake
 conn = st.connection("snowflake")
