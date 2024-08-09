@@ -109,8 +109,8 @@ with household_tab:
         value = f'${int(hh_metric):,}')
 
     hh_bar = alt.Chart(hh_df).mark_bar().encode(
-        x=alt.Y('Measure', sort = None),
-        y=alt.X('Population')
+        y=alt.Y('Measure', sort = None),
+        x=alt.X('Population')
     )
 
     col1_bar.altair_chart(hh_bar, use_container_width = True)
@@ -122,8 +122,8 @@ with family_tab:
         f'${int(fam_metric):,}')
 
     fam_bar = alt.Chart(fam_df).mark_bar().encode(
-        x=alt.Y('Measure', sort = None),
-        y=alt.X('Population')
+        y=alt.Y('Measure', sort = None),
+        x=alt.X('Population')
     )
 
     col2_bar.altair_chart(fam_bar, use_container_width = True)
