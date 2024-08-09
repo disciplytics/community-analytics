@@ -21,10 +21,10 @@ def var_cleaner(x):
         return x.lstrip('Family Income In The Past 12 Months (In 2022 Inflation-Adjusted Dollars): Population |').rstrip('5yr Estimate (2022)')
     elif x[:1] == 'H':
         return x.lstrip('Household Income In The Past 12 Months (In 2022 Inflation-Adjusted Dollars): Population |').rstrip('5yr Estimate (2022)')
-    elif x[:23] == 'Median Household Income':
-        return x.lstrip('Median Household Income In The Past 12 Months (In 2022 Inflation-Adjusted Dollars): Population |').rstrip('5yr Estimate (2022)')
-    elif x[:21] == 'Median Family Income':
-        return x.lstrip('Median Family Income In The Past 12 Months (In 2022 Inflation-Adjusted Dollars): Population |').rstrip('5yr Estimate (2022)')
+    elif x == 'Median Family Income In The Past 12 Months (In 2022 Inflation-Adjusted Dollars): Population | Median family income in the past 12 months (in 2022 inflation-adjusted dollars), 5yr Estimate (2022)':
+        return 'Median Family Income In The Past 12 Months'
+    elif x[:21] == 'Median Household Income In The Past 12 Months (In 2022 Inflation-Adjusted Dollars) By Household Size: Population | Total, 5yr Estimate (2022)':
+        return 'Median Household Income In The Past 12 Months'
         
 income_df['Measure'] = income_df['VARIABLE_NAME'].apply(var_cleaner)
 
