@@ -103,7 +103,7 @@ fam_df = fam_df[fam_df['Measure'] != f'Median Family Income In The Past 12 Month
 household_tab, family_tab = st.tabs(['Household Income', 'Family Income'])
 
 with household_tab:
-    col1_met, col1_bar = st.columns([0.25, 0.75])
+    col1_met, col1_bar = st.columns(2)
     col1_met.metric(
         f'{report_year} Median Household Income',
         value = f'${int(hh_metric):,}')
@@ -116,7 +116,7 @@ with household_tab:
     st.altair_chart(hh_bar, use_container_width = True)
 
 with family_tab:
-    col2_met, col2_bar = st.columns([0.25, 0.75])
+    col2_met, col2_bar = st.columns(2)
     col2_met.metric(
         f'{report_year} Median Family Income',
         f'${int(fam_metric):,}')
