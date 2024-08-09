@@ -100,8 +100,14 @@ general_age_sex_df_pct_diff = general_age_sex_df_pct_diff.groupby(['Age Range', 
 
 general_age_sex_df_pct_diff = general_age_sex_df_pct_diff.sort_values(by = ['FIVE_YEAR_ESTIMATE_DATE'], ascending = True)
 
-general_age_sex_df_pct_diff['pct'] = general_age_sex_df_pct_diff.sort_values('FIVE_YEAR_ESTIMATE_DATE').groupby(['Age Range']).FIVE_YEAR_ESTIMATE.pct_change()
+general_age_sex_df_pct_diff['% Change In Last 2 Years'] = np.round(general_age_sex_df_pct_diff.sort_values('FIVE_YEAR_ESTIMATE_DATE').groupby(['Age Range']).FIVE_YEAR_ESTIMATE.pct_change(),2)
 
+general_age_sex_df_pct_diff = general_age_sex_df_pct_diff.dropna()
+
+st.line_chart(
+  general_age_sex_df_pct_diff,
+  x = 'Age Range', y = '% Change In Last 2 Years',
+  x_label = ' ', y_label = '% Change In Last 2 Years')
 st.dataframe(general_age_sex_df_pct_diff)
 
 
