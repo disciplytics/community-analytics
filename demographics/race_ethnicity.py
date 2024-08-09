@@ -28,7 +28,7 @@ race_dict = {
 }
 total_race_df['Race'] = total_race_df['VARIABLE_NAME'].copy()
 
-total_race_df = total_race_df.replace({'Race', race_dict})
+total_race_df = total_race_df.replace({'Race': race_dict})
 
 total_race_df['FIVE_YEAR_ESTIMATE_DATE'] = pd.to_datetime(total_race_df['FIVE_YEAR_ESTIMATE_DATE']).dt.year.astype(int)
 total_race_df['Counts'] = total_race_df['FIVE_YEAR_ESTIMATE'].astype(int)
