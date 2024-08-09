@@ -27,6 +27,6 @@ def var_cleaner(x):
         x_clean = x.lstrip('Median Family Income In The Past 12 Months (In 2022 Inflation-Adjusted Dollars): Population |')
     return x_clean.rstrip('5yr Estimate (2022)')
         
-income_df['Measure'] = income_df['VARIABLE_NAME'].str.apply(var_cleaner)
+income_df['Measure'] = income_df['VARIABLE_NAME'].apply(var_cleaner)
 
 st.dataframe(income_df)
