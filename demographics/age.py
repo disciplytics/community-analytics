@@ -113,7 +113,7 @@ general_age_sex_df_pct_diff = general_age_sex_df_pct_diff.reindex([
 
 pctdiff_lc = alt.Chart(general_age_sex_df_pct_diff).mark_line().encode(
     x=alt.X('Age Range', sort = None),
-    y='% Change In Last 2 Years'
+    y=alt.Y('% Change In Last 2 Years').axis(format='%')
 )
 
 st.write('Percent Change in Population Over the Last Two Years')
