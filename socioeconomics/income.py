@@ -18,7 +18,7 @@ income_sql = "SELECT GEO_NAME, VARIABLE_NAME, DATE as Five_Year_Estimate_Date, V
 income_df = conn.query(income_sql, ttl=0)
 
 # get the report year
-report_year = pd.to_datetime(income_df).dt.year.astype(int)
+report_year = pd.to_datetime(income_df['FIVE_YEAR_ESTIMATE_DATE']).dt.year.astype(int)
 
 # clean variables
 def var_cleaner(x):
