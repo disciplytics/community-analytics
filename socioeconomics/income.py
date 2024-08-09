@@ -41,6 +41,9 @@ def get_cat(x):
         return 'Household'
 income_df['Category'] = income_df['VARIABLE_NAME'].apply(get_cat)
 
+# rename metric col
+income_df = income_df.rename(columns = {'FIVE_YEAR_ESTIMATE': 'Population'})
+
 # subset dfs
 hh_df = income_df[income_df['Category'] == 'Household']
 fam_df = income_df[income_df['Category'] == 'Family']
@@ -64,7 +67,7 @@ hh_df = hh_df.reindex([
     f'$100,000 to $124,999, 5yr Estimate ({report_year})',
     f'$125,000 to $149,999, 5yr Estimate ({report_year})',
     f'$150,000 to $199,999, 5yr Estimate ({report_year})',
-    f'$200,000 or more, 5yr Estimate ({report_year})',])
+    f'$200,000 or more, 5yr Estimate ({report_year})',]).reset_index()
 
 # reindx df
 fam_df = fam_df.set_index(['Measure'])
@@ -85,13 +88,25 @@ fam_df = fam_df.reindex([
     f'$100,000 to $124,999, 5yr Estimate ({report_year})',
     f'$125,000 to $149,999, 5yr Estimate ({report_year})',
     f'$150,000 to $199,999, 5yr Estimate ({report_year})',
-    f'$200,000 or more, 5yr Estimate ({report_year})',])
+    f'$200,000 or more, 5yr Estimate ({report_year})',]).reset_index()
 
+# get metrics
+hh_metric = hh_df[hh_df['Measure'] == f'Median Household Income In The Past 12 Months, 5yr Estimate ({report_year})']
+fam_metric = fam_df[fam_df['Measure'] == f'Median Family Income In The Past 12 Months, 5yr Estimate ({report_year})']
 
+# get range tables
+hh_df = hh_df[hh_df['Measure'] != f'Median Household Income In The Past 12 Months, 5yr Estimate ({report_year})']
+fam_df = fam_df[fam_df['Measure'] != f'Median Family Income In The Past 12 Months, 5yr Estimate ({report_year})']
+
+# select needed cols
 household_tab, family_tab = st.tabs(['Household Income', 'Family Income'])
 
 with household_tab:
-    st.dataframe(hh_df)
+    col1_met, col1_table = st.columns([0.3, 0.7])
+    col1_met.metric(hh_metric)
+    col1_table.dataframe(hh_df)
 
 with family_tab:
-    st.dataframe(fam_df)
+    col2_met, col2_table = st.columns([0.3, 0.7])
+    col2_met.metric(fam_metric)
+    col2_table.dataframe(fam_df)
