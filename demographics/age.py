@@ -30,12 +30,8 @@ age_sex_df['Age Range'] = age_sex_df['Age Range'].str.rstrip(', 5yr Estimate')
 # get year variable
 age_sex_df['FIVE_YEAR_ESTIMATE_DATE'] = pd.to_datetime(age_sex_df['FIVE_YEAR_ESTIMATE_DATE']).dt.year.astype(int)
 
-# make the age table
-age_sex_df_report = pd.pivot_table(
-  age_sex_df, index = 'Age Range', columns = 'FIVE_YEAR_ESTIMATE_DATE', values = 'FIVE_YEAR_ESTIMATE', aggfunc = 'sum').fillna(0)
-
 # rename year ranges
-mapping_dict = {
+detailed_mapping_dict = {
   'Und': 'Under 5 Yrs Old',
   '5 to 9': '5 to 9 Yrs Old',
   '10 to 14': '10 to 14 Yrs Old',
@@ -61,8 +57,73 @@ mapping_dict = {
   '85 years and ov': '85 Yrs and Older'
 }
 
-age_sex_df = age_sex_df.replace({'Age Range': mapping_dict})
+# general years
+general_mapping_dict = {
+  'Und': 'Under 5 Yrs Old',
+  '5 to 9': '5 to 17 Yrs Old',
+  '10 to 14': '5 to 17 Yrs Old',
+  '15 to 17': '5 to 17 Yrs Old',
+  '18 and 19': '18 to 24 Yrs Old',
+  '20': '18 to 24 Yrs Old',
+  '21': '18 to 24 Yrs Old',
+  '22 to 24': '18 to 24 Yrs Old',
+  '25 to 29': '25 to 34 Yrs Old',
+  '30 to 34': '25 to 34 Yrs Old',
+  '35 to 39': '35 to 54 Yrs Old',
+  '40 to 44': '35 to 54 Yrs Old',
+  '45 to 49': '35 to 54 Yrs Old',
+  '50 to 54': '35 to 54 Yrs Old',
+  '55 to 59': '55 to 64 Yrs Old',
+  '60 and 61': '55 to 64 Yrs Old',
+  '62 to 64':  '55 to 64 Yrs Old',
+  '65 and 66': '65 Yrs and Older',
+  '67 to 69': '65 Yrs and Older',
+  '70 to 74': '65 Yrs and Older',
+  '75 to 79': '65 Yrs and Older',
+  '80 to 84': '65 Yrs and Older',
+  '85 years and ov': '65 Yrs and Older',
+}
 
-st.dataframe(age_sex_df_report, use_container_width=True)
+# phase of life dict
+phase_of_life_dict = {
+  'Under 5 Yrs Old': 'Before Formal Schooling',
+  '5 to 17 Yrs Old': 'Required Formal Schooling',
+  '18 to 24 Yrs Old': 'College/Career Starts',
+  '25 to 34 Yrs Old': 'Singles & Young Families',
+  '35 to 54 Yrs Old': 'Families & Empty Nesters',
+  '55 to 64 Yrs Old': 'Enrichment Years Singles/Couples',
+  '65 Yrs and Older': 'Retirement Opportunities'
+}
+  
+  
+# replace ages with readable values
+detailed_age_sex_df = age_sex_df.replace({'Age Range': detailed_mapping_dict})
+general_age_sex_df = age_sex_df.replace({'Age Range': general_mapping_dict})
 
-st.write(age_sex_df['Age Range'].unique())
+# create phase of life field
+general_age_sex_df['Phase of Life'] = general_age_sex_df['Age Range'].copy()
+general_age_sex_df = general_age_sex_df.replace({'Phase of Life': phase_of_life_dict})
+
+# make the detailed age table
+detailed_age_sex_df_report = pd.pivot_table(
+  detailed_age_sex_df, 
+  index = 'Age Range', 
+  columns = 'FIVE_YEAR_ESTIMATE_DATE', 
+  values = 'FIVE_YEAR_ESTIMATE', 
+  aggfunc = 'sum').fillna(0)
+
+# make the general age table
+general_age_sex_df_report = pd.pivot_table(
+  general_age_sex_df, 
+  index = 'Age Range', 
+  columns = 'FIVE_YEAR_ESTIMATE_DATE', 
+  values = 'FIVE_YEAR_ESTIMATE', 
+  aggfunc = 'sum').fillna(0)
+
+phase_tab, detail_tab = st.tabs(['Ages: Phase of Life', 'Ages: Detailed'])
+
+with phase_tab:
+  st.dataframe(general_age_sex_df_report, use_container_width=True)
+
+with detail_tab:
+  st.dataframe(detailed_age_sex_df_report, use_container_width=True)
