@@ -96,8 +96,8 @@ hh_metric = hh_df[hh_df['Income Range'] == f'Median Household Income In The Past
 fam_metric = fam_df[fam_df['Income Range'] == f'Median Family Income In The Past 12 Months, 5yr Estimate ({report_year})']['Population']
 
 # get range tables
-hh_df = hh_df[hh_df['Income Range'] != f'Median Household Income In The Past 12 Months, 5yr Estimate ({report_year})'][['Measure', 'Population']].set_index(['Income Range'])
-fam_df = fam_df[fam_df['Income Range'] != f'Median Family Income In The Past 12 Months, 5yr Estimate ({report_year})'][['Measure', 'Population']].set_index(['Income Range'])
+hh_df = hh_df[hh_df['Income Range'] != f'Median Household Income In The Past 12 Months, 5yr Estimate ({report_year})'][['Income Range', 'Population']].set_index(['Income Range'])
+fam_df = fam_df[fam_df['Income Range'] != f'Median Family Income In The Past 12 Months, 5yr Estimate ({report_year})'][['Income Range', 'Population']].set_index(['Income Range'])
 
 # select needed cols
 household_tab, family_tab = st.tabs(['Household Income', 'Family Income'])
