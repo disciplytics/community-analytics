@@ -98,7 +98,7 @@ general_age_sex_df_pct_diff = general_age_sex_df[general_age_sex_df['FIVE_YEAR_E
 
 general_age_sex_df_pct_diff = general_age_sex_df_pct_diff.sort_values(by = ['Age Range', 'FIVE_YEAR_ESTIMATE_DATE'], ascending = True)
 
-general_age_sex_df_pct_diff = general_age_sex_df_pct_diff.groupby(['Age Range'])['FIVE_YEAR_ESTIMATE'].pct_change()
+general_age_sex_df_pct_diff = general_age_sex_df_pct_diff.groupby(['Age Range'])['FIVE_YEAR_ESTIMATE'].pct_change().reset_index()
 
 st.dataframe(general_age_sex_df_pct_diff)
 
