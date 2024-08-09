@@ -113,7 +113,7 @@ general_age_sex_df_pct_diff = general_age_sex_df_pct_diff.reindex([
 
 st.line_chart(
   general_age_sex_df_pct_diff,
-  x = general_age_sex_df_pct_diff.index, y = '% Change In Last 2 Years',
+  x = None, y = '% Change In Last 2 Years',
   x_label = ' ', y_label = '% Change In Last 2 Years')
 st.dataframe(general_age_sex_df_pct_diff)
 
