@@ -2,6 +2,10 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 
+# Initialization
+if 'cbsa_selection' not in st.session_state:
+    st.session_state['cbsa_selection'] = 'Abbeville, Alabama'
+
 st.title("Race Report:")
 st.subheader(f"{st.session_state['cbsa_selection']}")
 
