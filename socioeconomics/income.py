@@ -109,7 +109,7 @@ with household_tab:
         value = f'${int(hh_metric):,}')
 
     hh_bar = alt.Chart(hh_df).mark_bar().encode(
-        y=alt.Y('Measure', sort = None, title = None, axis=alt.Axis(labelAngle=-45)),
+        y=alt.Y('Measure', sort = None, title = None),
         x=alt.X('Population')
     )
 
@@ -123,7 +123,7 @@ with family_tab:
         f'${int(fam_metric):,}')
 
     fam_bar = alt.Chart(fam_df).mark_bar().encode(
-        y=alt.Y('Measure', sort = None, title = None, axis=alt.Axis(labelAngle=-45)),
+        y=alt.Y('Measure', sort = None, title = None),
         x=alt.X('Population')
     )
 
