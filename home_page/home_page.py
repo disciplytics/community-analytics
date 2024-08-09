@@ -5,10 +5,6 @@ import pydeck as pdk
 import ast
 
 
-# Initialization
-if 'cbsa_selection' not in st.session_state:
-    st.session_state['cbsa_selection'] = 'Abbeville, Alabama'
- 
 st.title('Community Analytics')
 st.subheader('An app to better understand your neighbors...')
 
