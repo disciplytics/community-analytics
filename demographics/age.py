@@ -93,3 +93,10 @@ general_age_sex_df_report = general_age_sex_df_report.reindex([
 
 st.dataframe(general_age_sex_df_report, use_container_width=True)
 
+# percent diff plot
+st.write(general_age_sex_df_report.columns)
+
+
+
+
+
