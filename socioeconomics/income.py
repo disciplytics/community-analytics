@@ -113,6 +113,7 @@ with household_tab:
         x=alt.X('Population')
     )
 
+    st.write('Number of Households By Income Range')
     st.altair_chart(hh_bar, use_container_width = True)
 
 with family_tab:
@@ -126,4 +127,5 @@ with family_tab:
         x=alt.X('Population')
     )
 
+    st.write('Number of Familes By Income Range')
     st.altair_chart(fam_bar, use_container_width = True)
