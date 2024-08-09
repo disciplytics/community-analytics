@@ -115,7 +115,7 @@ detailed_age_sex_df_report = pd.pivot_table(
 # make the general age table
 general_age_sex_df_report = pd.pivot_table(
   general_age_sex_df, 
-  index = 'Age Range', 
+  index = ['Phase of Life', 'Age Range'], 
   columns = 'FIVE_YEAR_ESTIMATE_DATE', 
   values = 'FIVE_YEAR_ESTIMATE', 
   aggfunc = 'sum').fillna(0)
