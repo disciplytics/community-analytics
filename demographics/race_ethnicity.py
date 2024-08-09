@@ -66,5 +66,5 @@ total_race_df = total_race_df[(total_race_df['Race'].isin(race_filter)) & (total
 total_race_df['Percent of Population'] = np.round((total_race_df['Population'] / np.sum(total_race_df['Population'])) * 100, 2).astype(str) + "%"
 
 st.write(f"Race Breakdown Table For Year {total_race_df['FIVE_YEAR_ESTIMATE_DATE'].max()}")
-st.dataframe(,
+st.dataframe(total_race_df,
             use_container_width = True)
