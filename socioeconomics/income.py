@@ -112,5 +112,5 @@ with family_tab:
     col2_met, col2_table = st.columns([0.3, 0.7])
     col2_met.metric(
         f'{report_year} Median Family Income',
-        f'${int(fam_metric):,}'))
+        f'${int(fam_metric):,}')
     col2_table.dataframe(fam_df)
