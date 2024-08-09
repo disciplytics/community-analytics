@@ -18,14 +18,13 @@ income_df = conn.query(income_sql, ttl=0)
 # clean variables
 def var_cleaner(x):
     if x[:1] == 'F':
-        x_clean = x.lstrip('Family Income In The Past 12 Months (In 2022 Inflation-Adjusted Dollars): Population |')
+        return x.lstrip('Family Income In The Past 12 Months (In 2022 Inflation-Adjusted Dollars): Population |').rstrip('5yr Estimate (2022)')
     elif x[:1] == 'H':
-        x_clean = x.lstrip('Household Income In The Past 12 Months (In 2022 Inflation-Adjusted Dollars): Population |')
+        return x.lstrip('Household Income In The Past 12 Months (In 2022 Inflation-Adjusted Dollars): Population |').rstrip('5yr Estimate (2022)')
     elif x[:23] == 'Median Household Income':
-        x_clean = x.lstrip('Median Household Income In The Past 12 Months (In 2022 Inflation-Adjusted Dollars): Population |')
+        return x.lstrip('Median Household Income In The Past 12 Months (In 2022 Inflation-Adjusted Dollars): Population |').rstrip('5yr Estimate (2022)')
     elif x[:21] == 'Median Family Income':
-        x_clean = x.lstrip('Median Family Income In The Past 12 Months (In 2022 Inflation-Adjusted Dollars): Population |')
-    return x_clean#.rstrip('5yr Estimate (2022)')
+        return x.lstrip('Median Family Income In The Past 12 Months (In 2022 Inflation-Adjusted Dollars): Population |').rstrip('5yr Estimate (2022)')
         
 income_df['Measure'] = income_df['VARIABLE_NAME'].apply(var_cleaner)
 
