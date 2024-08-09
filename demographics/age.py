@@ -91,7 +91,7 @@ general_age_sex_df_report = general_age_sex_df_report.reindex([
   'Singles & Young Families', 'Familes & Empty Nesters', 'Enrichment Years Singles/Couples',
   'Retirement Opportunities'], level = 0)
 
-
+st.write('Phase of Life Table')
 st.dataframe(general_age_sex_df_report, use_container_width=True)
 
 # percent diff plot
@@ -116,6 +116,7 @@ pctdiff_lc = alt.Chart(general_age_sex_df_pct_diff).mark_line().encode(
     y='% Change In Last 2 Years'
 )
 
+st.write('Percent Change in Population Over the Last Two Years')
 st.altair_chart(pctdiff_lc, use_container_width = True)
 
 
