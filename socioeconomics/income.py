@@ -31,7 +31,6 @@ def var_cleaner(x):
         return f'Median Family Income In The Past 12 Months, 5yr Estimate ({report_year})'
     elif 'Median Household Income' in x:
         return f'Median Household Income In The Past 12 Months, 5yr Estimate ({report_year})'
-        
 income_df['Measure'] = income_df['VARIABLE_NAME'].apply(var_cleaner)
 
 # get category
@@ -40,12 +39,59 @@ def get_cat(x):
         return 'Family'
     elif 'Household' in x:
         return 'Household'
-
 income_df['Category'] = income_df['VARIABLE_NAME'].apply(get_cat)
 
+# subset dfs
+hh_df = income_df[income_df['Category'] == 'Household']
+fam_df = income_df[income_df['Category'] == 'Family']
 
+# reindx df
+hh_df = hh_df.set_index(['Measure'])
+hh_df = hh_df.reindex([
+    f'Median Household Income In The Past 12 Months, 5yr Estimate ({report_year})',
+    f'Less than $10,000, 5yr Estimate ({report_year})',
+    f'$10,000 to $14,999, 5yr Estimate ({report_year})',
+    f'$15,000 to $19,999, 5yr Estimate ({report_year})',
+    f'$20,000 to $24,999, 5yr Estimate ({report_year})',
+    f'$25,000 to $29,999, 5yr Estimate ({report_year})',
+    f'$30,000 to $34,999, 5yr Estimate ({report_year})',
+    f'$35,000 to $39,999, 5yr Estimate ({report_year})',
+    f'$40,000 to $44,999, 5yr Estimate ({report_year})',
+    f'$45,000 to $49,999, 5yr Estimate ({report_year})',
+    f'$50,000 to $59,999, 5yr Estimate ({report_year})',
+    f'$60,000 to $74,999, 5yr Estimate ({report_year})',
+    f'$75,000 to $99,999, 5yr Estimate ({report_year})',
+    f'$100,000 to $124,999, 5yr Estimate ({report_year})',
+    f'$125,000 to $149,999, 5yr Estimate ({report_year})',
+    f'$150,000 to $199,999, 5yr Estimate ({report_year})',
+    f'$200,000 or more, 5yr Estimate ({report_year})',])
+
+# reindx df
+fam_df = fam_df.set_index(['Measure'])
+fam_df = fam_df.reindex([
+    f'Median Family Income In The Past 12 Months, 5yr Estimate ({report_year})',
+    f'Less than $10,000, 5yr Estimate ({report_year})',
+    f'$10,000 to $14,999, 5yr Estimate ({report_year})',
+    f'$15,000 to $19,999, 5yr Estimate ({report_year})',
+    f'$20,000 to $24,999, 5yr Estimate ({report_year})',
+    f'$25,000 to $29,999, 5yr Estimate ({report_year})',
+    f'$30,000 to $34,999, 5yr Estimate ({report_year})',
+    f'$35,000 to $39,999, 5yr Estimate ({report_year})',
+    f'$40,000 to $44,999, 5yr Estimate ({report_year})',
+    f'$45,000 to $49,999, 5yr Estimate ({report_year})',
+    f'$50,000 to $59,999, 5yr Estimate ({report_year})',
+    f'$60,000 to $74,999, 5yr Estimate ({report_year})',
+    f'$75,000 to $99,999, 5yr Estimate ({report_year})',
+    f'$100,000 to $124,999, 5yr Estimate ({report_year})',
+    f'$125,000 to $149,999, 5yr Estimate ({report_year})',
+    f'$150,000 to $199,999, 5yr Estimate ({report_year})',
+    f'$200,000 or more, 5yr Estimate ({report_year})',])
 
 
 household_tab, family_tab = st.tabs(['Household Income', 'Family Income'])
 
-st.dataframe(income_df)
+with household_tab:
+    st.dataframe(hh_df)
+
+with family_tab:
+    st.dataframe(fam_df)
