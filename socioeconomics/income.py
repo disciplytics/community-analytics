@@ -23,9 +23,9 @@ report_year = pd.to_datetime(income_df['FIVE_YEAR_ESTIMATE_DATE']).dt.year.astyp
 # clean variables
 def var_cleaner(x):
     if x[:1] == 'F':
-        return x.lstrip(f'Family Income In The Past 12 Months (In {report_year} Inflation-Adjusted Dollars): Population |').rstrip(f'5yr Estimate ({report_year})')[:-1]
+        return x.lstrip(f'Family Income In The Past 12 Months (In {report_year} Inflation-Adjusted Dollars): Population |')
     elif x[:1] == 'H':
-        return x.lstrip(f'Household Income In The Past 12 Months (In {report_year} Inflation-Adjusted Dollars): Population |').rstrip(f'5yr Estimate ({report_year})')[:-1]
+        return x.lstrip(f'Household Income In The Past 12 Months (In {report_year} Inflation-Adjusted Dollars): Population |')
     elif x == f'Median Family Income In The Past 12 Months (In {report_year} Inflation-Adjusted Dollars): Population | Median family income in the past 12 months (in {report_year} inflation-adjusted dollars), 5yr Estimate ({report_year})':
         return 'Median Family Income In The Past 12 Months'
     elif x == f'Median Household Income In The Past 12 Months (In {report_year} Inflation-Adjusted Dollars) By Household Size: Population | Total, 5yr Estimate ({report_year})':
