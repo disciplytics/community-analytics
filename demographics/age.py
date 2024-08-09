@@ -115,7 +115,7 @@ st.line_chart(
   general_age_sex_df_pct_diff,
   x = None, y = '% Change In Last 2 Years',
   x_label = ' ', y_label = '% Change In Last 2 Years')
-st.dataframe(general_age_sex_df_pct_diff)
+
 
 
 
