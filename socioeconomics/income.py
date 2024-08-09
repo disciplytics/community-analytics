@@ -104,13 +104,13 @@ household_tab, family_tab = st.tabs(['Household Income', 'Family Income'])
 with household_tab:
     col1_met, col1_table = st.columns([0.3, 0.7])
     col1_met.metric(
-        f'Median Household Income, 5yr Estimate ({report_year})',
+        f'{report_year} Median Household Income',
         value = hh_metric)
     col1_table.dataframe(hh_df)
 
 with family_tab:
     col2_met, col2_table = st.columns([0.3, 0.7])
     col2_met.metric(
-        f'Median Family Income, \n 5yr Estimate ({report_year})',
+        f'{report_year} Median Family Income',
         fam_metric)
     col2_table.dataframe(fam_df)
