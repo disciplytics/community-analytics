@@ -4,3 +4,4 @@ pandas
 numpy
 pydeck
 geojson==3.1.0
+altair
