@@ -109,8 +109,8 @@ with household_tab:
         value = f'${int(hh_metric):,}')
 
     hh_bar = alt.Chart(hh_df).mark_bar().encode(
-        x=alt.X('Measure', sort = None, title = None, axis=alt.Axis(labelAngle=-45)),
-        y=alt.Y('Population')
+        y=alt.Y('Measure', sort = None, title = None, axis=alt.Axis(labelAngle=-45)),
+        x=alt.X('Population')
     )
 
     st.write('Number of Households By Income Range')
@@ -123,8 +123,8 @@ with family_tab:
         f'${int(fam_metric):,}')
 
     fam_bar = alt.Chart(fam_df).mark_bar().encode(
-        x=alt.X('Measure', sort = None, title = None, axis=alt.Axis(labelAngle=-45)),
-        y=alt.Y('Population')
+        y=alt.Y('Measure', sort = None, title = None, axis=alt.Axis(labelAngle=-45)),
+        x=alt.X('Population')
     )
 
     st.write('Number of Familes By Income Range')
