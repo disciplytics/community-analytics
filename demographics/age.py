@@ -112,7 +112,7 @@ general_age_sex_df_pct_diff = general_age_sex_df_pct_diff.reindex([
   '35 to 54 Yrs Old', '55 to 64 Yrs Old', '65 Yrs and Older']).reset_index()
 
 pctdiff_lc = alt.Chart(general_age_sex_df_pct_diff).mark_line().encode(
-    x='Age Range',
+    x=alt.X('Age Range', sort = None),
     y='% Change In Last 2 Years'
 )
 
