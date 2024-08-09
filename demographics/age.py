@@ -116,7 +116,7 @@ pctdiff_lc = alt.Chart(general_age_sex_df_pct_diff).mark_line().encode(
     y='% Change In Last 2 Years'
 )
 
-st.altair_chart(pctdiff_lc, user_container_width = True)
+st.altair_chart(pctdiff_lc, use_container_width = True)
 
 
 
