@@ -32,7 +32,7 @@ def var_cleaner(x):
         return f'Median Family Income In The Past 12 Months, 5yr Estimate ({report_year})'
     elif 'Median Household Income' in x:
         return f'Median Household Income In The Past 12 Months, 5yr Estimate ({report_year})'
-income_df['Measure'] = income_df['VARIABLE_NAME'].apply(var_cleaner)
+income_df['Income Range'] = income_df['VARIABLE_NAME'].apply(var_cleaner)
 
 # get category
 def get_cat(x):
@@ -50,7 +50,7 @@ hh_df = income_df[income_df['Category'] == 'Household']
 fam_df = income_df[income_df['Category'] == 'Family']
 
 # reindx df
-hh_df = hh_df.set_index(['Measure'])
+hh_df = hh_df.set_index(['Income Range'])
 hh_df = hh_df.reindex([
     f'Median Household Income In The Past 12 Months, 5yr Estimate ({report_year})',
     f'Less than $10,000, 5yr Estimate ({report_year})',
@@ -71,7 +71,7 @@ hh_df = hh_df.reindex([
     f'$200,000 or more, 5yr Estimate ({report_year})',]).reset_index()
 
 # reindx df
-fam_df = fam_df.set_index(['Measure'])
+fam_df = fam_df.set_index(['Income Range'])
 fam_df = fam_df.reindex([
     f'Median Family Income In The Past 12 Months, 5yr Estimate ({report_year})',
     f'Less than $10,000, 5yr Estimate ({report_year})',
@@ -92,40 +92,28 @@ fam_df = fam_df.reindex([
     f'$200,000 or more, 5yr Estimate ({report_year})',]).reset_index()
 
 # get metrics
-hh_metric = hh_df[hh_df['Measure'] == f'Median Household Income In The Past 12 Months, 5yr Estimate ({report_year})']['Population']
-fam_metric = fam_df[fam_df['Measure'] == f'Median Family Income In The Past 12 Months, 5yr Estimate ({report_year})']['Population']
+hh_metric = hh_df[hh_df['Income Range'] == f'Median Household Income In The Past 12 Months, 5yr Estimate ({report_year})']['Population']
+fam_metric = fam_df[fam_df['Income Range'] == f'Median Family Income In The Past 12 Months, 5yr Estimate ({report_year})']['Population']
 
 # get range tables
-hh_df = hh_df[hh_df['Measure'] != f'Median Household Income In The Past 12 Months, 5yr Estimate ({report_year})'][['Measure', 'Population']]
-fam_df = fam_df[fam_df['Measure'] != f'Median Family Income In The Past 12 Months, 5yr Estimate ({report_year})'][['Measure', 'Population']]
+hh_df = hh_df[hh_df['Income Range'] != f'Median Household Income In The Past 12 Months, 5yr Estimate ({report_year})'][['Measure', 'Population']].set_index(['Income Range'])
+fam_df = fam_df[fam_df['Income Range'] != f'Median Family Income In The Past 12 Months, 5yr Estimate ({report_year})'][['Measure', 'Population']].set_index(['Income Range'])
 
 # select needed cols
 household_tab, family_tab = st.tabs(['Household Income', 'Family Income'])
 
 with household_tab:
-    col1_met, col1_bar = st.columns(2)
-    col1_met.metric(
+    st.metric(
         f'{report_year} Median Household Income',
         value = f'${int(hh_metric):,}')
 
-    hh_bar = alt.Chart(hh_df).mark_bar().encode(
-        y=alt.Y('Measure', sort = None, title = None),
-        x=alt.X('Population')
-    )
-
     st.write('Number of Households By Income Range')
-    st.altair_chart(hh_bar, use_container_width = True)
+    st.dataframe(hh_df, use_container_width = True)
 
 with family_tab:
-    col2_met, col2_bar = st.columns(2)
-    col2_met.metric(
+    st.metric(
         f'{report_year} Median Family Income',
         f'${int(fam_metric):,}')
 
-    fam_bar = alt.Chart(fam_df).mark_bar().encode(
-        y=alt.Y('Measure', sort = None, title = None),
-        x=alt.X('Population')
-    )
-
     st.write('Number of Familes By Income Range')
-    st.altair_chart(fam_bar, use_container_width = True)
+    st.dataframe(fam_df, use_container_width = True)
