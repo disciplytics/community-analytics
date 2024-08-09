@@ -30,6 +30,10 @@ age_sex_df['Age Range'] = age_sex_df['Age Range'].str.rstrip(', 5yr Estimate')
 # get year variable
 age_sex_df['FIVE_YEAR_ESTIMATE_DATE'] = pd.to_datetime(age_sex_df['FIVE_YEAR_ESTIMATE_DATE']).dt.year.astype(int)
 
+st.write(age_sex_df['Age Range'].unique())
+# reorder indicies
+#age_sex_df = age_sex_df.reindex(["Z", "C", "A"])
+
 # rename year ranges
 detailed_mapping_dict = {
   'Und': 'Under 5 Yrs Old',
