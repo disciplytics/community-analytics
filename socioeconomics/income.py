@@ -8,6 +8,7 @@ if 'cbsa_selection' not in st.session_state:
 
 st.title("Income Report:")
 st.subheader(f"{st.session_state['cbsa_selection']}")
+st.write('Household and Family Incomes')
 
 
 # connect to snowflake
@@ -32,5 +33,19 @@ def var_cleaner(x):
         return f'Median Household Income In The Past 12 Months, 5yr Estimate ({report_year})'
         
 income_df['Measure'] = income_df['VARIABLE_NAME'].apply(var_cleaner)
+
+# get category
+def get_cat(x):
+    if 'Family' in x:
+        return 'Family'
+    elif 'Household' in x
+        return 'Household'
+
+income_df['Category'] = income_df['VARIABLE_NAME'].apply(get_cat)
+
+
+
+
+household_tab, family_tab = st.tabs(['Household Income', 'Family Income'])
 
 st.dataframe(income_df)
