@@ -91,8 +91,8 @@ fam_df = fam_df.reindex([
     f'$200,000 or more, 5yr Estimate ({report_year})',]).reset_index()
 
 # get metrics
-hh_metric = hh_df[hh_df['Measure'] == f'Median Household Income In The Past 12 Months, 5yr Estimate ({report_year})']
-fam_metric = fam_df[fam_df['Measure'] == f'Median Family Income In The Past 12 Months, 5yr Estimate ({report_year})']
+hh_metric = hh_df[hh_df['Measure'] == f'Median Household Income In The Past 12 Months, 5yr Estimate ({report_year})']['Population']
+fam_metric = fam_df[fam_df['Measure'] == f'Median Family Income In The Past 12 Months, 5yr Estimate ({report_year})']['Population']
 
 # get range tables
 hh_df = hh_df[hh_df['Measure'] != f'Median Household Income In The Past 12 Months, 5yr Estimate ({report_year})']
