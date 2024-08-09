@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
+import altair as alt
 
 # Initialization
 if 'cbsa_selection' not in st.session_state:
@@ -95,22 +96,34 @@ hh_metric = hh_df[hh_df['Measure'] == f'Median Household Income In The Past 12 M
 fam_metric = fam_df[fam_df['Measure'] == f'Median Family Income In The Past 12 Months, 5yr Estimate ({report_year})']['Population']
 
 # get range tables
-hh_df = hh_df[hh_df['Measure'] != f'Median Household Income In The Past 12 Months, 5yr Estimate ({report_year})'][['Measure', 'Population']].set_index(['Measure'])
-fam_df = fam_df[fam_df['Measure'] != f'Median Family Income In The Past 12 Months, 5yr Estimate ({report_year})'][['Measure', 'Population']].set_index(['Measure'])
+hh_df = hh_df[hh_df['Measure'] != f'Median Household Income In The Past 12 Months, 5yr Estimate ({report_year})'][['Measure', 'Population']]
+fam_df = fam_df[fam_df['Measure'] != f'Median Family Income In The Past 12 Months, 5yr Estimate ({report_year})'][['Measure', 'Population']]
 
 # select needed cols
 household_tab, family_tab = st.tabs(['Household Income', 'Family Income'])
 
 with household_tab:
-    col1_met, col1_table = st.columns([0.3, 0.7])
+    col1_met, col1_bar = st.columns([0.3, 0.7])
     col1_met.metric(
         f'{report_year} Median Household Income',
         value = f'${int(hh_metric):,}')
-    col1_table.dataframe(hh_df)
+
+    hh_bar = alt.Chart(hh_df).mark_bar().encode(
+        x=alt.X('Measure', sort = None),
+        y=alt.Y('Population')
+    )
+
+    col1_bar.altair_chart(hh_bar, use_container_width = True)
 
 with family_tab:
-    col2_met, col2_table = st.columns([0.3, 0.7])
+    col2_met, col2_bar = st.columns([0.3, 0.7])
     col2_met.metric(
         f'{report_year} Median Family Income',
         f'${int(fam_metric):,}')
-    col2_table.dataframe(fam_df)
+
+    fam_bar = alt.Chart(fam_df).mark_bar().encode(
+        x=alt.X('Measure', sort = None),
+        y=alt.Y('Population')
+    )
+
+    col2_bar.altair_chart(fam_bar, use_container_width = True)
