@@ -108,12 +108,12 @@ general_age_sex_df_pct_diff = general_age_sex_df_pct_diff.dropna()
 general_age_sex_df_pct_diff = general_age_sex_df_pct_diff.set_index(['Age Range'])
 general_age_sex_df_pct_diff = general_age_sex_df_pct_diff.reindex([
   'Under 5 Yrs Old', '5 to 17 Yrs Old', '18 to 24 Yrs Old', '25 to 34 Yrs Old',
-  '35 to 54 Yrs Old', '55 to 64 Yrs Old', '65 Yrs and Older']).reset_index()
+  '35 to 54 Yrs Old', '55 to 64 Yrs Old', '65 Yrs and Older'])
 
 
 st.line_chart(
   general_age_sex_df_pct_diff,
-  x = 'Age Range', y = '% Change In Last 2 Years',
+  x = general_age_sex_df_pct_diff.index, y = '% Change In Last 2 Years',
   x_label = ' ', y_label = '% Change In Last 2 Years')
 st.dataframe(general_age_sex_df_pct_diff)
 
