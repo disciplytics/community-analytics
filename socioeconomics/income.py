@@ -113,7 +113,7 @@ with household_tab:
         x=alt.X('Population')
     )
 
-    col1_bar.altair_chart(hh_bar, use_container_width = True)
+    st.altair_chart(hh_bar, use_container_width = True)
 
 with family_tab:
     col2_met, col2_bar = st.columns([0.25, 0.75])
@@ -126,4 +126,4 @@ with family_tab:
         x=alt.X('Population')
     )
 
-    col2_bar.altair_chart(fam_bar, use_container_width = True)
+    st.altair_chart(fam_bar, use_container_width = True)
