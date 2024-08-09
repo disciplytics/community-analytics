@@ -100,8 +100,8 @@ hh_df = hh_df[hh_df['Income Range'] != f'Median Household Income In The Past 12 
 fam_df = fam_df[fam_df['Income Range'] != f'Median Family Income In The Past 12 Months, 5yr Estimate ({report_year})'][['Income Range', 'Population']].set_index(['Income Range'])
 
 # get pct
-hh_df['Percent of Population'] = np.round((hh_df['Population'] / np.sum(hh_df['Population'])) * 100, 2)
-fam_df['Percent of Population'] = np.round((fam_df['Population'] / np.sum(fam_df['Population'])) * 100, 2)
+hh_df['Percent of Population'] = np.round((hh_df['Population'] / np.sum(hh_df['Population'])) * 100, 2).astype(str) + "%"
+fam_df['Percent of Population'] = np.round((fam_df['Population'] / np.sum(fam_df['Population'])) * 100, 2).astype(str) + "%"
 
 # select needed cols
 household_tab, family_tab = st.tabs(['Household Income', 'Family Income'])
