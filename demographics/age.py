@@ -128,7 +128,7 @@ detailed_age_sex_df_report = detailed_age_sex_df_report.reindex([
 
 general_age_sex_df_report = general_age_sex_df_report.reindex([
   'Before Formal Schooling', 'Required Formal Schooling', 'College/Career Starts',
-  'Singles & Young Families', 'Familes & Empty Nesters', 'Enrichment Years Singles/Couples,
+  'Singles & Young Families', 'Familes & Empty Nesters', 'Enrichment Years Singles/Couples',
   'Retirement Opportunities'], level = 0)
 
 phase_tab, detail_tab = st.tabs(['Ages: Phase of Life', 'Ages: Detailed'])
