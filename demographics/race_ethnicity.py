@@ -35,7 +35,8 @@ total_race_df['Race'] = total_race_df['VARIABLE_NAME'].copy()
 total_race_df = total_race_df.replace({'Race': race_dict})
 
 total_race_df['FIVE_YEAR_ESTIMATE_DATE'] = pd.to_datetime(total_race_df['FIVE_YEAR_ESTIMATE_DATE']).dt.year.astype(int)
-total_race_df['Counts'] = total_race_df['FIVE_YEAR_ESTIMATE'].astype(int)
+total_race_df['Population'] = total_race_df['FIVE_YEAR_ESTIMATE'].astype(int)
+total_race_df['Percent of Population'] = np.round((total_race_df['Population'] / np.sum(total_race_df['Population'])) * 100, 2).astype(str) + "%"
 
 race_filter = st.multiselect('Filter Races Here', total_race_df['Race'].unique(),total_race_df['Race'].unique())
 st.write('Race Trends')
@@ -43,7 +44,7 @@ st.write('Race Trends')
 st.bar_chart(
     data = total_race_df[total_race_df['Race'].isin(race_filter)],
     x = 'FIVE_YEAR_ESTIMATE_DATE',
-    y = 'Counts',
+    y = 'Population',
     x_label = '5 Year Estimate Date',
     y_label = 'Total',
     color = 'Race',
@@ -55,7 +56,7 @@ st.write(f"Race Breakdown For Year {total_race_df['FIVE_YEAR_ESTIMATE_DATE'].max
 st.bar_chart(
     data = total_race_df[(total_race_df['Race'].isin(race_filter)) & (total_race_df['FIVE_YEAR_ESTIMATE_DATE'] == total_race_df['FIVE_YEAR_ESTIMATE_DATE'].max())].sort_values(by=['Counts'], ascending = True),
     x = 'Race',
-    y = 'Counts',
+    y = 'Population',
     y_label = 'Total',
     x_label = 'Race',
     #color = 'Race',
@@ -63,5 +64,5 @@ st.bar_chart(
     horizontal=False,)
 
 st.write(f"Race Breakdown Table For Year {total_race_df['FIVE_YEAR_ESTIMATE_DATE'].max()}")
-st.dataframe(total_race_df[(total_race_df['Race'].isin(race_filter)) & (total_race_df['FIVE_YEAR_ESTIMATE_DATE'] == total_race_df['FIVE_YEAR_ESTIMATE_DATE'].max())][['Race', 'Counts']].sort_values(by=['Counts'], ascending = False).set_index(['Race']),
+st.dataframe(total_race_df[(total_race_df['Race'].isin(race_filter)) & (total_race_df['FIVE_YEAR_ESTIMATE_DATE'] == total_race_df['FIVE_YEAR_ESTIMATE_DATE'].max())][['Race', 'Population']].sort_values(by=['Population'], ascending = False).set_index(['Race']),
             use_container_width = True)
