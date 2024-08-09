@@ -126,6 +126,11 @@ detailed_age_sex_df_report = detailed_age_sex_df_report.reindex([
 '30 to 34', '35 to 39', '40 to 44', '45 to 49', '50 to 54', '55 to 59', '60 and 61', '62 to 64',
 '65 and 66', '67 to 69', '70 to 74', '75 to 79', '80 to 84', '85 years and ov'])
 
+general_age_sex_df_report = general_age_sex_df_report.reindex([
+  'Before Formal Schooling', 'Required Formal Schooling', 'College/Career Starts',
+  'Singles & Young Families', 'Familes & Empty Nesters', 'Enrichment Years Singles/Couples,
+  'Retirement Opportunities'], level = 0)
+
 phase_tab, detail_tab = st.tabs(['Ages: Phase of Life', 'Ages: Detailed'])
 
 with phase_tab:
