@@ -22,7 +22,7 @@ cbsa_selection = st.selectbox(
 st.write(f'Please enjoy the community report for {cbsa_selection}. See the views on the left.')
 
 # get geojson for selected area
-geojson_sql = "SELECT COORDS FROM CBSA_DATA WHERE CENSUS_SUBJECT = 'Race' AND CITY_STATE = " + f"'{cbsa_selection}'" + "LIMIT 1"
+geojson_sql = "SELECT COORDS FROM CBSA_RACE_DATA WHERE CITY_STATE = " + f"'{cbsa_selection}'" + "LIMIT 1"
 geojson = conn.query(geojson_sql, ttl=0)
 
 # covert to dictionary
