@@ -43,21 +43,18 @@ edu_table_df = edu_table_df.reindex([
         "Some College or Associate's Degree",
         "Bachelor's Degree of Higher"])
 
-with c_tab:
-    # line chart
-    lc_df = education_df[education_df['Educational Attainment'].isnull()==False]
-    lc_df['Year'] = lc_df['FIVE_YEAR_ESTIMATE_DATE'].astype(str)
-    lc_df['Population'] = lc_df['FIVE_YEAR_ESTIMATE'].copy()
-    st.line_chart(lc_df, x = 'Year', y = 'Population', color = 'Educational Attainment')
+# line chart
+st.subheader('Educational Attainment Trends')
+lc_df = education_df[education_df['Educational Attainment'].isnull()==False]
+lc_df['Year'] = lc_df['FIVE_YEAR_ESTIMATE_DATE'].astype(str)
+lc_df['Population'] = lc_df['FIVE_YEAR_ESTIMATE'].copy()
+st.line_chart(lc_df, x = 'Year', y = 'Population', color = 'Educational Attainment')
 
 
-    st.dataframe(edu_table_df)
-    st.dataframe(lc_df)
-with p_tab:
-    g=lc_df.groupby('Year').agg(Sum=('Population','sum')).reset_index()#Calculate sum
-    lc_df_pct = g.assign(per=(g.Sum/(g.Sum.sum())*100).astype(int))#Calc the Percentage
+st.dataframe(edu_table_df)
 
-    st.table(lc_df_pct)
+
+
 
     
     
