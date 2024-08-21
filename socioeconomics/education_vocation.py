@@ -34,8 +34,7 @@ with edu_tab:
 
     # clean variables
     education_df['Educational Attainment'] = education_df['VARIABLE_NAME'].apply(clean_edu)
-
-    st.dataframe(education_df)
+    education_df['FIVE_YEAR_ESTIMATE_DATE'] = pd.to_datetime(education_df['FIVE_YEAR_ESTIMATE_DATE']).year.astype(int)
     # create table report
     edu_table_df = pd.pivot_table(education_df, index = 'Educational Attainment', columns = 'FIVE_YEAR_ESTIMATE_DATE', values = 'FIVE_YEAR_ESTIMATE', aggfunc = 'sum').fillna(0)
     
