@@ -48,7 +48,9 @@ with race_tab:
 
   # clean variables
   race_poverty_df['Year'] = pd.to_datetime(race_poverty_df['FIVE_YEAR_ESTIMATE_DATE']).dt.year.astype(int)
-  
+
+  st.table(race_poverty_df)
+
   total_pop_tab, by_race_tab = st.tabs(['Poverty Rate By Total Population', 'Poverty Rate By Race Total Population'])
 
   with total_pop_tab:
@@ -67,7 +69,6 @@ with race_tab:
 
     #race_poverty_df_total = pd.pivot_table(race_poverty_df_total, index = 'Year', columns = 'VARIABLE_NAME', values = 'FIVE_YEAR_ESTIMATE', aggfunc='sum')
 
-    st.table(race_poverty_df_total)
 
 
 
