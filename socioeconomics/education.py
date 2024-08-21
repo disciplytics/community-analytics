@@ -49,10 +49,7 @@ lc_df['Population'] = lc_df['FIVE_YEAR_ESTIMATE'].copy()
 st.line_chart(lc_df, x = 'Year', y = 'Population', color = 'Educational Attainment')
 
 
-st.dataframe(edu_table_df)
-
-st.subheader('Percent Change in Population Over the Last Two Years')
-
+st.dataframe(edu_table_df, use_container_width=True)
 
 # percent diff plot
 lc_df2 = education_df[education_df['Educational Attainment'].isnull()==False]
@@ -68,4 +65,10 @@ lc_df_report_pct_diff['% Change In Last 2 Years'] = np.round(lc_df_report_pct_di
 
 lc_df_report_pct_diff = lc_df_report_pct_diff.dropna()
 
-st.table(lc_df_report_pct_diff)
+pctdiff_lc = alt.Chart(lc_df_report_pct_diff).mark_line().encode(
+    x=alt.X('Educational Attainment', sort = None),
+    y=alt.Y('% Change In Last 2 Years').axis(format='%')
+)
+
+st.write('Percent Change in Population Over the Last Two Years')
+st.altair_chart(pctdiff_lc, use_container_width = True)
