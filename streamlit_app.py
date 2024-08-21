@@ -30,16 +30,16 @@ poverty = st.Page(
   'socioeconomics/poverty.py', title = 'Poverty Report', icon=":material/money_off:"
 )
 
-social_assist = st.Page(
-  'socioeconomics/social_assistance.py', title = 'Social Assitance Report', icon=":material/bento:"
-)
+#social_assist = st.Page(
+#  'socioeconomics/social_assistance.py', title = 'Social Assitance Report', icon=":material/bento:"
+#)
 
 
 pg = st.navigation(
         {
             " ": [home_page],
             "Demographics": [population, race_ethnicity, age],
-            "Socioeconomics": [income, edu_voc, poverty, social_assist],
+            "Socioeconomics": [income, edu_voc, poverty],
         }
     )
 
