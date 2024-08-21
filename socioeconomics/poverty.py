@@ -106,10 +106,10 @@ with race_tab:
       
     st.altair_chart(race_lc, use_container_width = True)
 
-    with by_race_tab:
+  with by_race_tab:
 
     # calc pct for race
-        race_cols = [
+    race_cols = [
       'Total Population In Poverty, 5yr Estimate', 'Total, 5yr Estimate',
       'In Poverty American Indian and Alaska Native Alone, 5yr Estimate',
       'In Poverty Asian Alone, 5yr Estimate', 'In Poverty Black or African American Alone, 5yr Estimate', 
