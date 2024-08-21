@@ -48,6 +48,6 @@ with edu_tab:
     lc_df['Year'] = lc_df['FIVE_YEAR_ESTIMATE_DATE'].astype(str)
     lc_df['Population'] = lc_df['FIVE_YEAR_ESTIMATE'].copy()
     
-    st.line_chart(, x = 'Year', y = 'v', color = 'Educational Attainment')
+    st.line_chart(lc_df, x = 'Year', y = 'Population', color = 'Educational Attainment')
     
     st.dataframe(edu_table_df)
