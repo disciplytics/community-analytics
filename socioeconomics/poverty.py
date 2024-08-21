@@ -92,19 +92,22 @@ with race_tab:
         race_poverty_df_total['Year'] = race_poverty_df_total['Year'].astype(str)
       
         st.write('Overall Poverty Rate')
-        total_lc = alt.Chart(race_poverty_df_total[race_poverty_df_total['Race'] == 'Total Poverty Rate']).mark_line().encode(
+        df1 = race_poverty_df_total[race_poverty_df_total['Race'] == 'Total Poverty Rate']
+        st.table(df1)
+        chart1 = alt.Chart(df1).mark_line().encode(
                 x=alt.X('Year', sort = None),
                 y=alt.Y('Rate').axis(format='%'))
       
-        st.altair_chart(total_lc, use_container_width = True)
+        st.altair_chart(chart1, use_container_width = True)
 
         st.write('Poverty Rate By Race')
-        race_lc = alt.Chart(race_poverty_df_total[race_poverty_df_total['Race'] != 'Total Poverty Rate']).mark_line().encode(
+        df2 = race_poverty_df_total[race_poverty_df_total['Race'] != 'Total Poverty Rate']
+        chart2 = alt.Chart(df2).mark_line().encode(
             x=alt.X('Year', sort = None),
             y=alt.Y('Rate').axis(format='%'),
             color='Race:N')
       
-        st.altair_chart(race_lc, use_container_width = True)
+        st.altair_chart(chart2, use_container_width = True)
 
     with by_race_tab:
 
