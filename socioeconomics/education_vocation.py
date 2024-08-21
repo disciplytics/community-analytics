@@ -43,7 +43,11 @@ with edu_tab:
         "High School Graduate or Equivalent",
         "Some College or Associate's Degree",
         "Bachelor's Degree of Higher"])
-        
-    st.line_chart(education_df[education_df['Educational Attainment'].isnull()==False], x = 'FIVE_YEAR_ESTIMATE_DATE', y = 'FIVE_YEAR_ESTIMATE', color = 'Educational Attainment')
+
+    lc_df = education_df[education_df['Educational Attainment'].isnull()==False]
+    lc_df['Year'] = lc_df['FIVE_YEAR_ESTIMATE_DATE'].astype(str)
+    lc_df['Population'] = lc_df['FIVE_YEAR_ESTIMATE'].copy()
+    
+    st.line_chart(, x = 'Year', y = 'v', color = 'Educational Attainment')
     
     st.dataframe(edu_table_df)
