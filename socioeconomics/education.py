@@ -55,7 +55,10 @@ st.subheader('Percent Change in Population Over the Last Two Years')
 
 
 # percent diff plot
-lc_df_report_pct_diff = lc_df[lc_df['Year'] >= lc_df['Year'].max()-1]
+lc_df2 = education_df[education_df['Educational Attainment'].isnull()==False]
+lc_df2['Year'] = lc_df2['FIVE_YEAR_ESTIMATE_DATE'].astype(int)
+lc_df2['Population'] = lc_df2['FIVE_YEAR_ESTIMATE'].copy()
+lc_df_report_pct_diff = lc_df2[lc_df2['Year'] >= lc_df2['Year'].max()-1]
 
 lc_df_report_pct_diff = lc_df_report_pct_diff.groupby(['Educational Attainment', 'Year'])['Population'].sum().reset_index()
 
