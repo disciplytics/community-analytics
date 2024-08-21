@@ -60,4 +60,17 @@ with edu_tab:
     edu_table_df['Count'] = edu_table_df['FIVE_YEAR_ESTIMATE'].astype(int)
     # rename VARIABLE_NAME
     edu_table_df['Measure'] = 'Total Population'
+
+    ## Get Year
+    edu_table_df['FIVE_YEAR_ESTIMATE_DATE'] = pd.to_datetime(edu_table_df['FIVE_YEAR_ESTIMATE_DATE']).dt.year.astype(int)
+
+    # change calcs to rows
+    edu_table_df = pd.melt(edu_table_df, id_vars = ['Measure', 'FIVE_YEAR_ESTIMATE_DATE'], value_vars = ['Count', 'Percent Change'])
+    edu_table_df = edu_table_df.pivot(
+    values = 'value', 
+    index = ['Measure', 'variable'], 
+    columns = 'FIVE_YEAR_ESTIMATE_DATE')
+
+    # reorder df
+    edu_table_df = edu_table_df.sort_index(level = 0, ascending=False)
     st.dataframe(edu_table_df)
