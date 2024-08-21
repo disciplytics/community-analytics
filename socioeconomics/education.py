@@ -13,8 +13,6 @@ st.subheader(f"{st.session_state['cbsa_selection']}")
 # connect to snowflake
 conn = st.connection("snowflake")
 
-c_tab, p_tab = st.tabs(['Educational Attainment Counts', 'Educational Attainment Percentages'])
-
 st.write('Educational Attainment For The Population 25 to 64 Years Old')
 
 # education etl
