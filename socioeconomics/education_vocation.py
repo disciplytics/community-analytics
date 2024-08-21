@@ -44,6 +44,6 @@ with edu_tab:
         "Some College or Associate's Degree",
         "Bachelor's Degree of Higher"])
         
-    st.line_chart(edu_table_df.reset_index(), x = 'FIVE_YEAR_ESTIMATE_DATE', y = 'FIVE_YEAR_ESTIMATE', color = 'Educational Attainment')
+    st.line_chart(education_df, x = 'FIVE_YEAR_ESTIMATE_DATE', y = 'FIVE_YEAR_ESTIMATE', color = 'Educational Attainment')
     
     st.dataframe(edu_table_df)
