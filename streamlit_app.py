@@ -23,7 +23,7 @@ income = st.Page(
 )
 
 edu_voc = st.Page(
-  'socioeconomics/education_vocation.py', title = 'Education and Vocation Report', icon=":material/school:"
+  'socioeconomics/education.py', title = 'Educational Attainment Report', icon=":material/school:"
 )
 
 poverty = st.Page(
