@@ -37,6 +37,6 @@ with edu_tab:
 
     st.dataframe(education_df)
     # create table report
-    edu_table_df = pd.pivot_table(education_df, index = 'Educational Attainment', columns = 'Five_Year_Estimate_Date', values = 'Five_Year_Estimate', aggfunc = 'sum').fillna(0)
+    edu_table_df = pd.pivot_table(education_df, index = 'Educational Attainment', columns = 'FIVE_YEAR_ESTIMATE_DATE', values = 'FIVE_YEAR_ESTIMATE', aggfunc = 'sum').fillna(0)
     
     st.dataframe(edu_table_df)
