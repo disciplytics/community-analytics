@@ -165,11 +165,18 @@ with race_tab:
 
 with age_tab:
     # age_poverty etl
-    age_poverty_sql = "SELECT GEO_NAME, VARIABLE_NAME, DATE as Five_Year_Estimate_Date, VALUE as Five_Year_Estimate FROM CBSA_POVERTY_DATA WHERE CITY_STATE = " + f"'{st.session_state['cbsa_selection']}'" + "AND VARIABLE_NAME IN ('Poverty Status In The Past 12 Months By Age: Population | Income in the past 12 months below poverty level | Under 6 years, 5yr Estimate', 'Poverty Status In The Past 12 Months By Age: Population | Income in the past 12 months below poverty level | 6 to 11 years, 5yr Estimate','Poverty Status In The Past 12 Months By Age: Population | Income in the past 12 months below poverty level | 12 to 17 years, 5yr Estimate','Poverty Status In The Past 12 Months By Age: Population | Income in the past 12 months below poverty level | 18 to 59 years, 5yr Estimate','Poverty Status In The Past 12 Months By Age: Population | Income in the past 12 months below poverty level | 60 to 74 years, 5yr Estimate','Poverty Status In The Past 12 Months By Age: Population | Income in the past 12 months below poverty level | 75 to 84 years, 5yr Estimate', 'Poverty Status In The Past 12 Months By Age: Population | Income in the past 12 months below poverty level | 85 years and over, 5yr Estimate');"
+    age_poverty_sql = "SELECT GEO_NAME, VARIABLE_NAME, DATE as Five_Year_Estimate_Date, VALUE as Five_Year_Estimate FROM CBSA_POVERTY_DATA WHERE CITY_STATE = " + f"'{st.session_state['cbsa_selection']}'" + "AND VARIABLE_NAME IN ('Poverty Status In The Past 12 Months By Age: Population | Total, 5yr Estimate', 'Poverty Status In The Past 12 Months By Age: Population | Income in the past 12 months below poverty level | Under 6 years, 5yr Estimate', 'Poverty Status In The Past 12 Months By Age: Population | Income in the past 12 months below poverty level | 6 to 11 years, 5yr Estimate','Poverty Status In The Past 12 Months By Age: Population | Income in the past 12 months below poverty level | 12 to 17 years, 5yr Estimate','Poverty Status In The Past 12 Months By Age: Population | Income in the past 12 months below poverty level | 18 to 59 years, 5yr Estimate','Poverty Status In The Past 12 Months By Age: Population | Income in the past 12 months below poverty level | 60 to 74 years, 5yr Estimate','Poverty Status In The Past 12 Months By Age: Population | Income in the past 12 months below poverty level | 75 to 84 years, 5yr Estimate', 'Poverty Status In The Past 12 Months By Age: Population | Income in the past 12 months below poverty level | 85 years and over, 5yr Estimate');"
     age_poverty_df = conn.query(age_poverty_sql, ttl=0)
 
     age_rename_dict = {
-
+        'Poverty Status In The Past 12 Months By Age: Population | Total, 5yr Estimate': 'Total, 5yr Estimate',
+        'Poverty Status In The Past 12 Months By Age: Population | Income in the past 12 months below poverty level | Under 6 years, 5yr Estimate': 'In Poverty Under 6 years, 5yr Estimate',
+        'Poverty Status In The Past 12 Months By Age: Population | Income in the past 12 months below poverty level | 6 to 11 years, 5yr Estimate': 'In Poverty 6 to 11 years, 5yr Estimate',
+        'Poverty Status In The Past 12 Months By Age: Population | Income in the past 12 months below poverty level | 12 to 17 years, 5yr Estimate': 'In Poverty 12 to 17 years, 5yr Estimate',
+        'Poverty Status In The Past 12 Months By Age: Population | Income in the past 12 months below poverty level | 18 to 59 years, 5yr Estimate': 'In Poverty 18 to 59 years, 5yr Estimate',
+        'Poverty Status In The Past 12 Months By Age: Population | Income in the past 12 months below poverty level | 60 to 74 years, 5yr Estimate': 'In Poverty 60 to 74 years, 5yr Estimate',
+        'Poverty Status In The Past 12 Months By Age: Population | Income in the past 12 months below poverty level | 75 to 84 years, 5yr Estimate': 'In Poverty 75 to 84 years, 5yr Estimate',
+        'Poverty Status In The Past 12 Months By Age: Population | Income in the past 12 months below poverty level | 85 years and over, 5yr Estimate': 'In Poverty 85 years and over, 5yr Estimate'
   }
 
     # rename columns
@@ -177,3 +184,36 @@ with age_tab:
 
     # clean variables
     age_poverty_df['Year'] = pd.to_datetime(age_poverty_df['FIVE_YEAR_ESTIMATE_DATE']).dt.year.astype(int)
+
+    # pivot data
+    age_poverty_df = pd.pivot_table(age_poverty_df, index = 'Year', columns = 'VARIABLE_NAME', values = 'FIVE_YEAR_ESTIMATE', aggfunc='sum')
+
+    # calc poverty rate
+    age_poverty_df['Under 6 years Poverty Rate'] = age_poverty_df['In Poverty Under 6 years, 5yr Estimate'] / age_poverty_df['Total, 5yr Estimate']
+    age_poverty_df['6 to 11 years Poverty Rate'] = age_poverty_df['In Poverty 6 to 11 years, 5yr Estimate'] / age_poverty_df['Total, 5yr Estimate']
+    age_poverty_df['12 to 17 years Poverty Rate'] = age_poverty_df['In Poverty 12 to 17 years, 5yr Estimate'] / age_poverty_df['Total, 5yr Estimate']
+    age_poverty_df['18 to 59 years Poverty Rate'] = age_poverty_df['In Poverty 18 to 59 years, 5yr Estimate'] / age_poverty_df['Total, 5yr Estimate']
+    age_poverty_df['60 to 74 years Poverty Rate'] = age_poverty_df['In Poverty 60 to 74 years, 5yr Estimate'] / age_poverty_df['Total, 5yr Estimate']
+    age_poverty_df['75 to 84 years Poverty Rate'] = age_poverty_df['In Poverty 75 to 84 years, 5yr Estimate'] / age_poverty_df['Total, 5yr Estimate']
+    age_poverty_df['85 years and over Poverty Rate'] = age_poverty_df['In Poverty 85 years and over, 5yr Estimate'] / age_poverty_df['Total, 5yr Estimate']
+
+    age_poverty_df = age_poverty_df.reset_index()
+      
+    # agg data
+    age_poverty_df = pd.melt(age_poverty_df, 
+                                    id_vars=['Year'], 
+                                    value_vars=['Under 6 years Poverty Rate','6 to 11 years Poverty Rate','12 to 17 years Poverty Rate',
+                                                '18 to 59 years Poverty Rate', '60 to 74 years Poverty Rate', '75 to 84 years Poverty Rate',
+                                                '85 years and over Poverty Rate'],
+                                   var_name='Age Range', value_name='Rate')
+
+    age_poverty_df['Year'] = age_poverty_df['Year'].astype(str)
+      
+    st.write('Poverty Rate By Age Range')
+    age_lc = alt.Chart(
+            age_poverty_df).mark_line().encode(
+            x=alt.X('Year', sort = None),
+            y=alt.Y('Rate').axis(format='%'),
+            color='Age Range:N')
+      
+    st.altair_chart(age_lc, use_container_width = True)
