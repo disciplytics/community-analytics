@@ -54,8 +54,10 @@ with c_tab:
     st.dataframe(edu_table_df)
     st.dataframe(lc_df)
 with p_tab:
+    g=lc_df.groupby('Year').agg(Sum=('Population','sum')).reset_index()#Calculate sum
+    lc_df_pct = g.assign(per=(g.Sum/(g.Sum.sum())*100).astype(int))#Calc the Percentage
 
-    lc_df_pct = lc_df
+    st.table(lc_df_pct)
 
     
     
