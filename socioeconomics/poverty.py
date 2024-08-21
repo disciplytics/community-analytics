@@ -87,13 +87,13 @@ with race_tab:
                                                 'Asian Alone Poverty Rate', 'Black or African American Alone Poverty Rate',
                                                 'Hispanic or Latino Poverty Rate', 'Some Other Race Alone Poverty Rate',
                                                 'Two or More Races Poverty Rate', 'White Alone Poverty Rate', 'White Alone, Not Hispanic or Latino Poverty Rate'],
-                                   var_name='Metric', value_name='Race')
+                                   var_name='Race', value_name='Rate')
 
         race_poverty_df_total['Year'] = race_poverty_df_total['Year'].astype(str)
       
         st.write('Overall Poverty Rate')
         df1 = race_poverty_df_total[race_poverty_df_total['Race'] == 'Total Poverty Rate']
-        st.table(df1)
+    
         chart1 = alt.Chart(df1).mark_line().encode(
                 x=alt.X('Year', sort = None),
                 y=alt.Y('Rate').axis(format='%'))
@@ -149,7 +149,7 @@ with race_tab:
                                                 'Asian Alone Poverty Rate', 'Black or African American Alone Poverty Rate',
                                                 'Hispanic or Latino Poverty Rate', 'Some Other Race Alone Poverty Rate',
                                                 'Two or More Races Poverty Rate', 'White Alone Poverty Rate', 'White Alone, Not Hispanic or Latino Poverty Rate'],
-                                   var_name='Metric', value_name='Race')
+                                   var_name='Race', value_name='Rate')
 
         race_poverty_df_race['Year'] = race_poverty_df_race['Year'].astype(str)
       
