@@ -49,7 +49,7 @@ with race_tab:
   # clean variables
   race_poverty_df['Year'] = pd.to_datetime(race_poverty_df['FIVE_YEAR_ESTIMATE_DATE']).dt.year.astype(int)
 
-  total_pop_tab, by_race_tab = st.tabs(['Poverty Rate By Total Population', 'Poverty Rate By Race Total Population'])
+  total_pop_tab, by_race_tab = st.tabs(['Poverty Rate By Total Population', 'Poverty Rate By Each Race Total Population'])
 
   with total_pop_tab:
 
@@ -66,7 +66,6 @@ with race_tab:
     race_poverty_df_total = race_poverty_df[race_poverty_df['VARIABLE_NAME'].isin(total_cols)]
 
     race_poverty_df_total = pd.pivot_table(race_poverty_df_total, index = 'Year', columns = 'VARIABLE_NAME', values = 'FIVE_YEAR_ESTIMATE', aggfunc='sum')
-    st.table(race_poverty_df_total)
 
     # calc poverty rate
     race_poverty_df_total['Total Poverty Rate'] = race_poverty_df_total['Total Population In Poverty, 5yr Estimate'] / race_poverty_df_total['Total, 5yr Estimate']
@@ -88,68 +87,82 @@ with race_tab:
                                                 'Asian Alone Poverty Rate', 'Black or African American Alone Poverty Rate',
                                                 'Hispanic or Latino Poverty Rate', 'Some Other Race Alone Poverty Rate',
                                                 'Two or More Races Poverty Rate', 'White Alone Poverty Rate', 'White Alone, Not Hispanic or Latino Poverty Rate'],
-                                   var_name='Metric', value_name='Rate')
+                                   var_name='Metric', value_name='Race')
 
     race_poverty_df_total['Year'] = race_poverty_df_total['Year'].astype(str)
       
     st.write('Overall Poverty Rate')
-    total_lc = alt.Chart(race_poverty_df_total[race_poverty_df_total['Metric'] == 'Total Poverty Rate']).mark_line().encode(
+    total_lc = alt.Chart(race_poverty_df_total[race_poverty_df_total['Race'] == 'Total Poverty Rate']).mark_line().encode(
     x=alt.X('Year', sort = None),
     y=alt.Y('Rate').axis(format='%'))
       
     st.altair_chart(total_lc, use_container_width = True)
 
     st.write('Poverty Rate By Race')
-    race_lc = alt.Chart(race_poverty_df_total[race_poverty_df_total['Metric'] != 'Total Poverty Rate']).mark_line().encode(
+    race_lc = alt.Chart(race_poverty_df_total[race_poverty_df_total['Race'] != 'Total Poverty Rate']).mark_line().encode(
     x=alt.X('Year', sort = None),
     y=alt.Y('Rate').axis(format='%'),
-    color='Metric:N')
+    color='Race:N')
       
     st.altair_chart(race_lc, use_container_width = True)
 
+with by_race_tab:
+
+    # calc pct for race
+    race_cols = [
+      'Total Population In Poverty, 5yr Estimate', 'Total, 5yr Estimate',
+      'In Poverty American Indian and Alaska Native Alone, 5yr Estimate',
+      'In Poverty Asian Alone, 5yr Estimate', 'In Poverty Black or African American Alone, 5yr Estimate', 
+      'In Poverty Hispanic or Latino, 5yr Estimate', 'In Poverty Some Other Race Alone, 5yr Estimate',
+      'In Poverty Two or More Races, 5yr Estimate', 'In Poverty White Alone, 5yr Estimate', 
+      'In Poverty White Alone, Not Hispanic or Latino, 5yr Estimate', 
+      'American Indian and Alaska Native Alone, 5yr Estimate', 'Asian Alone, 5yr Estimate', 
+      'Black or African American Alone, 5yr Estimate', 'Hispanic or Latino, 5yr Estimate', 
+      'Some Other Race Alone, 5yr Estimate', 'Two or More Races, 5yr Estimate',
+      'White Alone, 5yr Estimate', 'White Alone, Not Hispanic or Latino, 5yr Estimate'
+                 ]
+    
+    race_poverty_df_race = race_poverty_df[race_poverty_df['VARIABLE_NAME'].isin(race_cols)]
+
+    race_poverty_df_race = pd.pivot_table(race_poverty_df_race, index = 'Year', columns = 'VARIABLE_NAME', values = 'FIVE_YEAR_ESTIMATE', aggfunc='sum')
+
+    # calc poverty rate
+    race_poverty_df_race['Total Poverty Rate'] = race_poverty_df_race['Total Population In Poverty, 5yr Estimate'] / race_poverty_df_race['Total, 5yr Estimate']
+    race_poverty_df_race['American Indian and Alaska Native Alone Poverty Rate'] = race_poverty_df_race['In Poverty American Indian and Alaska Native Alone, 5yr Estimate'] / race_poverty_df_race['American Indian and Alaska Native Alone, 5yr Estimate']
+    race_poverty_df_race['Asian Alone Poverty Rate'] = race_poverty_df_race['In Poverty Asian Alone, 5yr Estimate'] / race_poverty_df_race['Asian Alone, 5yr Estimate']
+    race_poverty_df_race['Black or African American Alone Poverty Rate'] = race_poverty_df_race['In Poverty Black or African American Alone, 5yr Estimate'] / race_poverty_df_race['Black or African American Alone, 5yr Estimate']
+    race_poverty_df_race['Hispanic or Latino Poverty Rate'] = race_poverty_df_race['In Poverty Hispanic or Latino, 5yr Estimate'] / race_poverty_df_race['Hispanic or Latino, 5yr Estimate']
+    race_poverty_df_race['Some Other Race Alone Poverty Rate'] = race_poverty_df_race['In Poverty Some Other Race Alone, 5yr Estimate'] / race_poverty_df_race['Some Other Race Alone, 5yr Estimate']
+    race_poverty_df_race['Two or More Races Poverty Rate'] = race_poverty_df_race['In Poverty Two or More Races, 5yr Estimate'] / race_poverty_df_race['Two or More Races, 5yr Estimate']
+    race_poverty_df_race['White Alone Poverty Rate'] = race_poverty_df_race['In Poverty White Alone, 5yr Estimate'] / race_poverty_df_race['White Alone, 5yr Estimate']
+    race_poverty_df_race['White Alone, Not Hispanic or Latino Poverty Rate'] = race_poverty_df_race['In Poverty White Alone, Not Hispanic or Latino, 5yr Estimate'] / race_poverty_df_race['White Alone, Not Hispanic or Latino, 5yr Estimate']
+
+    race_poverty_df_race = race_poverty_df_race.reset_index()
       
+    # agg data
+    race_poverty_df_race = pd.melt(race_poverty_df_race, 
+                                    id_vars=['Year'], 
+                                    value_vars=['Total Poverty Rate', 'American Indian and Alaska Native Alone Poverty Rate',
+                                                'Asian Alone Poverty Rate', 'Black or African American Alone Poverty Rate',
+                                                'Hispanic or Latino Poverty Rate', 'Some Other Race Alone Poverty Rate',
+                                                'Two or More Races Poverty Rate', 'White Alone Poverty Rate', 'White Alone, Not Hispanic or Latino Poverty Rate'],
+                                   var_name='Metric', value_name='Race')
+
+    race_poverty_df_race['Year'] = race_poverty_df_race['Year'].astype(str)
+      
+    st.write('Overall Poverty Rate')
+    total_lc = alt.Chart(race_poverty_df_race[race_poverty_df_race['Race'] == 'Total Poverty Rate']).mark_line().encode(
+    x=alt.X('Year', sort = None),
+    y=alt.Y('Rate').axis(format='%'))
+      
+    st.altair_chart(total_lc, use_container_width = True)
+
+    st.write('Poverty Rate By Race')
+    race_lc = alt.Chart(race_poverty_df_total[race_poverty_df_race['Race'] != 'Total Poverty Rate']).mark_line().encode(
+    x=alt.X('Year', sort = None),
+    y=alt.Y('Rate').axis(format='%'),
+    color='Race:N')
+      
+    st.altair_chart(race_lc, use_container_width = True)
 
 
-
-
-
-# create table report
-edu_table_df = pd.pivot_table(education_df, index = 'Educational Attainment', columns = 'FIVE_YEAR_ESTIMATE_DATE', values = 'FIVE_YEAR_ESTIMATE', aggfunc = 'sum').fillna(0)
-# reindex
-edu_table_df = edu_table_df.reindex([
-        "Less Than High School Graduate",
-        "High School Graduate or Equivalent",
-        "Some College or Associate's Degree",
-        "Bachelor's Degree of Higher"])
-
-# line chart
-st.subheader('Educational Attainment Trends')
-lc_df = education_df[education_df['Educational Attainment'].isnull()==False]
-lc_df['Year'] = lc_df['FIVE_YEAR_ESTIMATE_DATE'].astype(str)
-lc_df['Population'] = lc_df['FIVE_YEAR_ESTIMATE'].copy()
-st.line_chart(lc_df, x = 'Year', y = 'Population', color = 'Educational Attainment')
-
-
-st.dataframe(edu_table_df, use_container_width=True)
-
-# percent diff plot
-lc_df2 = education_df[education_df['Educational Attainment'].isnull()==False]
-lc_df2['Year'] = lc_df2['FIVE_YEAR_ESTIMATE_DATE'].astype(int)
-lc_df2['Population'] = lc_df2['FIVE_YEAR_ESTIMATE'].copy()
-lc_df_report_pct_diff = lc_df2[lc_df2['Year'] >= lc_df2['Year'].max()-1]
-
-lc_df_report_pct_diff = lc_df_report_pct_diff.groupby(['Educational Attainment', 'Year'])['Population'].sum().reset_index()
-
-lc_df_report_pct_diff = lc_df_report_pct_diff.sort_values(by = ['Year'], ascending = True)
-
-lc_df_report_pct_diff['% Change In Last 2 Years'] = np.round(lc_df_report_pct_diff.sort_values('Year').groupby(['Educational Attainment']).Population.pct_change(),2)
-
-lc_df_report_pct_diff = lc_df_report_pct_diff.dropna()
-
-pctdiff_lc = alt.Chart(lc_df_report_pct_diff).mark_line().encode(
-    x=alt.X('Educational Attainment', sort = None),
-    y=alt.Y('% Change In Last 2 Years').axis(format='%')
-)
-
-st.write('Percent Change in Population Over the Last Two Years')
-st.altair_chart(pctdiff_lc, use_container_width = True)
