@@ -94,7 +94,7 @@ chart1 = alt.Chart(df1).mark_line().encode(
       
 st.altair_chart(chart1, use_container_width = True)
 
-race_tab, age_tab, household_tab = st.tabs(['Poverty By Race', 'Poverty By Age', 'Poverty by Household Type'])
+race_tab, age_tab = st.tabs(['Poverty By Race', 'Poverty By Age'])
 
 with race_tab:
 
