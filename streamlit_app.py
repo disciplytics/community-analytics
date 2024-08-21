@@ -22,8 +22,16 @@ income = st.Page(
   'socioeconomics/income.py', title = 'Income Report', icon=":material/payments:"
 )
 
+edu_voc = st.Page(
+  'socioeconomics/education_vocation.py', title = 'Education and Vocation Report', icon=":material/school:"
+)
+
 poverty = st.Page(
   'socioeconomics/poverty.py', title = 'Poverty Report', icon=":material/money_off:"
+)
+
+social_assist = st.Page(
+  'socioeconomics/social_assistance.py', title = 'Social Assitance Report', icon=":material/bento:"
 )
 
 
@@ -31,7 +39,7 @@ pg = st.navigation(
         {
             " ": [home_page],
             "Demographics": [population, race_ethnicity, age],
-            "Socioeconomics": [income, poverty],
+            "Socioeconomics": [income, edu_voc, poverty, social_assist],
         }
     )
 
