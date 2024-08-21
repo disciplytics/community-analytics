@@ -24,11 +24,11 @@ with edu_tab:
 
     def clean_edu(x):
         if x == "Educational Attainment By Employment Status For The Population 25 To 64 Years: Population | Some college or associate's degree, 5yr Estimate":
-            return 'Some College or Associate's Degree'
+            return "Some College or Associate's Degree"
         elif x == "Educational Attainment By Employment Status For The Population 25 To 64 Years: Population | Less than high school graduate, 5yr Estimate":
-            return 'Less Than High School Graduate'
+            return "Less Than High School Graduate"
         elif x == "Educational Attainment By Employment Status For The Population 25 To 64 Years: Population | High school graduate (includes equivalency), 5yr Estimate":
-            return 'High School Graduate or Equivalent'
+            return "High School Graduate or Equivalent"
         elif x == "Educational Attainment By Employment Status For The Population 25 To 64 Years: Population | Bachelor's degree or higher, 5yr Estimate":
             return "Bachelor's Degree of Higher"
 
