@@ -44,12 +44,10 @@ with race_tab:
   }
 
   # rename columns
-  race_poverty_df = race_poverty_df.rename(columns=race_rename_dict)
+  race_poverty_df = race_poverty_df.replace({'VARIABLE_NAME': race_rename_dict})
 
   # clean variables
   race_poverty_df['Year'] = pd.to_datetime(race_poverty_df['FIVE_YEAR_ESTIMATE_DATE']).dt.year.astype(int)
-
-  st.table(race_poverty_df)
 
   total_pop_tab, by_race_tab = st.tabs(['Poverty Rate By Total Population', 'Poverty Rate By Race Total Population'])
 
@@ -67,7 +65,8 @@ with race_tab:
     
     race_poverty_df_total = race_poverty_df[race_poverty_df['VARIABLE_NAME'].isin(total_cols)]
 
-    #race_poverty_df_total = pd.pivot_table(race_poverty_df_total, index = 'Year', columns = 'VARIABLE_NAME', values = 'FIVE_YEAR_ESTIMATE', aggfunc='sum')
+    race_poverty_df_total = pd.pivot_table(race_poverty_df_total, index = 'Year', columns = 'VARIABLE_NAME', values = 'FIVE_YEAR_ESTIMATE', aggfunc='sum')
+    st.table(race_poverty_df_total)
 
 
 
