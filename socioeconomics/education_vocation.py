@@ -23,13 +23,13 @@ with edu_tab:
     education_df = conn.query(education_sql, ttl=0)
 
     def clean_edu(x):
-        if x == 'Educational Attainment By Employment Status For The Population 25 To 64 Years: Population | Some college or associate's degree, 5yr Estimate':
+        if x == "Educational Attainment By Employment Status For The Population 25 To 64 Years: Population | Some college or associate's degree, 5yr Estimate":
             return 'Some College or Associate's Degree'
-        elif x == 'Educational Attainment By Employment Status For The Population 25 To 64 Years: Population | Less than high school graduate, 5yr Estimate':
+        elif x == "Educational Attainment By Employment Status For The Population 25 To 64 Years: Population | Less than high school graduate, 5yr Estimate":
             return 'Less Than High School Graduate'
-        elif x == 'Educational Attainment By Employment Status For The Population 25 To 64 Years: Population | High school graduate (includes equivalency), 5yr Estimate':
+        elif x == "Educational Attainment By Employment Status For The Population 25 To 64 Years: Population | High school graduate (includes equivalency), 5yr Estimate":
             return 'High School Graduate or Equivalent'
-        elif x == 'Educational Attainment By Employment Status For The Population 25 To 64 Years: Population | Bachelor's degree or higher, 5yr Estimate':
+        elif x == "Educational Attainment By Employment Status For The Population 25 To 64 Years: Population | Bachelor's degree or higher, 5yr Estimate":
             return "Bachelor's Degree of Higher"
 
     # clean variables
