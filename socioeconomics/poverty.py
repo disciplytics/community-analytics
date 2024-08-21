@@ -158,7 +158,7 @@ with race_tab:
         st.altair_chart(total_lc2, use_container_width = True)
 
         st.write('Poverty Rate By Race')
-        race_lc = alt.Chart(race_poverty_df_total[race_poverty_df_race['Race'] != 'Total Poverty Rate']).mark_line().encode(
+        race_lc = alt.Chart(race_poverty_df_race[race_poverty_df_race['Race'] != 'Total Poverty Rate']).mark_line().encode(
     x=alt.X('Year', sort = None),
     y=alt.Y('Rate').axis(format='%'),
     color='Race:N')
