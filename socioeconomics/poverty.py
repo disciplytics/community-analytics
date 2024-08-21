@@ -90,6 +90,8 @@ with race_tab:
                                                 'Two or More Races Poverty Rate', 'White Alone Poverty Rate', 'White Alone, Not Hispanic or Latino Poverty Rate'],
                                    var_name='Metric', value_name='Rate')
 
+    race_poverty_df_total['Year'] = race_poverty_df_total['Year'].astype(str)
+      
     st.write('Overall Poverty Rate')
     total_lc = alt.Chart(race_poverty_df_total[race_poverty_df_total['Metric'] == 'Total Poverty Rate']).mark_line().encode(
     x=alt.X('Year', sort = None),
