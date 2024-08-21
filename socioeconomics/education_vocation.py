@@ -37,5 +37,12 @@ with edu_tab:
     education_df['FIVE_YEAR_ESTIMATE_DATE'] = pd.to_datetime(education_df['FIVE_YEAR_ESTIMATE_DATE']).dt.year.astype(int)
     # create table report
     edu_table_df = pd.pivot_table(education_df, index = 'Educational Attainment', columns = 'FIVE_YEAR_ESTIMATE_DATE', values = 'FIVE_YEAR_ESTIMATE', aggfunc = 'sum').fillna(0)
-    
+    # reindex
+    edu_table_df = edu_table_df.reindex([
+        "Less Than High School Graduate",
+        "High School Graduate or Equivalent",
+        "Some College or Associate's Degree",
+        "Bachelor's Degree of Higher"])
+        
+        
     st.dataframe(edu_table_df)
