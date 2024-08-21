@@ -51,24 +51,11 @@ st.line_chart(lc_df, x = 'Year', y = 'Population', color = 'Educational Attainme
 
 st.dataframe(edu_table_df)
 
-st.subheader('Percent Difference In last Two Years')
+st.subheader('Percent Change in Population Over the Last Two Years')
 
-lc_df_report = pd.pivot_table(
-  lc_df, 
-  index = 'Educational Attainment', 
-  columns = 'Year', 
-  values = 'Population', 
-  aggfunc = 'sum').fillna(0)
-
-# reorder indicies
-lc_df_report = lc_df_report.reindex([
-        "Less Than High School Graduate",
-        "High School Graduate or Equivalent",
-        "Some College or Associate's Degree",
-        "Bachelor's Degree of Higher"])
 
 # percent diff plot
-lc_df_report_pct_diff = lc_df_report[lc_df_report['Year'] >= lc_df_report['Year'].max()-1]
+lc_df_report_pct_diff = lc_df[lc_df['Year'] >= lc_df['Year'].max()-1]
 
 lc_df_report_pct_diff = lc_df_report_pct_diff.groupby(['Educational Attainment', 'Year'])['Population'].sum().reset_index()
 
