@@ -44,10 +44,20 @@ with edu_tab:
         "Some College or Associate's Degree",
         "Bachelor's Degree of Higher"])
 
+    # line chart
     lc_df = education_df[education_df['Educational Attainment'].isnull()==False]
     lc_df['Year'] = lc_df['FIVE_YEAR_ESTIMATE_DATE'].astype(str)
     lc_df['Population'] = lc_df['FIVE_YEAR_ESTIMATE'].copy()
-    
     st.line_chart(lc_df, x = 'Year', y = 'Population', color = 'Educational Attainment')
-    
+
+    # table view
+    edu_table_df = education_df.sort_values(by=['FIVE_YEAR_ESTIMATE_DATE'])
+    edu_table_df['PCT_CHANGE'] = edu_table_df['FIVE_YEAR_ESTIMATE'].pct_change()
+    # drop nan from pct change
+    edu_table_df = edu_table_df.dropna()
+    # format the pct change and count
+    edu_table_df['Percent Change'] = np.round(edu_table_df['PCT_CHANGE']*100,2).astype(str)+"%"
+    edu_table_df['Count'] = edu_table_df['FIVE_YEAR_ESTIMATE'].astype(int)
+    # rename VARIABLE_NAME
+    edu_table_df['Measure'] = 'Total Population'
     st.dataframe(edu_table_df)
