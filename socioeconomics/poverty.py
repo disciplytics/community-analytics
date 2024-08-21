@@ -65,7 +65,7 @@ with race_tab:
     
     race_poverty_df_total = race_poverty_df[race_poverty_df['VARIABLE_NAME'].isin(total_cols)]
 
-    race_poverty_df_total = race_poverty_df_total.pivot(index = 'Year', columns = 'VARIABLE_NAME', values = 'FIVE_YEAR_ESTIMATE')
+    #race_poverty_df_total = race_poverty_df_total.pivot(index = 'Year', columns = 'VARIABLE_NAME', values = 'FIVE_YEAR_ESTIMATE')
 
     st.table(race_poverty_df_total)
 
