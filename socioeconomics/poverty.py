@@ -68,6 +68,44 @@ with race_tab:
     race_poverty_df_total = pd.pivot_table(race_poverty_df_total, index = 'Year', columns = 'VARIABLE_NAME', values = 'FIVE_YEAR_ESTIMATE', aggfunc='sum')
     st.table(race_poverty_df_total)
 
+    # calc poverty rate
+    race_poverty_df_total['Total Poverty Rate'] = race_poverty_df_total['Total Population In Poverty, 5yr Estimate'] / race_poverty_df_total['Total, 5yr Estimate']
+    race_poverty_df_total['American Indian and Alaska Native Alone Poverty Rate'] = race_poverty_df_total['In Poverty American Indian and Alaska Native Alone, 5yr Estimate'] / race_poverty_df_total['Total, 5yr Estimate']
+    race_poverty_df_total['Asian Alone Poverty Rate'] = race_poverty_df_total['In Poverty Asian Alone, 5yr Estimate'] / race_poverty_df_total['Total, 5yr Estimate']
+    race_poverty_df_total['Black or African American Alone Poverty Rate'] = race_poverty_df_total['In Poverty Black or African American Alone, 5yr Estimate'] / race_poverty_df_total['Total, 5yr Estimate']
+    race_poverty_df_total['Hispanic or Latino Poverty Rate'] = race_poverty_df_total['In Poverty Hispanic or Latino, 5yr Estimate'] / race_poverty_df_total['Total, 5yr Estimate']
+    race_poverty_df_total['Some Other Race Alone Poverty Rate'] = race_poverty_df_total['In Poverty Some Other Race Alone, 5yr Estimate'] / race_poverty_df_total['Total, 5yr Estimate']
+    race_poverty_df_total['Two or More Races Poverty Rate'] = race_poverty_df_total['In Poverty Two or More Races, 5yr Estimate'] / race_poverty_df_total['Total, 5yr Estimate']
+    race_poverty_df_total['White Alone Poverty Rate'] = race_poverty_df_total['In Poverty White Alone, 5yr Estimate'] / race_poverty_df_total['Total, 5yr Estimate']
+    race_poverty_df_total['White Alone, Not Hispanic or Latino Poverty Rate'] = race_poverty_df_total['In Poverty White Alone, Not Hispanic or Latino, 5yr Estimate'] / race_poverty_df_total['Total, 5yr Estimate']
+
+    race_poverty_df_total = race_poverty_df_total.reset_index()
+      
+    # agg data
+    race_poverty_df_total = pd.melt(race_poverty_df_total, 
+                                    id_vars=['Year'], 
+                                    value_vars=['Total Poverty Rate', 'American Indian and Alaska Native Alone Poverty Rate',
+                                                'Asian Alone Poverty Rate', 'Black or African American Alone Poverty Rate',
+                                                'Hispanic or Latino Poverty Rate', 'Some Other Race Alone Poverty Rate',
+                                                'Two or More Races Poverty Rate', 'White Alone Poverty Rate', 'White Alone, Not Hispanic or Latino Poverty Rate'],
+                                   var_name='Metric', value_name='Rate')
+
+    st.write('Overall Poverty Rate')
+    st.line_chart(
+        race_poverty_df_total[race_poverty_df_total['Metric'] == 'Total Poverty Rate'],
+        x = 'Year',
+        y = 'Rate',
+        )
+
+    st.write('Poverty Rate By Race')
+    st.line_chart(
+        race_poverty_df_total[race_poverty_df_total['Metric'] != 'Total Poverty Rate'],
+        x = 'Year',
+        y = 'Rate',
+        color = 'Metric'
+        )
+      
+
 
 
 
