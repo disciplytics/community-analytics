@@ -34,11 +34,6 @@ df = ri_df.query('Type==@options')
 
 col1, col2 = st.columns([.6,.4])
 col1.dataframe(df[['Type', 'Institution']].set_index(['Type']).sort_index())
-
-fig = px.scatter_map(df, lat="LATITUDE", lon="LONGITUDE", color="Institution")
-
-plot_spot = st.empty()
-with plot_spot:
-    col2.plotly_chart(fig, use_container_width=True)
+col2.plotly_chart(px.scatter_map(df, lat="LATITUDE", lon="LONGITUDE", color="Institution"), use_container_width=True)
 
 
