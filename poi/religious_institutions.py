@@ -25,7 +25,8 @@ ri_df['LONGITUDE'] = pd.to_numeric(ri_df['LONGITUDE'])
 ri_df = ri_df.rename(columns={
     'CATEGORY_MAIN': 'Type',
     'CITY_STATE': 'Location',
-    'POI_NAME': 'Institution'})
+    'POI_NAME': 'Institution'
+})
 
 options = st.multiselect(
     "Select the Type(s) of Institution:",
@@ -40,7 +41,7 @@ col1.dataframe(df[['Type', 'Institution']].set_index(['Type']).sort_index())
 
 def display_map(location_data:pd.DataFrame):
 
-    fig = px.scatter_mapbox(location_data, lat="LATITUDE", lon="LONGITUDE", zoom=3, 
+    fig = px.scatter_mapbox(location_data, lat="LATITUDE", lon="LONGITUDE", zoom=6, 
                             hover_name='Institution', hover_data=['Type', 'Institution'])
 
     fig.update_layout(mapbox_style="open-street-map")
