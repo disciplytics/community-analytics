@@ -30,6 +30,10 @@ options = st.multiselect(
 
 
 df = ri_df.query('Type==@options')
-st.dataframe(df[['Type','Institution']].set_index(['Type']))
 
-st.map(data=df, latitude='LATITUDE', longitude='LONGITUDE', color='Type', use_container_width=True)
+col1, col2 = st.columns([.25,.75])
+col1.dataframe(df[['Type','Institution']].set_index(['Type']), use_container_width=True)
+
+col2.map(data=df, latitude='LATITUDE', longitude='LONGITUDE', use_container_width=True)
+
+
