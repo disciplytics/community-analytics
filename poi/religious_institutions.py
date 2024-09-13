@@ -46,6 +46,6 @@ def display_map(location_data:pd.DataFrame):
     fig.update_layout(mapbox_style="open-street-map")
     fig.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
     return fig
-st.plotly_chart(display_map(df))
+col2.plotly_chart(display_map(df))
 
 
