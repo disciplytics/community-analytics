@@ -15,7 +15,7 @@ st.subheader(f"{st.session_state['cbsa_selection']}")
 conn = st.connection("snowflake")
 
 # rietl
-ri_sql = "SELECT * FROM RELIGIOUS_POI WHERE CITY_STATE = " + f"'{st.session_state['cbsa_selection']}'"
+ri_sql = "SELECT DISTINCT * FROM RELIGIOUS_POI WHERE CITY_STATE = " + f"'{st.session_state['cbsa_selection']}'"
 ri_df = conn.query(ri_sql, ttl=0)
 
 st.dataframe(ri_df)
