@@ -41,7 +41,7 @@ col1.dataframe(df[['Type', 'Institution']].set_index(['Type']).sort_index())
 
 def display_map(location_data:pd.DataFrame):
 
-    fig = px.scatter_mapbox(location_data, lat="LATITUDE", lon="LONGITUDE", zoom=6, 
+    fig = px.scatter_mapbox(location_data, lat="LATITUDE", lon="LONGITUDE", zoom=8, 
                             hover_name='Institution', hover_data=['Type', 'Institution'])
 
     fig.update_layout(mapbox_style="open-street-map")
