@@ -18,10 +18,18 @@ conn = st.connection("snowflake")
 ri_sql = "SELECT DISTINCT * FROM RELIGIOUS_POI WHERE CITY_STATE = " + f"'{st.session_state['cbsa_selection']}'"
 ri_df = conn.query(ri_sql, ttl=0)
 
+ri_df = ri_df.rename(columns={
+    'CATEGORY_MAIN': 'Type',
+    'CITY_STATE': 'Location',
+    'POI_NAME': 'Institution'})
 
 options = st.multiselect(
     "Select the Type(s) of Institution:",
-    ri_df.CATEGORY_MAIN.unique(),
-    ri_df.CATEGORY_MAIN.unique())
+    ri_df.Type.unique(),
+    ri_df.Type.unique())
 
-st.dataframe(ri_df.query('CATEGORY_MAIN==@options'))
+
+df = ri_df.query('Type==@options')
+st.dataframe(df[['Type','Institution']].set_index(['Type']))
+
+st.map(data=df, latitude='LATITUDE', longitude='LONGITUDE', color='Type', use_container_width=True)
