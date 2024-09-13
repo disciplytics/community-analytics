@@ -21,7 +21,7 @@ ri_df = conn.query(ri_sql, ttl=0)
 
 options = st.multiselect(
     "Select the Type(s) of Institution:",
-    ri_df.CATEGORY_MAIN.unique().
+    ri_df.CATEGORY_MAIN.unique(),
     ri_df.CATEGORY_MAIN.unique())
 
 st.dataframe(ri_df.query('CATEGORY_MAIN==@options'))
