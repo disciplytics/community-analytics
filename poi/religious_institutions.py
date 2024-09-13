@@ -19,6 +19,9 @@ conn = st.connection("snowflake")
 ri_sql = "SELECT DISTINCT * FROM RELIGIOUS_POI WHERE CITY_STATE = " + f"'{st.session_state['cbsa_selection']}'"
 ri_df = conn.query(ri_sql, ttl=0)
 
+ri_df['LATITUDE'] = pd.to_numeric(ri_df['LATITUDE'])
+ri_df['LONGITUDE'] = pd.to_numeric(ri_df['LONGITUDE'])
+
 ri_df = ri_df.rename(columns={
     'CATEGORY_MAIN': 'Type',
     'CITY_STATE': 'Location',
