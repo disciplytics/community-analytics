@@ -24,4 +24,4 @@ options = st.multiselect(
     ri_df.CATEGORY_MAIN.unique().
     ri_df.CATEGORY_MAIN.unique())
 
-st.dataframe(ri_df[ri_df['CATEGORY_MAIN'].isin(options)])
+st.dataframe(ri_df.query('CATEGORY_MAIN==@options'))
