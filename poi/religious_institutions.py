@@ -18,4 +18,10 @@ conn = st.connection("snowflake")
 ri_sql = "SELECT DISTINCT * FROM RELIGIOUS_POI WHERE CITY_STATE = " + f"'{st.session_state['cbsa_selection']}'"
 ri_df = conn.query(ri_sql, ttl=0)
 
-st.dataframe(ri_df)
+
+options = st.multiselect(
+    "Select the Type(s) of Institution:",
+    ri_df.CATEGORY_MAIN.unique().
+    ri_df.CATEGORY_MAIN.unique())
+
+st.dataframe(ri_df[ri_df['CATEGORY_MAIN'].isin(options)])
