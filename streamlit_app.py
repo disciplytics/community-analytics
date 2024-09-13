@@ -34,12 +34,17 @@ poverty = st.Page(
 #  'socioeconomics/social_assistance.py', title = 'Social Assitance Report', icon=":material/bento:"
 #)
 
+poi_ri = st.Page(
+  'poi/religious_institutions.py', title = 'Religious Institutions Report', icon=":material/church:"
+)
+
 
 pg = st.navigation(
         {
             " ": [home_page],
             "Demographics": [population, race_ethnicity, age],
             "Socioeconomics": [income, edu_voc, poverty],
+            "Religious Institutions": [poi_ri]
         }
     )
 
