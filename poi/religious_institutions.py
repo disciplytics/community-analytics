@@ -37,6 +37,15 @@ df = ri_df.query('Type==@options')
 
 col1, col2 = st.columns([.6,.4])
 col1.dataframe(df[['Type', 'Institution']].set_index(['Type']).sort_index())
-st.plotly_chart(px.scatter_map(df, lat="LATITUDE", lon="LONGITUDE", color="Institution"))
+
+def display_map(location_data:pd.DataFrame):
+
+    fig = px.scatter_mapbox(location_data, lat="LATITUDE", lon="LONGITUDE", zoom=3, 
+                            hover_name='Institution', hover_data=['Type', 'Institution'])
+
+    fig.update_layout(mapbox_style="open-street-map")
+    fig.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
+    return fig
+st.plotly_chart(display_map(df))
 
 
