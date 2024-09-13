@@ -37,6 +37,8 @@ col1.dataframe(df[['Type', 'Institution']].set_index(['Type']).sort_index())
 
 fig = px.scatter_map(df, lat="LATITUDE", lon="LONGITUDE", color="Institution")
 
-col2.plotly_chart(fig, use_container_width=True)
+plot_spot = st.empty()
+with plot_spot:
+    col2.plotly_chart(fig, use_container_width=True)
 
 
