@@ -38,6 +38,6 @@ col1.dataframe(df[['Type', 'Institution']].set_index(['Type']).sort_index())
 fig = px.scatter_map(df, lat="LATITUDE", lon="LONGITUDE", color="Institution",
                   color_continuous_scale=px.colors.cyclical.IceFire, size_max=15, zoom=10)
 
-col2.plotly_chart(fig use_container_width=True)
+col2.plotly_chart(fig, use_container_width=True)
 
 
