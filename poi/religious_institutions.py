@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import altair as alt
+import plotly.express as px
 
 # Initialization
 if 'cbsa_selection' not in st.session_state:
@@ -34,6 +35,9 @@ df = ri_df.query('Type==@options')
 col1, col2 = st.columns([.6,.4])
 col1.dataframe(df[['Type', 'Institution']].set_index(['Type']).sort_index())
 
-col2.map(data=df, latitude='LATITUDE', longitude='LONGITUDE', use_container_width=True)
+fig = px.scatter_map(df, lat="LATITUDE", lon="LONGITUDE", color="Institution",
+                  color_continuous_scale=px.colors.cyclical.IceFire, size_max=15, zoom=10)
+
+col2.plotly_chart(fig use_container_width=True)
 
 
