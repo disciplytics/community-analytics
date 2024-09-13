@@ -32,7 +32,7 @@ options = st.multiselect(
 df = ri_df.query('Type==@options')
 
 col1, col2 = st.columns([.35,.65])
-col1.table(df['Institution'], use_container_width=True)
+col1.table(df['Institution'])
 
 col2.map(data=df, latitude='LATITUDE', longitude='LONGITUDE', use_container_width=True)
 
