@@ -47,9 +47,9 @@ pg = st.navigation(
         {
             " ": [home_page],
             "Community Explorer": [comm_db_page],
-            "Demographics": [population, race_ethnicity, age],
-            "Socioeconomics": [income, edu_voc, poverty],
-            "Religious Institutions": [poi_ri]
+           # "Demographics": [population, race_ethnicity, age],
+           # "Socioeconomics": [income, edu_voc, poverty],
+           # "Religious Institutions": [poi_ri]
         }
     )
 
