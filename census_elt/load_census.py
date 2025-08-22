@@ -39,7 +39,7 @@ def get_racial_breakdown(state, year=2023, dataset="acs/acs5", api_key=None):
         "DP05_0076PE", #Hispanic or Latino (of any race), percent
         "DP05_0076M", #Hispanic or Latino (of any race), percent MoE
         
-        "DP05_0081PE"  #Not Hispanic or Latino, percent
+        "DP05_0081PE",  #Not Hispanic or Latino, percent
         "DP05_0081M"  #Not Hispanic or Latino, percent MoE
     )
 
