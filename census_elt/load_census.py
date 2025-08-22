@@ -1,34 +1,55 @@
-import requests
 import pandas as pd
+from census import Census
+from us import states
 
-def load_acs_data(year=2023, dataset="acs/acs5", variables=["NAME", "B01001_001E"], 
-                  for_geo="county:*", in_geo="state:39", api_key=None):
+def get_racial_breakdown(state, year=2023, dataset="acs/acs5", api_key=None):
     """
-    Load ACS data from the U.S. Census Bureau API.
+    Get racial and ethnic demographic breakdown for a given State.
 
-    Parameters:
-    - year (int): Year of ACS dataset (default: 2023).
-    - dataset (str): ACS dataset, e.g., "acs/acs5" or "acs/acs1".
-    - variables (list): List of variable codes (default: total population).
-    - for_geo (str): Geography to pull data for (default: all counties).
-    - in_geo (str): Higher-level geography filter (default: state:39 for Ohio).
-    - api_key (str): Your Census API key (get one free at https://api.census.gov/data/key_signup.html).
-
-    Returns:
-    - pd.DataFrame: ACS data
+    Returns a DataFrame with counts and percentages.
     """
-    base_url = f"https://api.census.gov/data/{year}/{dataset}"
-    params = {
-        "get": ",".join(variables),
-        "for": for_geo,
-       # "in": in_geo
+
+    c = Census(api_key)
+        
+    variables_race = (
+        "NAME",
+        "B02001_001E",  # Total
+        "B02001_002E",  # White
+        "B02001_003E",  # Black
+        "B02001_004E",  # American Indian/Alaska Native
+        "B02001_005E",  # Asian
+        "B02001_006E",  # Native Hawaiian/Pacific Islander
+        "B02001_007E",  # Some other race
+        "B02001_008E",  # Two or more races
+        "B03003_003E",  # Hispanic/Latino
+    )
+
+    df = pd.json_normalize(c.acs5.state(variables_race, states.OH.fips, year=year))
+
+    # Convert to numeric
+    for col in df.columns:
+        if col not in ["NAME"]:
+            df[col] = pd.to_numeric(df[col], errors="coerce")
+
+    # Rename columns to human-readable labels
+    rename_map = {
+        "B02001_001E": "Total",
+        "B02001_002E": "White",
+        "B02001_003E": "Black",
+        "B02001_004E": "American Indian/Alaska Native",
+        "B02001_005E": "Asian",
+        "B02001_006E": "Native Hawaiian/Pacific Islander",
+        "B02001_007E": "Some Other Race",
+        "B02001_008E": "Two or More Races",
+        "B03003_003E": "Hispanic/Latino",
     }
-    if api_key:
-        params["key"] = api_key
+    df = df.rename(columns=rename_map)
 
-    response = requests.get(base_url, params=params)
-    response.raise_for_status()
+    total = df["Total"].iloc[0]
 
-    data = response.json()
-    df = pd.DataFrame(data[1:], columns=data[0])
+    # Compute percentages
+    for col in rename_map.values():
+        if col != "Total":
+            df[f"{col} (%)"] = (df[col] / total * 100).round(2)
+
     return df
