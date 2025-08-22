@@ -18,32 +18,21 @@ racial_vars = (
         "B02001_008E",  # Two or more races
         "B03003_003E",  # Hispanic/Latino
 )
-c = Census(st.secrets["acs_key"])
+
 
 st.write(pd.json_normalize(c.acs5.state(racial_vars, states.OH.fips, year=2023)))
 
 
-
-
-st.dataframe(
-      load_acs_data(
-          year=2023, 
-          dataset="acs/acs5", 
-          variables=["NAME", "B01001_001E"], 
-          for_geo="zip code tabulation area:44883", 
-          in_geo="state:*",
-          api_key=st.secrets["acs_key"]
-      )
-)
-
-
-def get_racial_breakdown(zipcode, year=2022, dataset="acs/acs5", api_key=None):
+def get_racial_breakdown(state, year=2023, dataset="acs/acs5", api_key=None):
     """
-    Get racial and ethnic demographic breakdown for a given ZIP Code (ZCTA).
+    Get racial and ethnic demographic breakdown for a given State.
 
     Returns a DataFrame with counts and percentages.
     """
-    variables_race = [
+
+    c = Census(api_key)
+        
+    variables_race = (
         "NAME",
         "B02001_001E",  # Total
         "B02001_002E",  # White
@@ -54,19 +43,13 @@ def get_racial_breakdown(zipcode, year=2022, dataset="acs/acs5", api_key=None):
         "B02001_007E",  # Some other race
         "B02001_008E",  # Two or more races
         "B03003_003E",  # Hispanic/Latino
-    ]
-
-    df = load_acs_data(
-        year=year,
-        dataset=dataset,
-        variables=variables_race,
-        for_geo=f"zip code tabulation area:{zipcode}",
-        api_key=st.secrets["acs_key"]
     )
+
+    df = pd.json_normalize(c.acs5.state(variables_race, f'states.{state}.fips', year=year))
 
     # Convert to numeric
     for col in df.columns:
-        if col not in ["NAME", "zip code tabulation area"]:
+        if col not in ["NAME"]:
             df[col] = pd.to_numeric(df[col], errors="coerce")
 
     # Rename columns to human-readable labels
@@ -91,12 +74,7 @@ def get_racial_breakdown(zipcode, year=2022, dataset="acs/acs5", api_key=None):
             df[f"{col} (%)"] = (df[col] / total * 100).round(2)
 
     return df
-      
+
 st.dataframe(
-      get_racial_breakdown(
-            zipcode=44883
-            , year=2023
-            , dataset="acs/acs5"
-            , api_key=st.secrets["acs_key"]
-            )
+        get_racial_breakdown('OH, year=2023, dataset="acs/acs5", api_key=st.secrets["acs_key"])
       )
