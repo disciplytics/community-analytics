@@ -20,7 +20,7 @@ racial_vars = (
 )
 c = Census(st.secrets["acs_key"])
 
-st.write(c.acs5.state(racial_vars, states.OH.fips, year=2023))
+st.write(pd.json_normalize(c.acs5.state(racial_vars, states.OH.fips, year=2023)))
 
 
 
