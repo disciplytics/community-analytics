@@ -4,6 +4,10 @@ home_page = st.Page(
   'home_page/home_page.py', title = 'Home', icon=":material/home:", default=True
 )
 
+comm_db_page = st.Page(
+  'pages/community_dashboard.py', title = 'Community Dashboard', icon=":material/dashboard:", default=False
+)
+
 # demographics pages
 population = st.Page(
   'demographics/population.py', title = 'Population Report', icon=":material/groups:"
@@ -42,6 +46,7 @@ poi_ri = st.Page(
 pg = st.navigation(
         {
             " ": [home_page],
+            "Community Explorer": [comm_db_page],
             "Demographics": [population, race_ethnicity, age],
             "Socioeconomics": [income, edu_voc, poverty],
             "Religious Institutions": [poi_ri]
