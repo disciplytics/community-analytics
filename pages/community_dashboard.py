@@ -1,4 +1,5 @@
 import streamlit as st
+import pandas as pd
 from census_elt.load_census import load_acs_data
 
 st.dataframe(
