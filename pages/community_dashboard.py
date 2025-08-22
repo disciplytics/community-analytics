@@ -6,10 +6,21 @@ import requests
 from census import Census
 from us import states
 
-
+racial_vars = (
+        "NAME",
+        "B02001_001E",  # Total
+        "B02001_002E",  # White
+        "B02001_003E",  # Black
+        "B02001_004E",  # American Indian/Alaska Native
+        "B02001_005E",  # Asian
+        "B02001_006E",  # Native Hawaiian/Pacific Islander
+        "B02001_007E",  # Some other race
+        "B02001_008E",  # Two or more races
+        "B03003_003E",  # Hispanic/Latino
+)
 c = Census(st.secrets["acs_key"])
 
-st.write(c.acs5.state(('NAME', 'B25034_010E'), states.OH.fips, year=2023))
+st.write(c.acs5.state(racial_vars, states.OH.fips, year=2023))
 
 
 
