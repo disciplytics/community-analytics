@@ -7,7 +7,7 @@ st.dataframe(
           dataset="acs/acs5", 
           variables=["NAME", "B01001_001E"], 
           for_geo="zip code tabulation area:44883", 
-          in_geo="state:39",
+          in_geo="state:*",
           api_key=st.secrets["acs_key"]
       )
 )
@@ -36,7 +36,7 @@ def get_racial_breakdown(zipcode, year=2022, dataset="acs/acs5", api_key=None):
         year=year,
         dataset=dataset,
         variables=variables_race,
-        for_geo=f"ZCTA:{zipcode}",
+        for_geo=f"zip code tabulation area:{zipcode}",
         api_key=st.secrets["acs_key"]
     )
 
