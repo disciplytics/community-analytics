@@ -7,3 +7,4 @@ geojson==3.1.0
 altair
 plotly
 census
+us
