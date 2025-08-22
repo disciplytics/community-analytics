@@ -21,7 +21,7 @@ def get_racial_breakdown(state, year=2023, dataset="acs/acs5", api_key=None):
         "DP05_0060PE", #Some other race alone, percent
         "DP05_0061PE", #Two or more races, percent
         "DP05_0076PE", #Hispanic or Latino (of any race), percent
-        "DP05_0082PE"  #Not Hispanic or Latino,White Alone percent
+        "DP05_0081PE"  #Not Hispanic or Latino, percent
     )
 
     #df = pd.json_normalize(c.acs5st.state(variables_race, states.OH.fips, year=year))
