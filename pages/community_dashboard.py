@@ -3,6 +3,54 @@ import pandas as pd
 from census_elt.load_census import load_acs_data
 import requests
 
+from census import Census
+
+c = Census(st.secrets["acs_key"])
+
+def get_acs_data(state_fips, csa_code=None, msa_code=None, year=2022, survey="acs5", variables=None):
+    """
+    Fetch ACS data by state → CSA → MSA/μSA.
+
+    Args:
+        state_fips (str): FIPS code of the state (e.g., "06" for California)
+        csa_code (str, optional): Combined Statistical Area code (partial match allowed)
+        msa_code (str, optional): Metropolitan/Micropolitan Statistical Area code (partial match allowed)
+        year (int): ACS year
+        survey (str): ACS survey ("acs5", "acs1", etc.)
+        variables (list, optional): List of ACS variables to fetch, e.g., ["B01003_001E"] (total population)
+
+    Returns:
+        pandas.DataFrame: ACS data filtered by CSA/MSA
+    """
+    if variables is None:
+        variables = ["NAME", "B01003_001E"]  # Default: geography name & total population
+
+    # Fetch all MSAs/μSAs in the state
+    data = c.acs5.state_msa(
+        fields=variables,
+        state_fips=state_fips,
+        year=year
+    )
+
+    df = pd.DataFrame(data)
+
+    # Filter by CSA if provided
+    if csa_code:
+        df = df[df['NAME'].str.contains(csa_code, case=False, na=False)]
+
+    # Filter by MSA/μSA if provided
+    if msa_code:
+        df = df[df['NAME'].str.contains(msa_code, case=False, na=False)]
+
+    return df
+
+# Example usage:
+# Get ACS total population for all MSAs in Ohio
+df_ca = get_acs_data(state_fips="39")
+st.dataframe(df_ca.head())
+
+
+
 st.dataframe(
       load_acs_data(
           year=2023, 
