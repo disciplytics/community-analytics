@@ -6,19 +6,6 @@ import requests
 from census import Census
 from us import states
 
-racial_vars = (
-        "NAME",
-        "B02001_001E",  # Total
-        "B02001_002E",  # White
-        "B02001_003E",  # Black
-        "B02001_004E",  # American Indian/Alaska Native
-        "B02001_005E",  # Asian
-        "B02001_006E",  # Native Hawaiian/Pacific Islander
-        "B02001_007E",  # Some other race
-        "B02001_008E",  # Two or more races
-        "B03003_003E",  # Hispanic/Latino
-)
-
 def get_racial_breakdown(state, year=2023, dataset="acs/acs5", api_key=None):
     """
     Get racial and ethnic demographic breakdown for a given State.
@@ -41,7 +28,7 @@ def get_racial_breakdown(state, year=2023, dataset="acs/acs5", api_key=None):
         "B03003_003E",  # Hispanic/Latino
     )
 
-    df = pd.json_normalize(c.acs5.state(variables_race, f'states.{state}.fips', year=year))
+    df = pd.json_normalize(c.acs5.state(variables_race, states.OH.fips, year=year))
 
     # Convert to numeric
     for col in df.columns:
