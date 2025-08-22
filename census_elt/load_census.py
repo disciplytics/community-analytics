@@ -9,7 +9,7 @@ def get_racial_breakdown(state, year=2023, dataset="acs/acs5", api_key=None):
     Returns a DataFrame with counts and percentages.
     """
 
-    c = Census(api_key)
+    c = Census(api_key, year=year)
         
     variables_race = (
         "NAME",
@@ -24,9 +24,9 @@ def get_racial_breakdown(state, year=2023, dataset="acs/acs5", api_key=None):
         "B03003_003E",  # Hispanic/Latino
     )
 
-    df = pd.json_normalize(c.acs5.state(variables_race, states.OH.fips, year=year))
+    df = pd.json_normalize(c.acs5st.state(variables_race, states.OH.fips, year=year))
 
-    df = pd.json_normalize(c.acs5.get(variables_race, geo={'for': 'county:*',
+    df = pd.json_normalize(c.acs5st.get(variables_race, geo={'for': 'county:*',
                        'in': 'state:{}'.format(states.OH.fips)}))
 
     # Convert to numeric
@@ -48,11 +48,11 @@ def get_racial_breakdown(state, year=2023, dataset="acs/acs5", api_key=None):
     }
     df = df.rename(columns=rename_map)
 
-    total = df["Total"].iloc[0]
+    #total = df["Total"].iloc[0]
 
     # Compute percentages
-    for col in rename_map.values():
-        if col != "Total":
-            df[f"{col} (%)"] = (df[col] / total * 100).round(2)
+    #for col in rename_map.values():
+    #    if col != "Total":
+    #        df[f"{col} (%)"] = (df[col] / total * 100).round(2)
 
     return df
