@@ -21,7 +21,7 @@ def load_acs_data(year=2023, dataset="acs/acs5", variables=["NAME", "B01001_001E
     params = {
         "get": ",".join(variables),
         "for": for_geo,
-        "in": in_geo
+       # "in": in_geo
     }
     if api_key:
         params["key"] = api_key
