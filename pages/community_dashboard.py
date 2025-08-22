@@ -76,5 +76,5 @@ def get_racial_breakdown(state, year=2023, dataset="acs/acs5", api_key=None):
     return df
 
 st.dataframe(
-        get_racial_breakdown('OH, year=2023, dataset="acs/acs5", api_key=st.secrets["acs_key"])
+        get_racial_breakdown('OH', year=2023, dataset="acs/acs5", api_key=st.secrets["acs_key"])
       )
