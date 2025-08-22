@@ -13,15 +13,15 @@ def get_racial_breakdown(state, year=2023, dataset="acs/acs5", api_key=None):
         
     variables_race = (
         "NAME",
-        "B02001_001E",  # Total
-        "B02001_002E",  # White
-        "B02001_003E",  # Black
-        "B02001_004E",  # American Indian/Alaska Native
-        "B02001_005E",  # Asian
-        "B02001_006E",  # Native Hawaiian/Pacific Islander
-        "B02001_007E",  # Some other race
-        "B02001_008E",  # Two or more races
-        "B03003_003E",  # Hispanic/Latino
+        "DP05_0037PE",  # White alone, percent
+        #"B02001_002E",  # White
+        #"B02001_003E",  # Black
+        #"B02001_004E",  # American Indian/Alaska Native
+        #"B02001_005E",  # Asian
+        #"B02001_006E",  # Native Hawaiian/Pacific Islander
+        #"B02001_007E",  # Some other race
+        #"B02001_008E",  # Two or more races
+        #"B03003_003E",  # Hispanic/Latino
     )
 
     df = pd.json_normalize(c.acs5st.state(variables_race, states.OH.fips, year=year))
