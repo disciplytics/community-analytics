@@ -24,9 +24,9 @@ def get_racial_breakdown(state, year=2023, dataset="acs/acs5", api_key=None):
         #"B03003_003E",  # Hispanic/Latino
     )
 
-    df = pd.json_normalize(c.acs5st.state(variables_race, states.OH.fips, year=year))
+    #df = pd.json_normalize(c.acs5st.state(variables_race, states.OH.fips, year=year))
 
-    df = pd.json_normalize(c.acs5st.get(variables_race, geo={'for': 'county:*',
+    df = pd.json_normalize(c.acs5dp.get(variables_race, geo={'for': 'county:*',
                        'in': 'state:{}'.format(states.OH.fips)}))
 
     # Convert to numeric
