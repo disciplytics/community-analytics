@@ -19,10 +19,6 @@ racial_vars = (
         "B03003_003E",  # Hispanic/Latino
 )
 
-
-st.write(pd.json_normalize(c.acs5.state(racial_vars, states.OH.fips, year=2023)))
-
-
 def get_racial_breakdown(state, year=2023, dataset="acs/acs5", api_key=None):
     """
     Get racial and ethnic demographic breakdown for a given State.
