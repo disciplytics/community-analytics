@@ -6,7 +6,7 @@ st.dataframe(
           year=2023, 
           dataset="acs/acs5", 
           variables=["NAME", "B01001_001E"], 
-          for_geo="ZCTA:*", 
+          for_geo="zip code tabulation area:44883", 
           in_geo="state:39",
           api_key=st.secrets["acs_key"]
       )
