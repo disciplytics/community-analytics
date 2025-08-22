@@ -4,6 +4,8 @@ from census_elt.load_census import load_acs_data
 import requests
 
 from census import Census
+from us import states
+
 
 c = Census(st.secrets["acs_key"])
 
